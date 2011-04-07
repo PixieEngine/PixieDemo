@@ -1,6 +1,7 @@
 window.engine = Engine 
   canvas: $("canvas").powerCanvas()
 
+# Add a red square to the scene
 engine.add
   x: 50
   y: 50
