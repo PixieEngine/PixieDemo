@@ -9,6 +9,6 @@
     "source": "src",
     "test": "test"
   },
-  "width": 320,
-  "height": 240
+  "width": 640,
+  "height": 480
 }
