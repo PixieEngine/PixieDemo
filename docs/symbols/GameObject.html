@@ -4,7 +4,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Bounded</title>
+		<title>JsDoc Reference - GameObject</title>
 		<link href="../css/default.css" type="text/css" rel="stylesheet" media="all" />
 	</head>
 
@@ -83,12 +83,14 @@
 			<div class="innerContent">
 				<h1 class="classTitle">
 					
-					Class <span>Bounded</span>
+					Class <span>GameObject</span>
 				</h1>
 
 				<p class="description summary">
 					
 					
+					<br />Extends
+						<a href="../symbols/Core.html">Core</a>.<br />
 					
 				
 					
@@ -100,7 +102,7 @@
 
 				
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Bounded.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class GameObject.">
 							<caption>Class Summary</caption>
 							<thead>
 								<tr>
@@ -113,12 +115,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/Bounded.html#constructor">Bounded</a></b>()
+											<b><a href="../symbols/GameObject.html#constructor">GameObject</a></b>(I)
 										</div>
-										<div class="description">The Bounded module is used to provide basic data about the
-location and dimensions of the including object
-
-Bounded module</div>
+										<div class="description">The default base class for all objects you can add to the engine.</div>
 									</td>
 								</tr>
 							</tbody>
@@ -126,6 +125,52 @@ Bounded module</div>
 					</div>
 				
 
+				
+					
+					
+						<div class="props">
+							<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class GameObject.">
+								<caption>Field Summary</caption>
+								
+								<thead>
+									<tr>
+										<th scope="col">Field Attributes</th>
+										<th scope="col">Field Name and Description</th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									
+										<tr>
+											<td class="attributes">&lt;static&gt; &nbsp;</td>
+											<td class="nameDescription">
+												<div class="fixedFont">
+												GameObject.<b><a href="../symbols/GameObject.html#.construct">construct</a></b>
+												</div>
+												<div class="description">Construct an object instance from the given entity data.</div>
+											</td>
+										</tr>
+									
+										<tr>
+											<td class="attributes">&nbsp;</td>
+											<td class="nameDescription">
+												<div class="fixedFont">
+												<b><a href="../symbols/GameObject.html#I">I</a></b>
+												</div>
+												<div class="description"></div>
+											</td>
+										</tr>
+									
+								</tbody>
+							</table>
+						</div>
+					
+					
+					
+						<dl class="inheritsList">
+						
+						</dl>
+					
 				
 
 	<!--
@@ -135,7 +180,7 @@ Bounded module</div>
 					
 					
 						<div class="props">
-							<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Bounded.">
+							<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class GameObject.">
 								<caption>Method Summary</caption>
 								
 								<thead>
@@ -150,30 +195,18 @@ Bounded module</div>
 										<tr>
 											<td class="attributes">&nbsp;</td>
 											<td class="nameDescription">
-												<div class="fixedFont"><b><a href="../symbols/Bounded.html#bounds">bounds</a></b>(xOffset, yOffset)
+												<div class="fixedFont"><b><a href="../symbols/GameObject.html#destroy">destroy</a></b>()
 												</div>
-												<div class="description">The bounds method returns infomation about the location
-    of the object and its dimensions with optional offsets</div>
+												<div class="description">Destroys the object and triggers the destroyed callback.</div>
 											</td>
 										</tr>
 									
 										<tr>
 											<td class="attributes">&nbsp;</td>
 											<td class="nameDescription">
-												<div class="fixedFont"><b><a href="../symbols/Bounded.html#center">center</a></b>()
+												<div class="fixedFont"><b><a href="../symbols/GameObject.html#update">update</a></b>()
 												</div>
-												<div class="description">The center method returns the <a href="../symbols/Point.html">Point</a> that is
-    the center of the object</div>
-											</td>
-										</tr>
-									
-										<tr>
-											<td class="attributes">&nbsp;</td>
-											<td class="nameDescription">
-												<div class="fixedFont"><b><a href="../symbols/Bounded.html#centeredBounds">centeredBounds</a></b>()
-												</div>
-												<div class="description">The centeredBounds method returns infomation about the center
-    of the object along with the midpoint of the width and height</div>
+												<div class="description">Update the game object.</div>
 											</td>
 										</tr>
 									
@@ -182,6 +215,10 @@ Bounded module</div>
 						</div>
 					
 					
+					
+						<dl class="inheritsList">
+						<dt>Methods borrowed from class <a href="../symbols/Core.html">Core</a>: </dt><dd><a href="../symbols/Core.html#attrAccessor">attrAccessor</a>, <a href="../symbols/Core.html#attrReader">attrReader</a>, <a href="../symbols/Core.html#extend">extend</a></dd>
+						</dl>
 					
 				
 				
@@ -203,19 +240,39 @@ Bounded module</div>
 							</div>
 							
 							<div class="fixedFont">
-								<b>Bounded</b>()
+								<b>GameObject</b>(I)
 							</div>
 							
 							<div class="description">
-								The Bounded module is used to provide basic data about the
-location and dimensions of the including object
+								The default base class for all objects you can add to the engine.
 
-Bounded module
+Events:
+
+<code>create</code> When object is created for the first time.
+
+<code>step</code> Triggered every update step.
+
+<code>destroy</code> Triggered when object is destroyed. Use
+the destroy event to add particle effects, play sounds, etc.
+
+<code>remove</code> Triggered when the object is removed from
+the engine. Use the remove event to handle any clean up.
 								
 							</div>
 							
 							
 						
+							
+								<dl class="detailList params">
+									<dt class="heading">Parameters:</dt>
+									
+										<dt>
+											 <b>I</b>
+											
+										</dt>
+										<dd></dd>
+									
+								</dl>
 							
 							
 							
@@ -226,6 +283,67 @@ Bounded module
 	<!--
 	#### FIELD DETAILS
 	-->
+				
+					<div class="details props">
+						<div class="innerProps">
+
+							<div class="sectionTitle">
+								Field Detail
+							</div>
+							
+							
+								<a name=".construct"></a>
+								
+								<div class="fixedFont heading">
+									<span class='lighter'>
+									&lt;static&gt; 
+									</span>
+									
+									
+									
+									<span class="light">GameObject.</span><b>construct</b>							
+								</div>
+								
+								<div class="description">
+									Construct an object instance from the given entity data.
+									
+									
+									
+								</div>
+								
+								
+
+								
+								
+								<div class="hr"></div>
+							
+								<a name="I"></a>
+								
+								<div class="fixedFont heading">
+									<span class='lighter'>
+									
+									</span>
+									
+									
+									
+									<b>I</b>							
+								</div>
+								
+								<div class="description">
+									
+									
+									
+									
+								</div>
+								
+								
+
+								
+								
+								
+							
+						</div>
+					</div>
 				
 
 	<!--
@@ -239,7 +357,7 @@ Bounded module
 							</div>
 							
 							
-								<a name="bounds"></a>
+								<a name="destroy"></a>
 								
 								<div class="fixedFont heading">
 									<span class='lighter'>
@@ -248,58 +366,11 @@ Bounded module
 									
 									
 									
-									<b>bounds</b>(xOffset, yOffset)
+									<b>destroy</b>()
 								</div>
 								
 								<div class="description">
-									The bounds method returns infomation about the location
-    of the object and its dimensions with optional offsets
-									
-									
-									
-									
-								</div>
-								
-								
-								
-								
-									<dl class="detailList params">
-										<dt class="heading">Parameters:</dt>
-										
-											<dt>
-												<span class="light fixedFont">{number}</span> <b>xOffset</b>
-												
-											</dt>
-											<dd>the amount to shift the x position</dd>
-										
-											<dt>
-												<span class="light fixedFont">{number}</span> <b>yOffset</b>
-												
-											</dt>
-											<dd>the amount to shift the y position</dd>
-										
-									</dl>
-								
-								
-								
-
-								<div class="hr"></div>
-							
-								<a name="center"></a>
-								
-								<div class="fixedFont heading">
-									<span class='lighter'>
-									
-									</span>
-									
-									
-									
-									<b>center</b>()
-								</div>
-								
-								<div class="description">
-									The center method returns the <a href="../symbols/Point.html">Point</a> that is
-    the center of the object
+									Destroys the object and triggers the destroyed callback.
 									
 									
 									
@@ -314,7 +385,7 @@ Bounded module
 
 								<div class="hr"></div>
 							
-								<a name="centeredBounds"></a>
+								<a name="update"></a>
 								
 								<div class="fixedFont heading">
 									<span class='lighter'>
@@ -323,12 +394,11 @@ Bounded module
 									
 									
 									
-									<b>centeredBounds</b>()
+									<b>update</b>()
 								</div>
 								
 								<div class="description">
-									The centeredBounds method returns infomation about the center
-    of the object along with the midpoint of the width and height
+									Update the game object. This is generally called by the engine.
 									
 									
 									
