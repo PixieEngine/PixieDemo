@@ -3,6 +3,7 @@ window.engine = Engine
   canvas: $('canvas').powerCanvas()
   includedModules: ['Box2D']
   PHYSICS_DEBUG_DRAW: false
+  showFPS: true
 
 obj = engine.add
   color: Color('pink')
