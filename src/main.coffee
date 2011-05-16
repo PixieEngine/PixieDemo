@@ -1,12 +1,10 @@
 window.engine = Engine 
   canvas: $("canvas").powerCanvas()
-  # includedModules: ["Tilemap"]
   showFPS: true
-  # FPS: 60
-  # effect: Engine.Effects.scanlines
+  # FPS: 30
 
 engine.loadMap "demo", ->
-  # Add a red square to the scene
+  # Add player square to the level after it loads
   engine.add
     class: "Player"
     x: 160
