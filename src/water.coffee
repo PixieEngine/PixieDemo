@@ -3,7 +3,7 @@ Water = (I) ->
     width: 32
     height: 32
     solid: true
-    flow: Point(1, 2).norm()
+    flow: Point(1, 2).norm().scale(0.25)
 
   self = GameObject(I).extend
     draw: (canvas) ->
