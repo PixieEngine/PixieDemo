@@ -267,6 +267,15 @@
                     <tr>
                       <td class="attributes">&nbsp;</td>
                       <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Engine.html#loadMap">loadMap</a></b>()
+                        </div>
+                        <div class="description">Loads a new may and unloads any existing map or entities.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
                         <div class="fixedFont"><b><a href="../symbols/Engine.html#pause">pause</a></b>()
                         </div>
                         <div class="description">Pause the simulation</div>
@@ -343,18 +352,18 @@
                   <tr>
                     <td class="attributes">&nbsp;</td>
                     <td class="nameDescription">
-                      <div class="fixedFont"><b><a href="../symbols/Engine.html#event:draw">draw</a></b>()
+                      <div class="fixedFont"><b><a href="../symbols/Engine.html#event:beforeDraw">beforeDraw</a></b>()
                       </div>
-                      <div class="description">Called after the engine draws on the canvas.</div>
+                      <div class="description">Called before the engine draws the game objects on the canvas.</div>
                     </td>
                   </tr>
                 
                   <tr>
                     <td class="attributes">&nbsp;</td>
                     <td class="nameDescription">
-                      <div class="fixedFont"><b><a href="../symbols/Engine.html#event:preDraw">preDraw</a></b>()
+                      <div class="fixedFont"><b><a href="../symbols/Engine.html#event:draw">draw</a></b>()
                       </div>
-                      <div class="description">Called before the engine draws the game objects on the canvas.</div>
+                      <div class="description">Called after the engine draws on the canvas.</div>
                     </td>
                   </tr>
                 
@@ -785,6 +794,32 @@ shadows.
 
                 <div class="hr"></div>
               
+                <a name="loadMap"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  
+
+                  <b>loadMap</b>()
+                </div>
+
+                <div class="description">
+                  Loads a new may and unloads any existing map or entities.
+
+                  
+                </div>
+
+                
+
+                
+
+                
+
+                <div class="hr"></div>
+              
                 <a name="pause"></a>
 
                 <div class="fixedFont heading">
@@ -982,6 +1017,34 @@ shadows.
 
                 <div class="hr"></div>
               
+                <a name="event:event:beforeDraw"> </a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  
+
+                  <b>beforeDraw</b>()
+                </div>
+
+                <div class="description">
+                  Called before the engine draws the game objects on the canvas.
+  
+  The current camera transform <b>is</b> applied.
+
+                  
+                </div>
+
+                
+
+                
+
+                
+
+                <div class="hr"></div>
+              
                 <a name="event:event:draw"> </a>
 
                 <div class="fixedFont heading">
@@ -999,34 +1062,6 @@ shadows.
   
   The current camera transform <b>is not</b> applied, you may
   choose to apply it yourself using <code>I.cameraTransform</code>.
-
-                  
-                </div>
-
-                
-
-                
-
-                
-
-                <div class="hr"></div>
-              
-                <a name="event:event:preDraw"> </a>
-
-                <div class="fixedFont heading">
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  
-
-                  <b>preDraw</b>()
-                </div>
-
-                <div class="description">
-                  Called before the engine draws the game objects on the canvas.
-  
-  The current camera transform <b>is</b> applied.
 
                   
                 </div>

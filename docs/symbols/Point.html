@@ -188,6 +188,15 @@
                     <tr>
                       <td class="attributes">&nbsp;</td>
                       <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Point.html#direction">direction</a></b>()
+                        </div>
+                        <div class="description">Returns the direction in radians of this point from the origin.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
                         <div class="fixedFont"><b><a href="../symbols/Point.html#distance">distance</a></b>(other)
                         </div>
                         <div class="description">Computed the Euclidean between this point and another point.</div>
@@ -209,6 +218,15 @@
                         <div class="fixedFont"><b><a href="../symbols/Point.html#equal">equal</a></b>(other)
                         </div>
                         <div class="description">Determine whether this point is equal to another point.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Point.html#floor">floor</a></b>()
+                        </div>
+                        <div class="description">Floor the x and y values, returning a new point.</div>
                       </td>
                     </tr>
                   
@@ -288,7 +306,7 @@
 
               <div class="description">
                 Create a new point with given x and y coordinates. If no arguments are given
-defaults to (0, 0).
+  defaults to (0, 0).
                 
               </div>
 
@@ -406,7 +424,9 @@ defaults to (0, 0).
                 </div>
 
                 <div class="description">
-                  Adds a point to this one and returns the new point.
+                  Adds a point to this one and returns the new point. You may
+      also use a two argument call like <code>point.add(x, y)</code>
+      to add x and y values without a second point object.
 
                   
                 </div>
@@ -465,10 +485,10 @@ defaults to (0, 0).
 
                 <div class="description">
                   Calculate the cross product of this point and another point (Vector). 
-Usually cross products are thought of as only applying to three dimensional vectors,
-but z can be treated as zero. The result of this method is interpreted as the magnitude 
-of the vector result of the cross product between [x1, y1, 0] x [x2, y2, 0]
-perpendicular to the xy plane.
+      Usually cross products are thought of as only applying to three dimensional vectors,
+      but z can be treated as zero. The result of this method is interpreted as the magnitude 
+      of the vector result of the cross product between [x1, y1, 0] x [x2, y2, 0]
+      perpendicular to the xy plane.
 
                   
                 </div>
@@ -509,6 +529,32 @@ perpendicular to the xy plane.
                     
 
                   </dl>
+                
+
+                <div class="hr"></div>
+              
+                <a name="direction"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
+
+                  <b>direction</b>()
+                </div>
+
+                <div class="description">
+                  Returns the direction in radians of this point from the origin.
+
+                  
+                </div>
+
+                
+
+                
+
                 
 
                 <div class="hr"></div>
@@ -687,6 +733,53 @@ perpendicular to the xy plane.
 
                 <div class="hr"></div>
               
+                <a name="floor"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
+
+                  <b>floor</b>()
+                </div>
+
+                <div class="description">
+                  Floor the x and y values, returning a new point.
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>A new point, with x and y values each floored to the largest previous integer.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+
+                <div class="hr"></div>
+              
                 <a name="length"></a>
 
                 <div class="fixedFont heading">
@@ -795,7 +888,7 @@ perpendicular to the xy plane.
 
                 <div class="description">
                   The norm of a vector is the unit vector pointing in the same direction. This method
-treats the point as though it is a vector from the origin to (x, y).
+      treats the point as though it is a vector from the origin to (x, y).
 
                   
                 </div>
