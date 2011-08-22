@@ -1,8 +1,9 @@
-window.engine = Engine 
+# Create the engine
+window.engine = Engine
+  backgroundColor: Color("light yellow")
   canvas: $("canvas").powerCanvas()
-  showFPS: true
-  # FPS: 30
 
+# Add the player object to the engine
 engine.add
   class: "Player"
   x: 160
@@ -11,5 +12,6 @@ engine.add
   width: 16
   height: 16
 
+# Start the engine
 engine.start()
 
