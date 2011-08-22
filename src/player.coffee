@@ -7,7 +7,7 @@ Player = (I) ->
     height: 32
     x: 160
     y: 160
-    speed: 4
+    speed: 3
 
   # The player is a GameObject
   self = GameObject(I)
