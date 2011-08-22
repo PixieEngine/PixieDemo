@@ -9,8 +9,6 @@ engine.add
   x: 160
   y: 96
   color: "#F00"
-  width: 16
-  height: 16
 
 # Start the engine
 engine.start()
