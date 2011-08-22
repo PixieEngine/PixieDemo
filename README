@@ -2,6 +2,10 @@
 
 Here you will learn the basics to get started.
 
+Hit "Run" to run your game at any time. Make changes to your files then run again.
+
+Hit "Publish" to publish the current version of your game to PixieEngine.
+
 == Description of Contents
 
 The default directory structure of a PixieEngine game:
