@@ -6157,10 +6157,8 @@ var Player;
 Player = function(I) {
   var self;
   Object.reverseMerge(I, {
-    width: 32,
-    height: 32,
-    x: 160,
-    y: 160,
+    width: 16,
+    height: 16,
     speed: 3
   });
   self = GameObject(I);
@@ -6182,48 +6180,7 @@ Player = function(I) {
   });
   return self;
 };;
-App.entities = {
-  "36A45ADCEEE2197541A9ED5DD7291F32": {
-    "name": "brick_blue",
-    "tileSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAi0lEQVRYR2Nk1Gz5zzCAgHHQOCA2Noau4bB48RKwffAQ0NbWZjAyMqS5I86dOw+2B6sDaG470AKYJ0cdMBoCoyEwGgKjITAaAqMhMBoCgy8EQK0hULOM1mDwtogGRQhcvXqV5tGAMwoGRQjQOgGCzCc6BGgVHXhzAcxSXDS1Qghrz4hahpNqzoD3jgGFuZ7BvgvVAAAAAABJRU5ErkJggg==",
-    "createCoffee": "",
-    "create": "",
-    "destroyCoffee": "",
-    "destroy": "",
-    "stepCoffee": "",
-    "step": "",
-    "class": "Wall"
-  },
-  "5069FF9A6162485840C4A6A3AACDA16E": {
-    "name": "brick_green",
-    "tileSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAmklEQVRYR2OUtBL8zzCAgHHQOKC6uoau4dDa2gK2Dx4C8p6iDDFG6TR3xL59exmcnJwZsDqA5rYDLYB5ctQBoyEwGgKjITAaAqMhMBoCoyEw+EIA1BoCNctoDQZvi2jAQ8DS0pLh+PHjNI8GnFEw4CFAjwQI8iTRIfBw+2uaRAdOByCnAZDl6HxqhhDIERgFEa3zPy7zB7x3DAAshZWB7lbnbAAAAABJRU5ErkJggg=="
-  },
-  "733506CD23456DB857ABA0E24DA61D4D": {
-    "name": "brick_red",
-    "tileSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAApklEQVRYR2MsYWb/zzCAgHHQOMAvPJyu4bBp5UqwffAQsBQTYxB1dKS5I66/eMagKSHFgNUBNLcdaAHMk6MOGA2B0RAYDYHREBgNgdEQGA2BwRcCoNYQqFlGazB4W0QDHgL2OjoMV69eZVAVFaVpLOCMggEPAXokQJAniQ6B269f0yQ6cDoAlAYOXrkCzorHX71iQOdTM4RAjsAoiGia8vAYPuC9YwB+XJjBwEHLkAAAAABJRU5ErkJggg=="
-  },
-  "CE4993346420BA72A152340916DE1DD0": {
-    "name": "water0",
-    "tileSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAm0lEQVRYR2Nkcnv8n2EAAeOoA4Z1CITVCTGsanqHN4XRLA2ALAcBihxArCGUZCKsIQCzmBgfUGI5SC/NooBYh406YDQEhn4IEFPa4csRFIUApZZjLQeoYSixZcBoQUTXEMAVtRQlQmLjGr1WRXYMXRxAs2xIbAiMOoCkEBjwggg5xdLDMVTNBeQ4nmoOwGY5Ma1qqjmA3Cw56gAAiiR7YYZ+cF4AAAAASUVORK5CYII=",
-    "class": "Water",
-    "createCoffee": "",
-    "create": "",
-    "destroyCoffee": "",
-    "destroy": "",
-    "stepCoffee": "",
-    "step": ""
-  },
-  "undefined": {
-    "tileSrc": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAMUlEQVRYR+3QwQ0AAAgCMdh/aHULPyW5P2mTzPW2OkCAAAECBAgQIECAAAECBAh8CyywJyABJlvz9gAAAABJRU5ErkJggg==",
-    "name": "black",
-    "createCoffee": "",
-    "create": "",
-    "destroyCoffee": "",
-    "destroy": "",
-    "stepCoffee": "",
-    "step": ""
-  }
-};;
+App.entities = {};;
 ;$(function(){ window.engine = Engine({
   backgroundColor: Color("light yellow"),
   canvas: $("canvas").powerCanvas()
@@ -6232,8 +6189,6 @@ engine.add({
   "class": "Player",
   x: 160,
   y: 96,
-  color: "#F00",
-  width: 16,
-  height: 16
+  color: "#F00"
 });
 engine.start(); });
