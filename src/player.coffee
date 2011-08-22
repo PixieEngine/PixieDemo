@@ -29,8 +29,8 @@ Player = (I) ->
       I.y += I.speed
 
     # Clamp the player's position to be within the screen
-    I.x = I.x.clamp(0, App.width)
-    I.y = I.y.clamp(0, App.height)
+    I.x = I.x.clamp(0, App.width - I.width)
+    I.y = I.y.clamp(0, App.height - I.height)
 
   # We must return a reference to self from the constructor
   return self
