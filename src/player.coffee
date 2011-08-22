@@ -3,10 +3,8 @@ Player = (I) ->
 
   # Default values that can be overriden when creating a new player.
   Object.reverseMerge I,
-    width: 32
-    height: 32
-    x: 160
-    y: 160
+    width: 16
+    height: 16
     speed: 3
 
   # The player is a GameObject
