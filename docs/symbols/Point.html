@@ -12,9 +12,7 @@
     <div class="index">
       <div class="menu">
         <!-- begin publish.classesIndex -->
-        <div align="center"><a href="../index.html">Class Index</a> | <a href="../files.html">File Index</a></div>
-
-<h2 class="heading1">Classes</h2>
+        <h2 class="heading1">Classes</h2>
 
 <ul class="classList">
   
@@ -40,8 +38,6 @@
   
     <li><a href="../symbols/Engine.html">Engine</a></li>
   
-    <li><a href="../symbols/Framerate.html">Framerate</a></li>
-  
     <li><a href="../symbols/Function.html">Function</a></li>
   
     <li><a href="../symbols/GameObject.html">GameObject</a></li>
@@ -59,8 +55,6 @@
     <li><a href="../symbols/Number.html">Number</a></li>
   
     <li><a href="../symbols/Object.html">Object</a></li>
-  
-    <li><a href="../symbols/Physical.html">Physical</a></li>
   
     <li><a href="../symbols/Point.html">Point</a></li>
   
@@ -84,7 +78,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          Class <span>Point</span>
+          <span>Point</span>
         </h1>
 
         <p class="description summary">
@@ -147,6 +141,16 @@
                       </td>
                     </tr>
                   
+                    <tr>
+                      <td class="attributes"><em>static</em>&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont">
+                        Point.<b><a href="../symbols/Point.html#.ZERO">ZERO</a></b>
+                        </div>
+                        <div class="description"></div>
+                      </td>
+                    </tr>
+                  
                 </tbody>
               </table>
             </div>
@@ -179,6 +183,15 @@
                     <tr>
                       <td class="attributes">&nbsp;</td>
                       <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Point.html#copy">copy</a></b>()
+                        </div>
+                        <div class="description">Creates a copy of this point.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
                         <div class="fixedFont"><b><a href="../symbols/Point.html#cross">cross</a></b>(other)
                         </div>
                         <div class="description">Calculate the cross product of this point and another point (Vector).</div>
@@ -195,11 +208,31 @@
                     </tr>
                   
                     <tr>
+                      <td class="attributes"><em>static</em>&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Point.<b><a href="../symbols/Point.html#.direction">direction</a></b>(p1, p2)
+                        </div>
+                        <div class="description">If you have two dudes, one standing at point p1, and the other
+  standing at point p2, then this method will return the direction
+  that the dude standing at p1 will need to face to look at p2.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
                       <td class="attributes">&nbsp;</td>
                       <td class="nameDescription">
                         <div class="fixedFont"><b><a href="../symbols/Point.html#distance">distance</a></b>(other)
                         </div>
                         <div class="description">Computed the Euclidean between this point and another point.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes"><em>static</em>&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Point.<b><a href="../symbols/Point.html#.distance">distance</a></b>(p1, p2)
+                        </div>
+                        <div class="description"></div>
                       </td>
                     </tr>
                   
@@ -227,6 +260,15 @@
                         <div class="fixedFont"><b><a href="../symbols/Point.html#floor">floor</a></b>()
                         </div>
                         <div class="description">Floor the x and y values, returning a new point.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes"><em>static</em>&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Point.<b><a href="../symbols/Point.html#.fromAngle">fromAngle</a></b>(angle)
+                        </div>
+                        <div class="description">Construct a point on the unit circle for the given angle.</div>
                       </td>
                     </tr>
                   
@@ -369,8 +411,6 @@
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="y"></a>
 
@@ -391,6 +431,26 @@
                 </div>
 
                 
+
+                
+              
+                <a name=".ZERO"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
+
+                  <span class="light">Point.</span><b>ZERO</b>
+                </div>
+
+                <div class="description">
+                  
+
+                  
+                </div>
 
                 
 
@@ -418,15 +478,13 @@
                   
                   </span>
 
-                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
-
                   <b>add</b>(other)
                 </div>
 
                 <div class="description">
                   Adds a point to this one and returns the new point. You may
-      also use a two argument call like <code>point.add(x, y)</code>
-      to add x and y values without a second point object.
+    also use a two argument call like <code>point.add(x, y)</code>
+    to add x and y values without a second point object.
 
                   
                 </div>
@@ -468,8 +526,49 @@
 
                   </dl>
                 
+              
+                <a name="copy"></a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>copy</b>()
+                </div>
+
+                <div class="description">
+                  Creates a copy of this point.
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>A new point with the same x and y value as this point.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
               
                 <a name="cross"></a>
 
@@ -478,17 +577,15 @@
                   
                   </span>
 
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
-
                   <b>cross</b>(other)
                 </div>
 
                 <div class="description">
                   Calculate the cross product of this point and another point (Vector). 
-      Usually cross products are thought of as only applying to three dimensional vectors,
-      but z can be treated as zero. The result of this method is interpreted as the magnitude 
-      of the vector result of the cross product between [x1, y1, 0] x [x2, y2, 0]
-      perpendicular to the xy plane.
+    Usually cross products are thought of as only applying to three dimensional vectors,
+    but z can be treated as zero. The result of this method is interpreted as the magnitude 
+    of the vector result of the cross product between [x1, y1, 0] x [x2, y2, 0]
+    perpendicular to the xy plane.
 
                   
                 </div>
@@ -530,8 +627,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="direction"></a>
 
@@ -539,8 +634,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
 
                   <b>direction</b>()
                 </div>
@@ -556,8 +649,68 @@
                 
 
                 
+              
+                <a name=".direction"></a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Point.</span><b>direction</b>(p1, p2)
+                </div>
+
+                <div class="description">
+                  If you have two dudes, one standing at point p1, and the other
+  standing at point p2, then this method will return the direction
+  that the dude standing at p1 will need to face to look at p2.
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <span class="light fixedFont">{<a href="../symbols/Point.html">Point</a>}</span> <b>p1</b>
+                        
+                      </dt>
+                      <dd>The starting point.</dd>
+                    
+                      <dt>
+                        <span class="light fixedFont">{<a href="../symbols/Point.html">Point</a>}</span> <b>p2</b>
+                        
+                      </dt>
+                      <dd>The ending point.</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>The direction from p1 to p2 in radians.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
               
                 <a name="distance"></a>
 
@@ -565,8 +718,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
 
                   <b>distance</b>(other)
                 </div>
@@ -614,8 +765,66 @@
 
                   </dl>
                 
+              
+                <a name=".distance"></a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Point.</span><b>distance</b>(p1, p2)
+                </div>
+
+                <div class="description">
+                  
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <span class="light fixedFont">{<a href="../symbols/Point.html">Point</a>}</span> <b>p1</b>
+                        
+                      </dt>
+                      <dd></dd>
+                    
+                      <dt>
+                        <span class="light fixedFont">{<a href="../symbols/Point.html">Point</a>}</span> <b>p2</b>
+                        
+                      </dt>
+                      <dd></dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>The Euclidean distance between two points.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
               
                 <a name="dot"></a>
 
@@ -623,8 +832,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
 
                   <b>dot</b>(other)
                 </div>
@@ -672,8 +879,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="equal"></a>
 
@@ -681,8 +886,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Boolean.html">Boolean</a>}</span>
 
                   <b>equal</b>(other)
                 </div>
@@ -730,8 +933,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="floor"></a>
 
@@ -739,8 +940,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
 
                   <b>floor</b>()
                 </div>
@@ -777,8 +976,60 @@
 
                   </dl>
                 
+              
+                <a name=".fromAngle"></a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Point.</span><b>fromAngle</b>(angle)
+                </div>
+
+                <div class="description">
+                  Construct a point on the unit circle for the given angle.
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <span class="light fixedFont">{<a href="../symbols/Number.html">Number</a>}</span> <b>angle</b>
+                        
+                      </dt>
+                      <dd>The angle in radians</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>The point on the unit circle.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
               
                 <a name="length"></a>
 
@@ -786,8 +1037,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
 
                   <b>length</b>()
                 </div>
@@ -824,8 +1073,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="magnitude"></a>
 
@@ -833,8 +1080,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Number.html">Number</a>}</span>
 
                   <b>magnitude</b>()
                 </div>
@@ -871,8 +1116,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="norm"></a>
 
@@ -881,14 +1124,12 @@
                   
                   </span>
 
-                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
-
                   <b>norm</b>()
                 </div>
 
                 <div class="description">
                   The norm of a vector is the unit vector pointing in the same direction. This method
-      treats the point as though it is a vector from the origin to (x, y).
+    treats the point as though it is a vector from the origin to (x, y).
 
                   
                 </div>
@@ -919,8 +1160,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="scale"></a>
 
@@ -928,8 +1167,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
 
                   <b>scale</b>(scalar)
                 </div>
@@ -977,8 +1214,6 @@
 
                   </dl>
                 
-
-                <div class="hr"></div>
               
                 <a name="subtract"></a>
 
@@ -986,8 +1221,6 @@
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Point.html">Point</a>}</span>
 
                   <b>subtract</b>(other)
                 </div>
@@ -1034,8 +1267,6 @@
                     
 
                   </dl>
-                
-
                 
               
             </div>

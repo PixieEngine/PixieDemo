@@ -12,9 +12,7 @@
     <div class="index">
       <div class="menu">
         <!-- begin publish.classesIndex -->
-        <div align="center"><a href="../index.html">Class Index</a> | <a href="../files.html">File Index</a></div>
-
-<h2 class="heading1">Classes</h2>
+        <h2 class="heading1">Classes</h2>
 
 <ul class="classList">
   
@@ -40,8 +38,6 @@
   
     <li><a href="../symbols/Engine.html">Engine</a></li>
   
-    <li><a href="../symbols/Framerate.html">Framerate</a></li>
-  
     <li><a href="../symbols/Function.html">Function</a></li>
   
     <li><a href="../symbols/GameObject.html">GameObject</a></li>
@@ -59,8 +55,6 @@
     <li><a href="../symbols/Number.html">Number</a></li>
   
     <li><a href="../symbols/Object.html">Object</a></li>
-  
-    <li><a href="../symbols/Physical.html">Physical</a></li>
   
     <li><a href="../symbols/Point.html">Point</a></li>
   
@@ -84,7 +78,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          Class <span>Engine</span>
+          <span>Engine</span>
         </h1>
 
         <p class="description summary">
@@ -131,16 +125,6 @@
                       <td class="attributes"><em>static</em>&nbsp;</td>
                       <td class="nameDescription">
                         <div class="fixedFont">
-                        Engine.<b><a href="../symbols/Engine.html#.Box2D">Box2D</a></b>
-                        </div>
-                        <div class="description">(Module) The <code>Box2D</code> module provides physics integration via Box2D.</div>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td class="attributes"><em>static</em>&nbsp;</td>
-                      <td class="nameDescription">
-                        <div class="fixedFont">
                         Engine.<b><a href="../symbols/Engine.html#.Collision">Collision</a></b>
                         </div>
                         <div class="description">The <code>Collision</code> module provides some simple collision detection methods to engine.</div>
@@ -161,9 +145,9 @@
                       <td class="attributes"><em>static</em>&nbsp;</td>
                       <td class="nameDescription">
                         <div class="fixedFont">
-                        Engine.<b><a href="../symbols/Engine.html#.FPSCounter">FPSCounter</a></b>
+                        Engine.<b><a href="../symbols/Engine.html#.HUD">HUD</a></b>
                         </div>
-                        <div class="description">The <code>FPSCounter</code> module tracks and displays the framerate.</div>
+                        <div class="description">The <code>HUD</code> module provides an extra canvas to draw to.</div>
                       </td>
                     </tr>
                   
@@ -171,9 +155,9 @@
                       <td class="attributes"><em>static</em>&nbsp;</td>
                       <td class="nameDescription">
                         <div class="fixedFont">
-                        Engine.<b><a href="../symbols/Engine.html#.HUD">HUD</a></b>
+                        Engine.<b><a href="../symbols/Engine.html#.Joysticks">Joysticks</a></b>
                         </div>
-                        <div class="description">The <code>HUD</code> module provides an extra canvas to draw to.</div>
+                        <div class="description">The <code>Joysticks</code> module gives the engine access to joysticks.</div>
                       </td>
                     </tr>
                   
@@ -243,15 +227,6 @@
                         <div class="fixedFont"><b><a href="../symbols/Engine.html#add">add</a></b>(entityData)
                         </div>
                         <div class="description">The add method creates and adds an object to the game world.</div>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td class="attributes">&nbsp;</td>
-                      <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Engine.html#canvas">canvas</a></b>()
-                        </div>
-                        <div class="description">Returns a reference to the canvas.</div>
                       </td>
                     </tr>
                   
@@ -370,6 +345,15 @@
                   <tr>
                     <td class="attributes">&nbsp;</td>
                     <td class="nameDescription">
+                      <div class="fixedFont"><b><a href="../symbols/Engine.html#event:overlay">overlay</a></b>()
+                      </div>
+                      <div class="description">Called after the engine draws.</div>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td class="attributes">&nbsp;</td>
+                    <td class="nameDescription">
                       <div class="fixedFont"><b><a href="../symbols/Engine.html#event:update">update</a></b>()
                       </div>
                       <div class="description">Called when the engine updates all the game objects.</div>
@@ -446,30 +430,6 @@
               </div>
 
               
-                <a name=".Box2D"></a>
-
-                <div class="fixedFont heading">
-                  <span class='lighter'>
-                  <em>static</em>
-                  </span>
-
-                  
-
-                  <span class="light">Engine.</span><b>Box2D</b>
-                </div>
-
-                <div class="description">
-                  (Module) The <code>Box2D</code> module provides physics integration via Box2D.
-
-                  
-                </div>
-
-                
-
-                
-
-                <div class="hr"></div>
-              
                 <a name=".Collision"></a>
 
                 <div class="fixedFont heading">
@@ -491,8 +451,6 @@
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name=".Developer"></a>
 
@@ -515,32 +473,6 @@
                 
 
                 
-
-                <div class="hr"></div>
-              
-                <a name=".FPSCounter"></a>
-
-                <div class="fixedFont heading">
-                  <span class='lighter'>
-                  <em>static</em>
-                  </span>
-
-                  
-
-                  <span class="light">Engine.</span><b>FPSCounter</b>
-                </div>
-
-                <div class="description">
-                  The <code>FPSCounter</code> module tracks and displays the framerate.
-
-                  
-                </div>
-
-                
-
-                
-
-                <div class="hr"></div>
               
                 <a name=".HUD"></a>
 
@@ -565,8 +497,28 @@ the responsibility of the objects drawing on it to manage that themselves.
                 
 
                 
+              
+                <a name=".Joysticks"></a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  
+
+                  <span class="light">Engine.</span><b>Joysticks</b>
+                </div>
+
+                <div class="description">
+                  The <code>Joysticks</code> module gives the engine access to joysticks.
+
+                  
+                </div>
+
+                
+
+                
               
                 <a name=".SaveState"></a>
 
@@ -589,8 +541,6 @@ the responsibility of the objects drawing on it to manage that themselves.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name=".Selector"></a>
 
@@ -613,8 +563,6 @@ the responsibility of the objects drawing on it to manage that themselves.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name=".Shadows"></a>
 
@@ -639,8 +587,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name=".Tilemap"></a>
 
@@ -659,8 +605,6 @@ shadows.
 
                   
                 </div>
-
-                
 
                 
 
@@ -687,8 +631,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/GameObject.html">GameObject</a>}</span>
 
                   <b>add</b>(entityData)
                 </div>
@@ -719,34 +661,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
-              
-                <a name="canvas"></a>
-
-                <div class="fixedFont heading">
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  
-
-                  <b>canvas</b>()
-                </div>
-
-                <div class="description">
-                  Returns a reference to the canvas.
-
-                  
-                </div>
-
-                
-
-                
-
-                
-
-                <div class="hr"></div>
               
                 <a name="find"></a>
 
@@ -754,8 +668,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  <span class="light">{<a href="../symbols/Array.html">Array</a>}</span>
 
                   <b>find</b>(selector)
                 </div>
@@ -791,8 +703,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="loadMap"></a>
 
@@ -800,8 +710,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  
 
                   <b>loadMap</b>()
                 </div>
@@ -817,8 +725,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="pause"></a>
 
@@ -826,8 +732,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  
 
                   <b>pause</b>()
                 </div>
@@ -843,8 +747,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="start"></a>
 
@@ -852,8 +754,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  
 
                   <b>start</b>()
                 </div>
@@ -869,8 +769,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="stop"></a>
 
@@ -878,8 +776,6 @@ shadows.
                   <span class='lighter'>
                   
                   </span>
-
-                  
 
                   <b>stop</b>()
                 </div>
@@ -889,8 +785,6 @@ shadows.
 
                   
                 </div>
-
-                
 
                 
 
@@ -949,8 +843,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="event:event:afterUpdate"> </a>
 
@@ -976,8 +868,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="event:event:beforeAdd"> </a>
 
@@ -1014,8 +904,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="event:event:beforeDraw"> </a>
 
@@ -1032,7 +920,7 @@ shadows.
                 <div class="description">
                   Called before the engine draws the game objects on the canvas.
   
-  The current camera transform <b>is</b> applied.
+  The current camera transform is applied.
 
                   
                 </div>
@@ -1042,8 +930,6 @@ shadows.
                 
 
                 
-
-                <div class="hr"></div>
               
                 <a name="event:event:draw"> </a>
 
@@ -1060,8 +946,7 @@ shadows.
                 <div class="description">
                   Called after the engine draws on the canvas.
   
-  The current camera transform <b>is not</b> applied, you may
-  choose to apply it yourself using <code>I.cameraTransform</code>.
+  The current camera transform is applied.
 
                   
                 </div>
@@ -1071,8 +956,33 @@ shadows.
                 
 
                 
+              
+                <a name="event:event:overlay"> </a>
 
-                <div class="hr"></div>
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  
+
+                  <b>overlay</b>()
+                </div>
+
+                <div class="description">
+                  Called after the engine draws.
+  
+  The current camera transform is not applied. This is great for
+  adding overlays.
+
+                  
+                </div>
+
+                
+
+                
+
+                
               
                 <a name="event:event:update"> </a>
 
@@ -1091,8 +1001,6 @@ shadows.
 
                   
                 </div>
-
-                
 
                 
 
