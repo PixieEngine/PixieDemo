@@ -117,6 +117,33 @@
                     <tr>
                       <td class="attributes">&nbsp;</td>
                       <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Number.html#approach">approach</a></b>()
+                        </div>
+                        <div class="description">Returns a number that is maxDelta closer to target.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Number.html#approachByRatio">approachByRatio</a></b>()
+                        </div>
+                        <div class="description">Returns a number that is closer to the target by the ratio.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Number.html#approachRotation">approachRotation</a></b>()
+                        </div>
+                        <div class="description">Returns a number that is closer to the target angle by the delta.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
                         <div class="fixedFont"><b><a href="../symbols/Number.html#ceil">ceil</a></b>()
                         </div>
                         <div class="description">Returns the mathematical ceiling of this number.</div>
@@ -138,6 +165,15 @@
                         <div class="fixedFont"><b><a href="../symbols/Number.html#constrainRotation">constrainRotation</a></b>()
                         </div>
                         <div class="description">Constrains a rotation to between -PI and PI.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Number.html#d">d</a></b>()
+                        </div>
+                        <div class="description">The mathematical d operator.</div>
                       </td>
                     </tr>
                   
@@ -222,6 +258,16 @@ which when multiplied together equal the original integer.</div>
                         </div>
                         <div class="description">Calls iterator the specified number of times, passing in the number of the 
 current iteration as a parameter: 0 on first call, 1 on the second call, etc.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="attributes">&nbsp;</td>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Number.html#toColorPart">toColorPart</a></b>()
+                        </div>
+                        <div class="description">Returns the two character hexidecimal 
+representation of numbers 0 through 255.</div>
                       </td>
                     </tr>
                   
@@ -341,6 +387,11 @@ current iteration as a parameter: 0 on first call, 1 on the second call, etc.</d
                 <div class="description">
                   Returns the absolute value of this number.
 
+<code><pre>
+   (-4).abs()
+=> 4
+</pre></code>
+
                   
                 </div>
 
@@ -371,18 +422,26 @@ current iteration as a parameter: 0 on first call, 1 on the second call, etc.</d
                   </dl>
                 
               
-                <a name="ceil"></a>
+                <a name="approach"></a>
 
                 <div class="fixedFont heading">
                   <span class='lighter'>
                   
                   </span>
 
-                  <b>ceil</b>()
+                  <b>approach</b>()
                 </div>
 
                 <div class="description">
-                  Returns the mathematical ceiling of this number.
+                  Returns a number that is maxDelta closer to target.
+
+<code><pre>
+   255.approach(0, 5)
+=> 250
+
+   5.approach(0, 10)
+=> 0
+</pre></code>
 
                   
                 </div>
@@ -403,11 +462,157 @@ current iteration as a parameter: 0 on first call, 1 on the second call, etc.</d
                     
                       <dt class="heading">Returns:</dt>
                       
-                        <dd>The number truncated to the nearest integer of greater than or equal value.
+                        <dd>A number maxDelta toward target</dd>
+                      
+                    
 
-(4.9).ceil() # => 5
-(4.2).ceil() # => 5
-(-1.2).ceil() # => -1</dd>
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <a name="approachByRatio"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>approachByRatio</b>()
+                </div>
+
+                <div class="description">
+                  Returns a number that is closer to the target by the ratio.
+
+<code><pre>
+   255.approachByRatio(0, 0.1)
+=> 229.5
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>A number toward target by the ratio</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <a name="approachRotation"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>approachRotation</b>()
+                </div>
+
+                <div class="description">
+                  Returns a number that is closer to the target angle by the delta.
+
+<code><pre>
+   Math.PI.approachRotation(0, Math.PI/4)
+=> 2.356194490192345 # this is (3/4) * Math.PI, which is (1/4) * Math.PI closer to 0 from Math.PI
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>A number toward the target angle by maxDelta</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <a name="ceil"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>ceil</b>()
+                </div>
+
+                <div class="description">
+                  Returns the mathematical ceiling of this number.
+
+<code><pre>
+   4.9.ceil() 
+=> 5
+
+   4.2.ceil()
+=> 5
+
+   (-1.2).ceil()
+=> -1
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>The number truncated to the nearest integer of greater than or equal value.</dd>
                       
                     
 
@@ -431,10 +636,11 @@ current iteration as a parameter: 0 on first call, 1 on the second call, etc.</d
                 <div class="description">
                   Returns a number whose value is limited to the given range.
 
-Example: limit the output of this computation to between 0 and 255
-<pre>
-(x * 255).clamp(0, 255)
-</pre>
+<code><pre>   
+   # limit the output of this computation to between 0 and 255
+   (2 * 255).clamp(0, 255)
+=> 255
+</pre></code>
 
                   
                 </div>
@@ -496,6 +702,11 @@ Example: limit the output of this computation to between 0 and 255
                 <div class="description">
                   Constrains a rotation to between -PI and PI.
 
+<code><pre>
+   (9/4 * Math.PI).constrainRotation() 
+=> 0.7853981633974483 # this is (1/4) * Math.PI
+</pre></code>
+
                   
                 </div>
 
@@ -526,6 +737,49 @@ Example: limit the output of this computation to between 0 and 255
                   </dl>
                 
               
+                <a name="d"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>d</b>()
+                </div>
+
+                <div class="description">
+                  The mathematical d operator. Useful for simulating dice rolls.
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>The sum of rolling <code>this</code> many <code>sides</code>-sided dice</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
                 <a name="even"></a>
 
                 <div class="fixedFont heading">
@@ -538,6 +792,17 @@ Example: limit the output of this computation to between 0 and 255
 
                 <div class="description">
                   Returns true if this number is even (evenly divisible by 2).
+
+<code><pre>
+   2.even()
+=> true
+
+   3.even()
+=> false
+
+   0.even()
+=> true      
+</pre></code>
 
                   
                 </div>
@@ -582,6 +847,17 @@ Example: limit the output of this computation to between 0 and 255
                 <div class="description">
                   Returns the mathematical floor of this number.
 
+<code><pre>
+   4.9.floor()
+=> 4
+
+   4.2.floor()
+=> 4
+
+   (-1.2).floor()
+=> -2
+</pre></code>
+
                   
                 </div>
 
@@ -601,11 +877,7 @@ Example: limit the output of this computation to between 0 and 255
                     
                       <dt class="heading">Returns:</dt>
                       
-                        <dd>The number truncated to the nearest integer of less than or equal value.
-
-(4.9).floor() # => 4
-(4.2).floor() # => 4
-(-1.2).floor() # => -2</dd>
+                        <dd>The number truncated to the nearest integer of less than or equal value.</dd>
                       
                     
 
@@ -630,10 +902,10 @@ Example: limit the output of this computation to between 0 and 255
                   A mod method useful for array wrapping. The range of the function is
 constrained to remain in bounds of array indices.
 
-<pre>
-Example:
-(-1).mod(5) == 4
-</pre>
+<code><pre>
+   (-1).mod(5)
+=> 4
+</pre></code>
 
                   
                 </div>
@@ -689,6 +961,17 @@ Example:
                 <div class="description">
                   Returns true if this number is odd (has remainder of 1 when divided by 2).
 
+<code><pre>
+   2.odd()
+=> false
+
+   3.odd()
+=> true
+
+   0.odd()
+=> false     
+</pre></code>
+
                   
                 </div>
 
@@ -736,6 +1019,14 @@ which when multiplied together equal the original integer.
 
 Floors the number for purposes of factorization.
 
+<code><pre>
+   60.primeFactors()
+=> [2, 2, 3, 5]
+
+   37.primeFactors()
+=> [37]
+</pre></code>
+
                   
                 </div>
 
@@ -779,6 +1070,14 @@ Floors the number for purposes of factorization.
                 <div class="description">
                   Returns this number rounded to the nearest integer.
 
+<code><pre>
+   4.5.round()
+=> 5
+
+   4.4.round()
+=> 4
+</pre></code>
+
                   
                 </div>
 
@@ -798,10 +1097,7 @@ Floors the number for purposes of factorization.
                     
                       <dt class="heading">Returns:</dt>
                       
-                        <dd>The number rounded to the nearest integer.
-
-(4.5).round() # => 5
-(4.4).round() # => 4</dd>
+                        <dd>The number rounded to the nearest integer.</dd>
                       
                     
 
@@ -824,6 +1120,17 @@ Floors the number for purposes of factorization.
 
                 <div class="description">
                   Get the sign of this number as an integer (1, -1, or 0).
+
+<code><pre>
+   (-5).sign()
+=> -1
+
+   0.sign()
+=> 0
+
+   5.sign()
+=> 1
+</pre></code>
 
                   
                 </div>
@@ -868,10 +1175,16 @@ Floors the number for purposes of factorization.
                 <div class="description">
                   Returns the the nearest grid resolution less than or equal to the number. 
 
-  EX: 
-   (7).snap(8) => 0
-   (4).snap(8) => 0
-   (12).snap(8) => 8
+<code><pre>
+    7.snap(8) 
+=> 0
+
+    4.snap(8) 
+=> 0
+
+   12.snap(8) 
+=> 8
+</pre></code>
 
                   
                 </div>
@@ -926,7 +1239,17 @@ Floors the number for purposes of factorization.
 
                 <div class="description">
                   Calls iterator the specified number of times, passing in the number of the 
-current iteration as a parameter: 0 on first call, 1 on the second call, etc.
+current iteration as a parameter: 0 on first call, 1 on the second call, etc. 
+
+<code><pre>
+   output = []
+
+   5.times (n) ->
+     output.push(n)
+
+   output
+=> [0, 1, 2, 3, 4]
+</pre></code>
 
                   
                 </div>
@@ -967,6 +1290,61 @@ to treat as <code>this</code> in the iterator block.</dd>
                       <dt class="heading">Returns:</dt>
                       
                         <dd>The number of times the iterator was called.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <a name="toColorPart"></a>
+
+                <div class="fixedFont heading">
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>toColorPart</b>()
+                </div>
+
+                <div class="description">
+                  Returns the two character hexidecimal 
+representation of numbers 0 through 255.
+
+<code><pre>
+   255.toColorPart()
+=> "ff"
+
+   0.toColorPart()
+=> "00"
+
+   200.toColorPart()
+=> "c8"
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      <dt class="heading">Returns:</dt>
+                      
+                        <dd>Hexidecimal representation of the number</dd>
                       
                     
 

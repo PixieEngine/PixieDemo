@@ -189,6 +189,23 @@
                   Merges properties from sources into target with overiding.
 Last in covers earlier properties.
 
+<code><pre>
+   I = {
+     a: 1
+     b: 2
+     c: 3
+   }
+
+   Object.extend I, {
+     c: 6
+     d: 4
+   }   
+
+   I
+
+=> {a: 1, b:2, c:6, d: 4}
+</pre></code>
+
                   
                 </div>
 
@@ -278,6 +295,14 @@ Last in covers earlier properties.
                 <div class="description">
                   Checks whether an object is an array.
 
+<code><pre>
+   Object.isArray([1, 2, 4])
+=> true
+
+   Object.isArray({key: "value"})
+=> false
+</pre></code>
+
                   
                 </div>
 
@@ -332,6 +357,23 @@ Last in covers earlier properties.
                 <div class="description">
                   Merges properties from objects into target without overiding.
 First come, first served.
+
+<code><pre>
+   I = {
+     a: 1
+     b: 2
+     c: 3
+   }
+
+   Object.reverseMerge I, {
+     c: 6
+     d: 4
+   }   
+
+   I
+
+=> {a: 1, b:2, c:3, d: 4}
+</pre></code>
 
                   
                 </div>
