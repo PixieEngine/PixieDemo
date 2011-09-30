@@ -1,7 +1,7 @@
 # Create the engine
 window.engine = Engine
   backgroundColor: Color("light yellow")
-  canvas: $("canvas").powerCanvas()
+  canvas: $("canvas").pixieCanvas()
 
 # Add the player object to the engine
 engine.add
