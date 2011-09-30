@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="generator" content="JsDoc Toolkit" />
     
-    <title>JsDoc Reference - Boolean</title>
+    <title>JsDoc Reference - Rotatable</title>
     <link href="/stylesheets/docs.css" type="text/css" rel="stylesheet" media="all" />
   </head>
 
@@ -88,7 +88,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          <span>Boolean</span>
+          <span>Rotatable</span>
         </h1>
 
         <p class="description summary">
@@ -100,51 +100,32 @@
         </p>
 
         
+          <div class="props">
+            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Rotatable.">
+              <caption>Module Summary</caption>
+              <tbody>
+                <tr>
+                  <td class="nameDescription" >
+                    <div class="fixedFont">
+                      <b><a href="../symbols/Rotatable.html#constructor">Rotatable</a></b>(I, self)
+                    </div>
+                    <div class="description">The Rotatable module rotates the object
+based on its rotational velocity.</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="instanceVariables">&nbsp;</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
 
         
 
   <!--
   #### METHODS SUMMARY
   -->
-        
-          
-          
-            <div class="props">
-              <table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Boolean.">
-                <caption>Method Summary</caption>
-
-                <tbody>
-                  
-                    <tr>
-                      <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Boolean.html#toSource">toSource</a></b>()
-                        </div>
-                        <div class="description">Non-standard</div>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Boolean.html#toString">toString</a></b>()
-                        </div>
-                        <div class="description">Returns a string representing the specified Boolean object.</div>
-                      </td>
-                    </tr>
-                  
-                    <tr>
-                      <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Boolean.html#valueOf">valueOf</a></b>()
-                        </div>
-                        <div class="description">Returns the primitive value of a Boolean object.</div>
-                      </td>
-                    </tr>
-                  
-                </tbody>
-              </table>
-            </div>
-          
-
-          
         
 
   <!--
@@ -156,6 +137,67 @@
   #### CONSTRUCTOR DETAILS
   -->
         
+          <div class="details props">
+            <div class="innerProps">
+              <a name="constructor"></a>
+
+              <div class="fixedFont">
+                <b>Rotatable</b>(I, self)
+              </div>
+
+              <div class="description">
+                The Rotatable module rotates the object
+based on its rotational velocity.
+
+<code><pre>
+player = GameObject
+  x: 0
+  y: 0
+  rotationalVelocity: Math.PI / 64
+
+player.include(Rotatable)
+
+player.I.rotation
+# => 0
+
+player.update()
+
+player.I.rotation
+# => 0.04908738521234052 # Math.PI / 64
+
+player.update()
+
+player.I.rotation
+# => 0.09817477042468103 # 2 * (Math.PI / 64)
+</pre></code>
+                
+              </div>
+
+              
+
+              
+                <dl class="detailList params">
+                  <dt class="heading">Parameters:</dt>
+                  
+                    <dt>
+                      <b>I</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
+                      
+                    </dt>
+                    <dd>Instance variables</dd>
+                  
+                    <dt>
+                      <b>self</b><span class='light fixedFont'> <a href="../symbols/Core.html">Core</a></span> 
+                      
+                    </dt>
+                    <dd>Reference to including object</dd>
+                  
+                </dl>
+              
+
+              
+            </div>
+          </div>
+        
 
   <!--
   #### FIELD DETAILS
@@ -165,79 +207,6 @@
   <!--
   #### METHOD DETAILS
   -->
-        
-          <div class="details props">
-            <div class="innerProps">
-              
-                <div class="fixedFont heading">
-                  <a name="toSource"></a>
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  <b>toSource</b>()
-                </div>
-
-                <div class="description">
-                  Non-standard
-
-                  
-                </div>
-
-                
-
-                
-
-                
-              
-                <div class="fixedFont heading">
-                  <a name="toString"></a>
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  <b>toString</b>()
-                </div>
-
-                <div class="description">
-                  Returns a string representing the specified Boolean object.
-
-<code><em>bool</em>.toString()</code>
-
-                  
-                </div>
-
-                
-
-                
-
-                
-              
-                <div class="fixedFont heading">
-                  <a name="valueOf"></a>
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  <b>valueOf</b>()
-                </div>
-
-                <div class="description">
-                  Returns the primitive value of a Boolean object.
-
-<code><em>bool</em>.valueOf()</code>
-
-                  
-                </div>
-
-                
-
-                
-
-                
-              
-            </div>
-          </div>
         
 
   <!--

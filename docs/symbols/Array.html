@@ -34,6 +34,8 @@
   
     <li><a href="../symbols/Date.html">Date</a></li>
   
+    <li><a href="../symbols/Drawable.html">Drawable</a></li>
+  
     <li><a href="../symbols/Durable.html">Durable</a></li>
   
     <li><a href="../symbols/Engine.html">Engine</a></li>
@@ -46,6 +48,8 @@
   
     <li><a href="../symbols/Local.html">Local</a></li>
   
+    <li><a href="../symbols/Logging.html">Logging</a></li>
+  
     <li><a href="../symbols/Math.html">Math</a></li>
   
     <li><a href="../symbols/Matrix.html">Matrix</a></li>
@@ -56,6 +60,8 @@
   
     <li><a href="../symbols/Object.html">Object</a></li>
   
+    <li><a href="../symbols/PixieCanvas.html">PixieCanvas</a></li>
+  
     <li><a href="../symbols/Point.html">Point</a></li>
   
     <li><a href="../symbols/PowerCanvas.html">PowerCanvas</a></li>
@@ -63,6 +69,10 @@
     <li><a href="../symbols/Random.html">Random</a></li>
   
     <li><a href="../symbols/RegExp.html">RegExp</a></li>
+  
+    <li><a href="../symbols/ResourceLoader.html">ResourceLoader</a></li>
+  
+    <li><a href="../symbols/Rotatable.html">Rotatable</a></li>
   
     <li><a href="../symbols/Sprite.html">Sprite</a></li>
   
@@ -488,6 +498,14 @@ length of the array.</div>
                       </td>
                     </tr>
                   
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Array.html#zip">zip</a></b>()
+                        </div>
+                        <div class="description">Merges together the values of each of the arrays with the values at the corresponding position.</div>
+                      </td>
+                    </tr>
+                  
                 </tbody>
               </table>
             </div>
@@ -531,10 +549,10 @@ length of the array.</div>
                   Empties the array of its contents. It is modified in place.
 
 <code><pre>
-   fullArray = [1, 2, 3]
-   fullArray.clear()
-   fullArray
-=> []
+fullArray = [1, 2, 3]
+fullArray.clear()
+fullArray
+# => []
 </pre></code>
 
                   
@@ -555,7 +573,7 @@ length of the array.</div>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>this, now emptied.</dd>
                       
                     
@@ -580,8 +598,8 @@ length of the array.</div>
                   Returns a copy of the array without null and undefined values.
 
 <code><pre>
-   [null, undefined, 3, 3, undefined, 5].compact()
-=> [3, 3, 5]
+[null, undefined, 3, 3, undefined, 5].compact()
+# => [3, 3, 5]
 </pre></code>
 
                   
@@ -602,7 +620,7 @@ length of the array.</div>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>A new array that contains only the non-null values.</dd>
                       
                     
@@ -663,16 +681,16 @@ value(s).
 the same objects.
 
 <code><pre>
-   a = ["a", "b", "c"]
-   b = a.copy()
+a = ["a", "b", "c"]
+b = a.copy()
 
-   # their elements are equal
-   a[0] == b[0] && a[1] == b[1] && a[2] == b[2]
-=> true
+# their elements are equal
+a[0] == b[0] && a[1] == b[1] && a[2] == b[2]
+# => true
 
-   # but they aren't the same object in memory
-   a === b
-=> false
+# but they aren't the same object in memory
+a === b
+# => false
 </pre></code>
 
                   
@@ -693,7 +711,7 @@ the same objects.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>A new array that is a copy of the array</dd>
                       
                     
@@ -721,19 +739,19 @@ the element as the second argument, and <code>this</code> array as the
 third argument.
 
 <code><pre>
-   word = ""
-   indices = []
-   ["r", "a", "d"].each (letter, index) ->
-     word += letter
-     indices.push(index)
+word = ""
+indices = []
+["r", "a", "d"].each (letter, index) ->
+  word += letter
+  indices.push(index)
 
-=> ["r", "a", "d"]
+# => ["r", "a", "d"]
 
-   word
-=> "rad"
+word
+# => "rad"
 
-   indices
-=> [0, 1, 2]
+indices
+# => [0, 1, 2]
 </pre></code>
 
                   
@@ -749,15 +767,13 @@ third argument.
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>Function to be called once for 
-each element in the array.</dd>
+                      <dd>Function to be called once for each element in the array.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be 
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -773,7 +789,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>this to enable method chaining.</dd>
                       
                     
@@ -798,7 +814,13 @@ used as `this` when calling the iterator function.</dd>
                   Call the given iterator once for each pair of objects in the array.
 
 <code><pre>
-  [1, 2, 3, 4].eachPair (a, b) ->
+[1, 2, 3, 4].eachPair (a, b) ->
+  # 1, 2
+  # 1, 3
+  # 1, 4
+  # 2, 3
+  # 2, 4
+  # 3, 4
 </pre></code>
 
                   
@@ -814,15 +836,13 @@ used as `this` when calling the iterator function.</dd>
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>Function to be called once for 
-each pair of elements in the array.</dd>
+                      <dd>Function to be called once for each pair of elements in the array.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be 
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -844,13 +864,13 @@ passing in the elements in groups of n. Additional argumens are
 passed as in each.
 
 <code><pre>
-   results = []
-   [1, 2, 3, 4].eachSlice 2, (slice) ->
-     results.push(slice)
-=> [1, 2, 3, 4]
+results = []
+[1, 2, 3, 4].eachSlice 2, (slice) ->
+  results.push(slice)
+# => [1, 2, 3, 4]
 
-   results
-=> [[1, 2], [3, 4]]
+results
+# => [[1, 2], [3, 4]]
 </pre></code>
 
                   
@@ -872,15 +892,13 @@ passed as in each.
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>Function to be called once for 
-each group of elements in the array.</dd>
+                      <dd>Function to be called once for each group of elements in the array.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be 
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -896,7 +914,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>this</dd>
                       
                     
@@ -941,22 +959,19 @@ as the second argument. Additional arguments are passed similar to
                         <b>object</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         
                       </dt>
-                      <dd>The object to pass to the iterator on each
-visit.</dd>
+                      <dd>The object to pass to the iterator on each visit.</dd>
                     
                       <dt>
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>Function to be called once for 
-each element in the array.</dd>
+                      <dd>Function to be called once for each element in the array.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be 
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -972,7 +987,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>this</dd>
                       
                     
@@ -1038,8 +1053,8 @@ this when executing callback.</dd>
                   Returns an object containing the extremes of this array.
 
 <code><pre>
-   [-1, 3, 0].extremes()
-=> {min: -1, max: 3}
+[-1, 3, 0].extremes()
+# => {min: -1, max: 3}
 </pre></code>
 
                   
@@ -1055,8 +1070,7 @@ this when executing callback.</dd>
                         <b>fn</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>An optional funtion used to evaluate 
-each element to calculate its value for determining extremes.</dd>
+                      <dd>An optional funtion used to evaluate each element to calculate its value for determining extremes.</dd>
                     
                   </dl>
                 
@@ -1072,8 +1086,8 @@ each element to calculate its value for determining extremes.</dd>
 
                     
                       
-                        <dt class="heading">Returns <span class="light fixedFont">min: minElement|max: maxElement</span> :</dt>
-                        <dd></dd>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
+                        <dd>{min: minElement, max: maxElement}</dd>
                       
                     
 
@@ -1112,7 +1126,7 @@ provided function.
                         <b>callback</b>
                         
                       </dt>
-                      <dd>thisObject  Function to test each element of the array.Object to
+                      <dd>thisObject  Function to test each element of the array.Object to
 use as this when executing callback.</dd>
                     
                   </dl>
@@ -1133,8 +1147,8 @@ use as this when executing callback.</dd>
                   Returns the first element of the array, undefined if the array is empty.
 
 <code><pre>
-   ["first", "second", "third"].first()
-=> "first"
+["first", "second", "third"].first()
+# => "first"
 </pre></code>
 
                   
@@ -1155,7 +1169,7 @@ use as this when executing callback.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
                         <dd>The first element, or undefined if the array is empty.</dd>
                       
                     
@@ -1180,13 +1194,13 @@ use as this when executing callback.</dd>
                   Flatten out an array of arrays into a single array of elements.
 
 <code><pre>
-   [[1, 2], [3, 4], 5].flatten()
-=> [1, 2, 3, 4, 5]
+[[1, 2], [3, 4], 5].flatten()
+# => [1, 2, 3, 4, 5]
 
-   # won't flatten twice nested arrays. call
-   # flatten twice if that is what you want
-   [[1, 2], [3, [4, 5]], 6].flatten()
-=> [1, 2, 3, [4, 5], 6]
+# won't flatten twice nested arrays. call
+# flatten twice if that is what you want
+[[1, 2], [3, [4, 5]], 6].flatten()
+# => [1, 2, 3, [4, 5], 6]
 </pre></code>
 
                   
@@ -1207,7 +1221,7 @@ use as this when executing callback.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>A new array with all the sub-arrays flattened to the top.</dd>
                       
                     
@@ -1246,7 +1260,7 @@ use as this when executing callback.</dd>
                         <b>callback</b>
                         
                       </dt>
-                      <dd>thisObject  Function to execute for each element.Object to use
+                      <dd>thisObject  Function to execute for each element.Object to use
 as this when executing callback.</dd>
                     
                   </dl>
@@ -1267,11 +1281,11 @@ as this when executing callback.</dd>
                   Returns true if the element is present in the array.
 
 <code><pre>
-   ["a", "b", "c"].include("c")
-=> true
+["a", "b", "c"].include("c")
+# => true
 
-   [40, "a"].include(700)
-=> false
+[40, "a"].include(700)
+# => false
 </pre></code>
 
                   
@@ -1303,7 +1317,7 @@ as this when executing callback.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
                         <dd>true if the element is in the array, false otherwise.</dd>
                       
                     
@@ -1343,7 +1357,7 @@ as this when executing callback.</dd>
                         <b>searchElement</b>
                         
                       </dt>
-                      <dd>fromIndex  Element to locate in the array.The index at
+                      <dd>fromIndex  Element to locate in the array.The index at
 which to begin the search. Defaults to 0, i.e. the whole array will be searched.
 If the index is greater than or equal to the length of the array, -1 is
 returned, i.e. the array will not be searched. If negative, it is taken as the
@@ -1388,7 +1402,7 @@ value (memo) and the element.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
                         <dd>The result of a</dd>
                       
                     
@@ -1414,11 +1428,11 @@ value (memo) and the element.
 and return a new array containing the results of the invocation.
 
 <code><pre>
-   [1.1, 2.2, 3.3, 4.4].invoke("floor")
-=> [1, 2, 3, 4]
+[1.1, 2.2, 3.3, 4.4].invoke("floor")
+# => [1, 2, 3, 4]
 
-   ['hello', 'world', 'cool!'].invoke('substring', 0, 3)
-=> ['hel', 'wor', 'coo']
+['hello', 'world', 'cool!'].invoke('substring', 0, 3)
+# => ['hel', 'wor', 'coo']
 </pre></code>
 
                   
@@ -1456,9 +1470,8 @@ and return a new array containing the results of the invocation.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
-                        <dd>A new array containing the results of invoking the 
-named method on each element.</dd>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
+                        <dd>A new array containing the results of invoking the named method on each element.</dd>
                       
                     
 
@@ -1518,8 +1531,8 @@ are separated with a comma.</dd>
                   Returns the last element of the array, undefined if the array is empty.
 
 <code><pre>
-   ["first", "second", "third"].last()
-=> "third"
+["first", "second", "third"].last()
+# => "third"
 </pre></code>
 
                   
@@ -1540,7 +1553,7 @@ are separated with a comma.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
                         <dd>The last element, or undefined if the array is empty.</dd>
                       
                     
@@ -1580,7 +1593,7 @@ if it is not present. The array is searched backwards, starting at fromIndex.
                         <b>searchElement</b>
                         
                       </dt>
-                      <dd>fromIndex  Element to locate in the array.The index at
+                      <dd>fromIndex  Element to locate in the array.The index at
 which to start searching backwards. Defaults to the array's length, i.e. the
 whole array will be searched. If the index is greater than or equal to the
 length of the array, the whole array will be searched. If negative, it is taken
@@ -1609,10 +1622,9 @@ the element as the second argument, and `this` array as the
 third argument.
 
 <code><pre>
-   [1, 2, 3].map (number) ->
-     number * number
-
-=> [1, 4, 9]
+[1, 2, 3].map (number) ->
+  number * number
+# => [1, 4, 9]
 </pre></code>
 
                   
@@ -1628,15 +1640,13 @@ third argument.
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>Function to be called once for
-each element in the array.</dd>
+                      <dd>Function to be called once for each element in the array.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -1652,9 +1662,8 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
-                        <dd>An array of the results of the iterator function
-being called on the original array elements.</dd>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
+                        <dd>An array of the results of the iterator function being called on the original array elements.</dd>
                       
                     
 
@@ -1697,8 +1706,7 @@ true, and those for which it returns false.
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -1714,7 +1722,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>An array in the form of [trueCollection, falseCollection]</dd>
                       
                     
@@ -1763,6 +1771,11 @@ used as `this` when calling the iterator function.</dd>
                 <div class="description">
                   Multiply all the elements in the array.
 
+<code><pre>
+[1, 2, 3, 4].product()
+# => 24
+</pre></code>
+
                   
                 </div>
 
@@ -1781,7 +1794,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Number.html">Number</a></span> :</dt>
                         <dd>The product of the elements in the array.</dd>
                       
                     
@@ -1840,6 +1853,11 @@ the array.
                 <div class="description">
                   Randomly select an element from the array.
 
+<code><pre>
+[1, 2, 3].rand()
+# => 2
+</pre></code>
+
                   
                 </div>
 
@@ -1858,7 +1876,7 @@ the array.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
                         <dd>A random element from an array</dd>
                       
                     
@@ -1934,7 +1952,7 @@ right-to-left) as to reduce it to a single value.
                         <b>callback</b>
                         
                       </dt>
-                      <dd>initialValue  Function to execute on each value in the
+                      <dd>initialValue  Function to execute on each value in the
 array.Object to use as the first argument to the first call of the callback.</dd>
                     
                   </dl>
@@ -1967,15 +1985,13 @@ array.Object to use as the first argument to the first call of the callback.</dd
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>The iterator receives each element in turn as 
-the first agument.</dd>
+                      <dd>The iterator receives each element in turn as the first agument.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -1991,7 +2007,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>An array containing the elements for which the iterator returned false.</dd>
                       
                     
@@ -2017,12 +2033,12 @@ used as `this` when calling the iterator function.</dd>
 present. The array is modified in place.
 
 <code><pre>
-   a = [1, 1, "a", "b"]
-   a.remove(1)
-=> 1
+a = [1, 1, "a", "b"]
+a.remove(1)
+# => 1
 
-   a
-=> [1, "a", "b"]
+a
+# => [1, "a", "b"]
 </pre></code>
 
                   
@@ -2054,7 +2070,7 @@ present. The array is modified in place.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
                         <dd>The removed object if present otherwise undefined.</dd>
                       
                     
@@ -2076,7 +2092,7 @@ present. The array is modified in place.
                 </div>
 
                 <div class="description">
-                  Reverses an array in place.  The first array element becomes the last and the
+                  Reverses an array in place.  The first array element becomes the last and the
 last becomes the first.
 
 <code><em>array</em>.reverse()</code>
@@ -2115,15 +2131,13 @@ last becomes the first.
                         <b>iterator</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
-                      <dd>The iterator receives each element in turn as 
-the first agument.</dd>
+                      <dd>The iterator receives each element in turn as the first agument.</dd>
                     
                       <dt>
                         <b>context</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional context parameter to be
-used as `this` when calling the iterator function.</dd>
+                      <dd>Optional context parameter to be used as `this` when calling the iterator function.</dd>
                     
                   </dl>
                 
@@ -2139,7 +2153,7 @@ used as `this` when calling the iterator function.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>An array containing the elements for which the iterator returned true.</dd>
                       
                     
@@ -2187,6 +2201,15 @@ changes the length of the array.
                 <div class="description">
                   Returns a new array with the elements all shuffled up.
 
+<code><pre>
+a = [1, 2, 3]
+
+a.shuffle()
+# => [2, 3, 1]
+
+a # => [1, 2, 3]
+</pre></code>
+
                   
                 </div>
 
@@ -2205,7 +2228,7 @@ changes the length of the array.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>A new array that is randomly shuffled.</dd>
                       
                     
@@ -2292,7 +2315,7 @@ provided function.
                         <b>callback</b>
                         
                       </dt>
-                      <dd>thisObject  Function to test for each element.Object to use as
+                      <dd>thisObject  Function to test for each element.Object to use as
 this when executing callback.</dd>
                     
                   </dl>
@@ -2381,7 +2404,7 @@ removed.</dd>
                         <b>element1,</b>
                         
                       </dt>
-                      <dd>..., elementN  The elements to add to the array. If you don't
+                      <dd>..., elementN  The elements to add to the array. If you don't
 specify any elements, splice simply removes elements from the array.</dd>
                     
                   </dl>
@@ -2401,6 +2424,11 @@ specify any elements, splice simply removes elements from the array.</dd>
                 <div class="description">
                   Add all the elements in the array.
 
+<code><pre>
+[1, 2, 3, 4].sum()
+# => 10
+</pre></code>
+
                   
                 </div>
 
@@ -2419,7 +2447,7 @@ specify any elements, splice simply removes elements from the array.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Number.html">Number</a></span> :</dt>
                         <dd>The sum of the elements in the array.</dd>
                       
                     
@@ -2551,7 +2579,7 @@ length of the array.
 
                     
                       
-                        <dt class="heading">Returns :</dt>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>An array containing the elements that are not passed in.</dd>
                       
                     
@@ -2578,14 +2606,14 @@ If length is not given return the element at start, again assuming the array
 is a circle.
 
 <code><pre>
-   [1, 2, 3].wrap(-1)
-=> 3
+[1, 2, 3].wrap(-1)
+# => 3
 
-   [1, 2, 3].wrap(6)
-=> 1
+[1, 2, 3].wrap(6)
+# => 1
 
-   ["l", "o", "o", "p"].wrap(0, 16)
-=> ["l", "o", "o", "p", "l", "o", "o", "p", "l", "o", "o", "p", "l", "o", "o", "p"]
+["l", "o", "o", "p"].wrap(0, 16)
+# => ["l", "o", "o", "p", "l", "o", "o", "p", "l", "o", "o", "p", "l", "o", "o", "p"]
 </pre></code>
 
                   
@@ -2601,15 +2629,13 @@ is a circle.
                         <b>start</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
                         
                       </dt>
-                      <dd>The index to start wrapping at, or the index of the 
-sole element to return if no length is given.</dd>
+                      <dd>The index to start wrapping at, or the index of the sole element to return if no length is given.</dd>
                     
                       <dt>
                         <b>length</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
                         <i>Optional</i>
                       </dt>
-                      <dd>Optional length determines how long result 
-array should be.</dd>
+                      <dd>Optional length determines how long result array should be.</dd>
                     
                   </dl>
                 
@@ -2625,9 +2651,55 @@ array should be.</dd>
 
                     
                       
-                        <dt class="heading">Returns :</dt>
-                        <dd>The element at start mod array.length, or an array of length elements, 
-starting from start and wrapping.</dd>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
+                        <dd>or {Array} The element at start mod array.length, or an array of length elements, starting from start and wrapping.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <div class="fixedFont heading">
+                  <a name="zip"></a>
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>zip</b>()
+                </div>
+
+                <div class="description">
+                  Merges together the values of each of the arrays with the values at the corresponding position.
+
+<code><pre>
+['a', 'b', 'c'].zip([1, 2, 3])
+# => [['a', 1], ['b', 2], ['c', 3]]
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
+                        <dd>Array groupings whose values are arranged by their positions in the original input arrays.</dd>
                       
                     
 

@@ -34,6 +34,8 @@
   
     <li><a href="../symbols/Date.html">Date</a></li>
   
+    <li><a href="../symbols/Drawable.html">Drawable</a></li>
+  
     <li><a href="../symbols/Durable.html">Durable</a></li>
   
     <li><a href="../symbols/Engine.html">Engine</a></li>
@@ -46,6 +48,8 @@
   
     <li><a href="../symbols/Local.html">Local</a></li>
   
+    <li><a href="../symbols/Logging.html">Logging</a></li>
+  
     <li><a href="../symbols/Math.html">Math</a></li>
   
     <li><a href="../symbols/Matrix.html">Matrix</a></li>
@@ -56,6 +60,8 @@
   
     <li><a href="../symbols/Object.html">Object</a></li>
   
+    <li><a href="../symbols/PixieCanvas.html">PixieCanvas</a></li>
+  
     <li><a href="../symbols/Point.html">Point</a></li>
   
     <li><a href="../symbols/PowerCanvas.html">PowerCanvas</a></li>
@@ -63,6 +69,10 @@
     <li><a href="../symbols/Random.html">Random</a></li>
   
     <li><a href="../symbols/RegExp.html">RegExp</a></li>
+  
+    <li><a href="../symbols/ResourceLoader.html">ResourceLoader</a></li>
+  
+    <li><a href="../symbols/Rotatable.html">Rotatable</a></li>
   
     <li><a href="../symbols/Sprite.html">Sprite</a></li>
   
@@ -99,7 +109,7 @@
                     <div class="fixedFont">
                       <b><a href="../symbols/Collision.html#constructor">Collision</a></b>()
                     </div>
-                    <div class="description">Collision holds many useful methods for checking geometric overlap of various objects.</div>
+                    <div class="description">Collision holds many useful class methods for checking geometric overlap of various objects.</div>
                   </td>
                 </tr>
                 <tr>
@@ -129,6 +139,22 @@
                         <div class="fixedFont">Collision.<b><a href="../symbols/Collision.html#.circular">circular</a></b>(a, b)
                         </div>
                         <div class="description">Takes two circle objects and returns true if they collide (overlap), false otherwise.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Collision.<b><a href="../symbols/Collision.html#.rayCircle">rayCircle</a></b>(source, direction, target)
+                        </div>
+                        <div class="description">Detects whether a line intersects a circle.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Collision.<b><a href="../symbols/Collision.html#.rayRectangle">rayRectangle</a></b>(source, direction, target)
+                        </div>
+                        <div class="description">Detects whether a line intersects a rectangle.</div>
                       </td>
                     </tr>
                   
@@ -166,7 +192,7 @@
               </div>
 
               <div class="description">
-                Collision holds many useful methods for checking geometric overlap of various objects.
+                Collision holds many useful class methods for checking geometric overlap of various objects.
                 
               </div>
 
@@ -204,6 +230,29 @@
                   Takes two circle objects and returns true if they collide (overlap), false otherwise.
   Circle objects have x, y, and radius.
 
+  <code><pre>
+  player = GameObject
+    x: 5
+    y: 5
+    radius: 10
+
+  enemy = GameObject
+    x: 10
+    y: 10
+    radius: 10
+
+  farEnemy = GameObject
+    x: 500
+    y: 500
+    radius: 30
+
+  Collision.circular(player, enemy)
+  # => true
+
+  Collision.circular(player, farEnemy)
+  # => false
+  </pre></code>
+
                   
                 </div>
 
@@ -214,20 +263,194 @@
                     <dt class="heading">Parameters:</dt>
                     
                       <dt>
-                        <b>a</b>
+                        <b>a</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         
                       </dt>
-                      <dd></dd>
+                      <dd>The first circle</dd>
                     
                       <dt>
-                        <b>b</b>
+                        <b>b</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         
                       </dt>
-                      <dd></dd>
+                      <dd>The second circle</dd>
                     
                   </dl>
                 
 
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
+                        <dd>true is the circles overlap, false otherwise</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <div class="fixedFont heading">
+                  <a name=".rayCircle"></a>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Collision.</span><b>rayCircle</b>(source, direction, target)
+                </div>
+
+                <div class="description">
+                  Detects whether a line intersects a circle.
+
+  <code><pre>
+  circle = engine.add
+    class: "circle"
+    x: 50
+    y: 50
+    radius: 10
+
+  Collision.rayCircle(Point(0, 0), Point(1, 0), circle)
+  # => true
+  </pre></code>
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>source</b><span class='light fixedFont'> <a href="../symbols/Point.html">Point</a></span> 
+                        
+                      </dt>
+                      <dd>The starting position</dd>
+                    
+                      <dt>
+                        <b>direction</b><span class='light fixedFont'> <a href="../symbols/Point.html">Point</a></span> 
+                        
+                      </dt>
+                      <dd>A vector from the point</dd>
+                    
+                      <dt>
+                        <b>target</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
+                        
+                      </dt>
+                      <dd>The circle</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
+                        <dd>true if the line intersects the circle, false otherwise</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <div class="fixedFont heading">
+                  <a name=".rayRectangle"></a>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Collision.</span><b>rayRectangle</b>(source, direction, target)
+                </div>
+
+                <div class="description">
+                  Detects whether a line intersects a rectangle.
+
+  <code><pre>
+  rect = engine.add
+    class: "circle"
+    x: 50
+    y: 50
+    width: 20
+    height: 20
+
+  Collision.rayRectangle(Point(0, 0), Point(1, 0), rect)
+  # => true
+  </pre></code>
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>source</b><span class='light fixedFont'> <a href="../symbols/Point.html">Point</a></span> 
+                        
+                      </dt>
+                      <dd>The starting position</dd>
+                    
+                      <dt>
+                        <b>direction</b><span class='light fixedFont'> <a href="../symbols/Point.html">Point</a></span> 
+                        
+                      </dt>
+                      <dd>A vector from the point</dd>
+                    
+                      <dt>
+                        <b>target</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
+                        
+                      </dt>
+                      <dd>The rectangle</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
+                        <dd>true if the line intersects the rectangle, false otherwise</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
                 
               
                 <div class="fixedFont heading">
@@ -243,6 +466,26 @@
                   Takes two bounds objects and returns true if they collide (overlap), false otherwise.
     Bounds objects have x, y, width and height properties.
 
+    <code><pre>
+    player = GameObject
+      x: 0
+      y: 0
+      width: 10
+      height: 10
+
+    enemy = GameObject
+      x: 5
+      y: 5
+      width: 10
+      height: 10
+
+    Collision.rectangular(player, enemy)
+    # => true
+
+    Collision.rectangular(player, {x: 50, y: 40, width: 30, height: 30})
+    # => false
+    </pre></code>
+
                   
                 </div>
 
@@ -253,20 +496,41 @@
                     <dt class="heading">Parameters:</dt>
                     
                       <dt>
-                        <b>a</b>
+                        <b>a</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         
                       </dt>
-                      <dd></dd>
+                      <dd>The first rectangle</dd>
                     
                       <dt>
-                        <b>b</b>
+                        <b>b</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
                         
                       </dt>
-                      <dd></dd>
+                      <dd>The second rectangle</dd>
                     
                   </dl>
                 
 
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
+                        <dd>true if the rectangles overlap, false otherwise</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
                 
               
             </div>
