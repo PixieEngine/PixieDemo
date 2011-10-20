@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="generator" content="JsDoc Toolkit" />
     
-    <title>JsDoc Reference - Movable</title>
+    <title>JsDoc Reference - justPressed</title>
     <link href="/stylesheets/docs.css" type="text/css" rel="stylesheet" media="all" />
   </head>
 
@@ -100,7 +100,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          <span>Movable</span>
+          <span>justPressed</span>
         </h1>
 
         <p class="description summary">
@@ -113,16 +113,15 @@
 
         
           <div class="props">
-            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Movable.">
-              <caption>Module Summary</caption>
+            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class justPressed.">
+              <caption>Class Summary</caption>
               <tbody>
                 <tr>
                   <td class="nameDescription" >
                     <div class="fixedFont">
-                      <b><a href="../symbols/Movable.html#constructor">Movable</a></b>(I, self)
+                      <b><a href="../symbols/justPressed.html#constructor">justPressed</a></b>()
                     </div>
-                    <div class="description">The Movable module automatically updates the position and velocity of
-GameObjects based on the velocity and acceleration.</div>
+                    <div class="description">The global justPressed property lets your query the status of keys.</div>
                   </td>
                 </tr>
                 <tr>
@@ -154,58 +153,31 @@ GameObjects based on the velocity and acceleration.</div>
               <a name="constructor"></a>
 
               <div class="fixedFont">
-                <b>Movable</b>(I, self)
+                <b>justPressed</b>()
               </div>
 
               <div class="description">
-                The Movable module automatically updates the position and velocity of
-GameObjects based on the velocity and acceleration. It does not check
-collisions so is probably best suited to particle effect like things.
+                The global justPressed property lets your query the status of keys. However, 
+  unlike keydown it will only trigger once for each time the key is pressed.
 
-<code><pre>
-player = GameObject
-  x: 0
-  y: 0
-  velocity: Point(0, 0)
-  acceleration: Point(1, 0)
-  maxSpeed: 2
+  <code><pre>
+  if justPressed.left
+    moveLeft()
 
-player.include(Movable)
+  if justPressed.a or justPressed.space
+    attack()
 
-# => `velocity is {x: 0, y: 0} and position is {x: 0, y: 0}`
+  if justPressed.return
+    confirm()
 
-player.update()
-# => `velocity is {x: 1, y: 0} and position is {x: 1, y: 0}` 
-
-player.update()
-# => `velocity is {x: 2, y: 0} and position is {x: 3, y: 0}`   
-
-# we've hit our maxSpeed so our velocity won't increase
-player.update()
-# => `velocity is {x: 2, y: 0} and position is {x: 5, y: 0}`
-</pre></code>
+  if justPressed.esc
+    cancel()
+  </pre></code>
                 
               </div>
 
               
 
-              
-                <dl class="detailList params">
-                  <dt class="heading">Parameters:</dt>
-                  
-                    <dt>
-                      <b>I</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
-                      
-                    </dt>
-                    <dd>Instance variables</dd>
-                  
-                    <dt>
-                      <b>self</b><span class='light fixedFont'> <a href="../symbols/Core.html">Core</a></span> 
-                      
-                    </dt>
-                    <dd>Reference to including object</dd>
-                  
-                </dl>
               
 
               

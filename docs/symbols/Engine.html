@@ -30,6 +30,8 @@
   
     <li><a href="../symbols/Collision.html">Collision</a></li>
   
+    <li><a href="../symbols/Color.html">Color</a></li>
+  
     <li><a href="../symbols/Core.html">Core</a></li>
   
     <li><a href="../symbols/Date.html">Date</a></li>
@@ -40,9 +42,13 @@
   
     <li><a href="../symbols/Engine.html">Engine</a></li>
   
+    <li><a href="../symbols/Framerate.html">Framerate</a></li>
+  
     <li><a href="../symbols/Function.html">Function</a></li>
   
     <li><a href="../symbols/GameObject.html">GameObject</a></li>
+  
+    <li><a href="../symbols/justPressed.html">justPressed</a></li>
   
     <li><a href="../symbols/keydown.html">keydown</a></li>
   
@@ -55,6 +61,8 @@
     <li><a href="../symbols/Matrix.html">Matrix</a></li>
   
     <li><a href="../symbols/Movable.html">Movable</a></li>
+  
+    <li><a href="../symbols/Music.html">Music</a></li>
   
     <li><a href="../symbols/Number.html">Number</a></li>
   
@@ -70,9 +78,13 @@
   
     <li><a href="../symbols/RegExp.html">RegExp</a></li>
   
+    <li><a href="../symbols/requestAnimationFrame.html">requestAnimationFrame</a></li>
+  
     <li><a href="../symbols/ResourceLoader.html">ResourceLoader</a></li>
   
     <li><a href="../symbols/Rotatable.html">Rotatable</a></li>
+  
+    <li><a href="../symbols/Sound.html">Sound</a></li>
   
     <li><a href="../symbols/Sprite.html">Sprite</a></li>
   
@@ -144,12 +156,36 @@
                     <tr>
                       <td class="nameDescription">
                         <div class="fixedFont">
+                        Engine.<b><a href="../symbols/Engine.html#.Delay">Delay</a></b>
+                          <span class='lighter'>
+                          <em>static</em>
+                          </span>
+                        </div>
+                        <div class="description">The <code>Delay</code> module provides methods to trigger events after a number of steps have passed.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont">
                         Engine.<b><a href="../symbols/Engine.html#.Developer">Developer</a></b>
                           <span class='lighter'>
                           <em>static</em>
                           </span>
                         </div>
                         <div class="description">The <code>Developer</code> module provides a debug overlay and methods for debugging and live coding.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont">
+                        Engine.<b><a href="../symbols/Engine.html#.FPSCounter">FPSCounter</a></b>
+                          <span class='lighter'>
+                          <em>static</em>
+                          </span>
+                        </div>
+                        <div class="description">The <code>FPSCounter</code> module tracks and displays the framerate.</div>
                       </td>
                     </tr>
                   
@@ -266,6 +302,14 @@
                         <div class="fixedFont"><b><a href="../symbols/Engine.html#collidesWith">collidesWith</a></b>(bounds, sourceObject)
                         </div>
                         <div class="description">Detects collisions between a bounds and the game objects.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont"><b><a href="../symbols/Engine.html#delay">delay</a></b>(steps, callback)
+                        </div>
+                        <div class="description">Execute a callback after a number of steps have passed.</div>
                       </td>
                     </tr>
                   
@@ -533,6 +577,26 @@
                 
               
                 <div class="fixedFont heading">
+                  <a name=".Delay"></a>
+                  
+
+                  <span class="light">Engine.</span><b>Delay</b>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+                </div>
+
+                <div class="description">
+                  The <code>Delay</code> module provides methods to trigger events after a number of steps have passed.
+
+                  
+                </div>
+
+                
+
+                
+              
+                <div class="fixedFont heading">
                   <a name=".Developer"></a>
                   
 
@@ -544,6 +608,26 @@
 
                 <div class="description">
                   The <code>Developer</code> module provides a debug overlay and methods for debugging and live coding.
+
+                  
+                </div>
+
+                
+
+                
+              
+                <div class="fixedFont heading">
+                  <a name=".FPSCounter"></a>
+                  
+
+                  <span class="light">Engine.</span><b>FPSCounter</b>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+                </div>
+
+                <div class="description">
+                  The <code>FPSCounter</code> module tracks and displays the framerate.
 
                   
                 </div>
@@ -862,6 +946,70 @@ shadows.
                       
                         <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Array.html">Array</a></span> :</dt>
                         <dd>An array of objects that collide with the given bounds.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <div class="fixedFont heading">
+                  <a name="delay"></a>
+                  <span class='lighter'>
+                  
+                  </span>
+
+                  <b>delay</b>(steps, callback)
+                </div>
+
+                <div class="description">
+                  Execute a callback after a number of steps have passed.
+
+    <code><pre>
+    engine.delay 5, ->
+
+    </pre></code>
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>steps</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
+                        
+                      </dt>
+                      <dd>The number of steps to wait before executing the callback</dd>
+                    
+                      <dt>
+                        <b>callback</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
+                        
+                      </dt>
+                      <dd>The callback to be executed.</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Engine.html">Engine</a></span> :</dt>
+                        <dd>self</dd>
                       
                     
 

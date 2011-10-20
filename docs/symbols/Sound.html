@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="generator" content="JsDoc Toolkit" />
     
-    <title>JsDoc Reference - Local</title>
+    <title>JsDoc Reference - Sound</title>
     <link href="/stylesheets/docs.css" type="text/css" rel="stylesheet" media="all" />
   </head>
 
@@ -100,7 +100,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          <span>Local</span>
+          <span>Sound</span>
         </h1>
 
         <p class="description summary">
@@ -113,15 +113,15 @@
 
         
           <div class="props">
-            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Local.">
+            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Sound.">
               <caption>Class Summary</caption>
               <tbody>
                 <tr>
                   <td class="nameDescription" >
                     <div class="fixedFont">
-                      <b><a href="../symbols/Local.html#constructor">Local</a></b>()
+                      <b><a href="../symbols/Sound.html#constructor">Sound</a></b>()
                     </div>
-                    <div class="description">A wrapper on the Local Storage API</div>
+                    <div class="description">A simple interface for playing sounds in games.</div>
                   </td>
                 </tr>
                 <tr>
@@ -141,32 +141,34 @@
           
           
             <div class="props">
-              <table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Local.">
+              <table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Sound.">
                 <caption>Method Summary</caption>
 
                 <tbody>
                   
                     <tr>
                       <td class="nameDescription">
-                        <div class="fixedFont">Local.<b><a href="../symbols/Local.html#.get">get</a></b>(key)
+                        <div class="fixedFont">Sound.<b><a href="../symbols/Sound.html#.play">play</a></b>(id, maxChannels)
                         </div>
-                        <div class="description">Retrieve an object from local storage.</div>
+                        <div class="description">Play a sound from your sounds 
+    directory with the name of `id`.</div>
                       </td>
                     </tr>
                   
                     <tr>
                       <td class="nameDescription">
-                        <div class="fixedFont">Local.<b><a href="../symbols/Local.html#.new">new</a></b>(prefix)
+                        <div class="fixedFont">Sound.<b><a href="../symbols/Sound.html#.playFromUrl">playFromUrl</a></b>(url)
                         </div>
-                        <div class="description">Access an instance of Local with a specified prefix.</div>
+                        <div class="description">Play a sound from the given
+    url with the name of `id`.</div>
                       </td>
                     </tr>
                   
                     <tr>
                       <td class="nameDescription">
-                        <div class="fixedFont">Local.<b><a href="../symbols/Local.html#.set">set</a></b>(key, value)
+                        <div class="fixedFont">Sound.<b><a href="../symbols/Sound.html#.stop">stop</a></b>(id)
                         </div>
-                        <div class="description">Store an object in local storage.</div>
+                        <div class="description">Stop a sound while it is playing.</div>
                       </td>
                     </tr>
                   
@@ -192,11 +194,11 @@
               <a name="constructor"></a>
 
               <div class="fixedFont">
-                <b>Local</b>()
+                <b>Sound</b>()
               </div>
 
               <div class="description">
-                A wrapper on the Local Storage API
+                A simple interface for playing sounds in games.
                 
               </div>
 
@@ -222,27 +224,22 @@
             <div class="innerProps">
               
                 <div class="fixedFont heading">
-                  <a name=".get"></a>
+                  <a name=".play"></a>
                   <span class='lighter'>
                   <em>static</em>
                   </span>
 
-                  <span class="light">Local.</span><b>get</b>(key)
+                  <span class="light">Sound.</span><b>play</b>(id, maxChannels)
                 </div>
 
                 <div class="description">
-                  Retrieve an object from local storage.
+                  Play a sound from your sounds 
+    directory with the name of `id`.
 
-  <code><pre>
-  Local.get('name')
-  # => 'Matt'
-
-  Local.get('age')
-  # => 26
-
-  Local.get('person')
-  # => { age: 26, name: 'Matt' }
-  </pre></code>
+    <code><pre>
+    # plays a sound called explode from your sounds directory
+    Sound.play('explode')
+    </pre></code>
 
                   
                 </div>
@@ -254,10 +251,54 @@
                     <dt class="heading">Parameters:</dt>
                     
                       <dt>
-                        <b>key</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
+                        <b>id</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
                         
                       </dt>
-                      <dd>string that identifies the stored object</dd>
+                      <dd>id or name of the sound file to play</dd>
+                    
+                      <dt>
+                        <b>maxChannels</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
+                        
+                      </dt>
+                      <dd>max number of sounds able to be played simultaneously</dd>
+                    
+                  </dl>
+                
+
+                
+              
+                <div class="fixedFont heading">
+                  <a name=".playFromUrl"></a>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Sound.</span><b>playFromUrl</b>(url)
+                </div>
+
+                <div class="description">
+                  Play a sound from the given
+    url with the name of `id`.
+
+    <code><pre>
+    # plays the sound at the specified url
+    Sound.playFromUrl('http://YourSoundWebsite.com/explode.wav')
+    </pre></code>
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>url</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
+                        
+                      </dt>
+                      <dd>location of sound file to play</dd>
                     
                   </dl>
                 
@@ -273,8 +314,8 @@
 
                     
                       
-                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
-                        <dd>The object that was stored or undefined if no object was stored.</dd>
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Sound.html">Sound</a></span> :</dt>
+                        <dd>this sound object</dd>
                       
                     
 
@@ -286,16 +327,22 @@
                 
               
                 <div class="fixedFont heading">
-                  <a name=".new"></a>
+                  <a name=".stop"></a>
                   <span class='lighter'>
                   <em>static</em>
                   </span>
 
-                  <span class="light">Local.</span><b>new</b>(prefix)
+                  <span class="light">Sound.</span><b>stop</b>(id)
                 </div>
 
                 <div class="description">
-                  Access an instance of Local with a specified prefix.
+                  Stop a sound while it is playing.
+
+    <code><pre>
+    # stops the sound 'explode' from 
+    # playing if it is currently playing 
+    Sound.stop('explode')
+    </pre></code>
 
                   
                 </div>
@@ -307,105 +354,14 @@
                     <dt class="heading">Parameters:</dt>
                     
                       <dt>
-                        <b>prefix</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
+                        <b>id</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
                         
                       </dt>
-                      <dd></dd>
+                      <dd>id or name of sound to stop playing.</dd>
                     
                   </dl>
                 
 
-                
-                  <dl class="detailList nomargin">
-
-                    
-
-                    
-
-                    
-
-                    
-                      
-                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Local.html">Local</a></span> :</dt>
-                        <dd>An interface to local storage with the given prefix applied.</dd>
-                      
-                    
-
-                    
-
-                    
-
-                  </dl>
-                
-              
-                <div class="fixedFont heading">
-                  <a name=".set"></a>
-                  <span class='lighter'>
-                  <em>static</em>
-                  </span>
-
-                  <span class="light">Local.</span><b>set</b>(key, value)
-                </div>
-
-                <div class="description">
-                  Store an object in local storage.
-
-  <code><pre>
-  # you can store strings
-  Local.set('name', 'Matt')
-
-  # and numbers
-  Local.set('age', 26)
-
-  # and even objects
-  Local.set('person', {name: 'Matt', age: 26})
-  </pre></code>
-
-                  
-                </div>
-
-                
-
-                
-                  <dl class="detailList params">
-                    <dt class="heading">Parameters:</dt>
-                    
-                      <dt>
-                        <b>key</b><span class='light fixedFont'> <a href="../symbols/String.html">String</a></span> 
-                        
-                      </dt>
-                      <dd>string used to identify the object you are storing</dd>
-                    
-                      <dt>
-                        <b>value</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
-                        
-                      </dt>
-                      <dd>value of the object you are storing</dd>
-                    
-                  </dl>
-                
-
-                
-                  <dl class="detailList nomargin">
-
-                    
-
-                    
-
-                    
-
-                    
-                      
-                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Object.html">Object</a></span> :</dt>
-                        <dd>value</dd>
-                      
-                    
-
-                    
-
-                    
-
-                  </dl>
                 
               
             </div>
