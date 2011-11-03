@@ -9,6 +9,7 @@ App = {
     "sounds": "sounds",
     "source": "src",
     "test": "test",
+    "test_lib": "test_lib",
     "tilemaps": "tilemaps"
   },
   "width": 480,
@@ -497,6 +498,17 @@ Array.prototype.wrap = function(start, length) {
 Partitions the elements into two groups: those for which the iterator returns
 true, and those for which it returns false.
 
+<code><pre>
+[evens, odds] = [1, 2, 3, 4].partition (n) ->
+  n.even()
+
+evens
+# => [2, 4]
+
+odds
+# => [1, 3]
+</pre></code>
+
 @name partition
 @methodOf Array#
 @param {Function} iterator
@@ -530,6 +542,11 @@ Array.prototype.select = function(iterator, context) {
 };
 /**
 Return the group of elements that are not in the passed in set.
+
+<code><pre>
+[1, 2, 3, 4].without ([2, 3])
+# => [1, 4]
+</pre></code>
 
 @name without
 @methodOf Array#
@@ -1146,6 +1163,16 @@ Gives you some convenience methods for outputting data while developing.
       return this.concat(Matrix.scale(sx, sy, aboutPoint));
     },
     /**
+    Returns a string representation of this matrix.
+
+    @name toString
+    @methodOf Matrix#
+    @returns {String} A string reperesentation of this matrix.
+    */
+    toString: function() {
+      return "Matrix(" + this.a + ", " + this.b + ", " + this.c + ", " + this.d + ", " + this.tx + ", " + this.ty + ")";
+    },
+    /**
     Returns the result of applying the geometric transformation represented by the 
     Matrix object to the specified point.
     @name transformPoint
@@ -1669,7 +1696,29 @@ Object.isArray({key: "value"})
 @returns {Boolean} A boolean expressing whether the object is an instance of Array 
 */var __slice = Array.prototype.slice;
 Object.isArray = function(object) {
-  return Object.prototype.toString.call(object) === '[object Array]';
+  return Object.prototype.toString.call(object) === "[object Array]";
+};
+/**
+Checks whether an object is a string.
+
+<code><pre>
+Object.isString("a string")
+# => true
+
+Object.isString([1, 2, 4])
+# => false
+
+Object.isString({key: "value"})
+# => false
+</pre></code>
+
+@name isString
+@methodOf Object
+@param {Object} object The object to check for string-ness.
+@returns {Boolean} A boolean expressing whether the object is an instance of String 
+*/
+Object.isString = function(object) {
+  return Object.prototype.toString.call(object) === "[object String]";
 };
 /**
 Merges properties from objects into target without overiding.
@@ -2257,6 +2306,14 @@ Object.isObject = function(object) {
     */
     distance: function(other) {
       return Point.distance(this, other);
+    },
+    /**
+    @name toString
+    @methodOf Point#
+    @returns {String} A string representation of this point.
+    */
+    toString: function() {
+      return "Point(" + this.x + ", " + this.y + ")";
     }
     /**
     Compute the Euclidean distance between two points.
@@ -2277,7 +2334,37 @@ Object.isObject = function(object) {
     */
   };
   Point.distance = function(p1, p2) {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+    return Math.sqrt(Point.distanceSquared(p1, p2));
+  };
+  /**
+  <code><pre>
+  pointA = Point(2, 3)
+  pointB = Point(9, 2)
+
+  Point.distanceSquared(pointA, pointB)
+  # => 50
+  </pre></code>
+
+  @name distanceSquared
+  @fieldOf Point
+  @param {Point} p1
+  @param {Point} p2
+  @returns {Number} The square of the Euclidean distance between two points.
+  */
+  Point.distanceSquared = function(p1, p2) {
+    return Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2);
+  };
+  /**
+  @name interpolate
+  @fieldOf Point
+
+  @param {Point} p1
+  @param {Point} p2
+  @param {Number} t
+  @returns {Point} A point along the path from p1 to p2
+  */
+  Point.interpolate = function(p1, p2, t) {
+    return p2.subtract(p1).scale(t).add(p1);
   };
   /**
   Construct a point on the unit circle for the given angle.
@@ -3978,7 +4065,9 @@ Bounded module
 @param {Core} self Reference to including object
 */var Bounded;
 Bounded = function(I, self) {
-  I || (I = {});
+  if (I == null) {
+    I = {};
+  }
   Object.reverseMerge(I, {
     x: 0,
     y: 0,
@@ -4006,8 +4095,18 @@ Bounded = function(I, self) {
     @methodOf Bounded#
     @returns {Point} The position of this object
     */
-    position: function() {
-      return Point(I.x, I.y);
+    position: function(newPosition) {
+      if (newPosition != null) {
+        I.x = newPosition.x;
+        return I.y = newPosition.y;
+      } else {
+        return Point(I.x, I.y);
+      }
+    },
+    changePosition: function(delta) {
+      I.x += delta.x;
+      I.y += delta.y;
+      return self;
     },
     /**
     Does a check to see if this object is overlapping
@@ -4158,8 +4257,8 @@ Bounded = function(I, self) {
     @methodOf Bounded#
     @returns {Point} The middle of the calling object
     */
-    center: function() {
-      return self.position();
+    center: function(newCenter) {
+      return self.position(newCenter);
     },
     /**
     Return the circular bounds of the object. The circle is
@@ -4191,6 +4290,131 @@ Bounded = function(I, self) {
   };
 };;
 (function() {
+  /**
+  Use this to handle generic rectangular collisions among game object a-la Flixel.
+
+  @name Collidable
+  @module
+  @constructor
+  */  var ANY, CEILING, Collidable, DOWN, FLOOR, LEFT, NONE, RIGHT, UP, WALL, _ref, _ref2;
+  Collidable = function(I, self) {
+    Object.reverseMerge(I, {
+      allowCollisions: ANY,
+      immovable: false,
+      touching: NONE,
+      velocity: Point(0, 0),
+      mass: 1,
+      elasticity: 0
+    });
+    self.attrAccessor("immovable", "velocity", "mass", "elasticity");
+    return {
+      solid: function(newSolid) {
+        if (newSolid != null) {
+          if (newSolid) {
+            return I.allowCollisions = ANY;
+          } else {
+            return I.allowCollisions = NONE;
+          }
+        } else {
+          return I.allowCollisions;
+        }
+      }
+    };
+  };
+  (typeof exports !== "undefined" && exports !== null ? exports : this)["Collidable"] = Collidable;
+  /**
+
+  */
+  _ref = Object.extend(Collidable, {
+    NONE: 0x0000,
+    LEFT: 0x0001,
+    RIGHT: 0x0010,
+    UP: 0x0100,
+    DOWN: 0x1000
+  }), NONE = _ref.NONE, LEFT = _ref.LEFT, RIGHT = _ref.RIGHT, UP = _ref.UP, DOWN = _ref.DOWN;
+  _ref2 = Object.extend(Collidable, {
+    FLOOR: DOWN,
+    WALL: LEFT | RIGHT,
+    CEILING: UP,
+    ANY: LEFT | RIGHT | UP | DOWN
+  }), ANY = _ref2.ANY, FLOOR = _ref2.FLOOR, WALL = _ref2.WALL, CEILING = _ref2.CEILING;
+  return Object.extend(Collidable, {
+    separate: function(a, b) {
+      var aBounds, aMass, aVelocity, average, bBounds, bMass, bVelocity, deltaVelocity, normal, overlap, pushA, pushB, relativeVelocity, totalMass;
+      if (a.immovable() && b.immovable()) {
+        return;
+      }
+      aBounds = a.bounds();
+      bBounds = b.bounds();
+      aVelocity = a.velocity();
+      bVelocity = b.velocity();
+      deltaVelocity = aVelocity.subtract(bVelocity);
+      overlap = Point(0, 0);
+      if (Collision.rectangular(aBounds, bBounds)) {
+        if (deltaVelocity.x > 0) {
+          overlap.x = aBounds.x + aBounds.width - bBounds.x;
+          if (!(a.I.allowCollisions & RIGHT) || !(b.I.allowCollisions & LEFT)) {
+            overlap.x = 0;
+          } else {
+            a.I.touching |= RIGHT;
+            b.I.touching |= LEFT;
+          }
+        } else if (deltaVelocity.x < 0) {
+          overlap.x = aBounds.x - bBounds.width - bBounds.x;
+          if (!(a.I.allowCollisions & LEFT) || !(b.I.allowCollisions & RIGHT)) {
+            overlap.x = 0;
+          } else {
+            a.I.touching |= LEFT;
+            b.I.touching |= RIGHT;
+          }
+        }
+        if (deltaVelocity.y > 0) {
+          overlap.y = aBounds.y + aBounds.height - bBounds.y;
+          if (!(a.I.allowCollisions & DOWN) || !(b.I.allowCollisions & UP)) {
+            overlap.y = 0;
+          } else {
+            a.I.touching |= DOWN;
+            b.I.touching |= UP;
+          }
+        } else if (deltaVelocity.y < 0) {
+          overlap.y = aBounds.y - bBounds.height - bBounds.y;
+          if (!(a.I.allowCollisions & UP) || !(b.I.allowCollisions & DOWN)) {
+            overlap.y = 0;
+          } else {
+            a.I.touching |= UP;
+            b.I.touching |= DOWN;
+          }
+        }
+      }
+      if (!overlap.equal(Point.ZERO)) {
+        if (!a.immovable() && !b.immovable()) {
+          a.changePosition(overlap.scale(-0.5));
+          b.changePosition(overlap.scale(+0.5));
+          relativeVelocity = aVelocity.subtract(bVelocity);
+          aMass = a.mass();
+          bMass = b.mass();
+          totalMass = bMass + aMass;
+          normal = overlap.norm();
+          pushA = normal.scale(-2 * (relativeVelocity.dot(normal) * (bMass / totalMass)));
+          pushB = normal.scale(+2 * (relativeVelocity.dot(normal) * (aMass / totalMass)));
+          average = pushA.add(pushB).scale(0.5);
+          pushA.subtract$(average).scale(a.elasticity());
+          pushB.subtract$(average).scale(b.elasticity());
+          a.I.velocity = average.add(pushA);
+          b.I.velocity = average.add(pushB);
+        } else if (!a.immovable()) {
+          a.changePosition(overlap.scale(-1));
+          a.I.velocity = bVelocity.subtract(aVelocity.scale(a.elasticity()));
+        } else if (!b.immovable()) {
+          b.changePosition(overlap);
+          b.I.velocity = aVelocity.subtract(bVelocity.scale(b.elasticity()));
+        }
+        return true;
+      }
+    }
+  });
+})();;
+(function() {
   var Collision, collides;
   collides = function(a, b) {
     return Collision.rectangular(a.bounds(), b.bounds());
@@ -4206,19 +4430,22 @@ Bounded = function(I, self) {
       Collision holds many useful class methods for checking geometric overlap of various objects.
 
       <code><pre>
-      player = GameObject
+      player = engine.add
+        class: "Player"
         x: 0
         y: 0
         width: 10
         height: 10
 
-      enemy = GameObject
+      enemy = engine.add
+        class: "Enemy"
         x: 5
         y: 5
         width: 10
         height: 10
 
-      enemy2 = GameObject
+      enemy2 = engine.add
+        class: "Enemy"
         x: -5
         y: -5
         width: 10
@@ -4229,21 +4456,37 @@ Bounded = function(I, self) {
 
       Collision.collide(player, [enemy, enemy2], (p, e) -> ...)
       # => callback is called twice
+
+      Collision.collide("Player", "Enemy", (p, e) -> ...)
+      # => callback is also called twice
       </pre></code>
 
       @name collide
       @methodOf Collision
-      @param {Object|Array} groupA An object or set of objects to check collisions with
-      @param {Object|Array} groupB An objcet or set of objects to check collisions with
-      @param {callback} The callback to call when an object of group a collides with an 
-      object of group b. `(a, b) ->`
+      @param {Object|Array|String} groupA An object or set of objects to check collisions with
+      @param {Object|Array|String} groupB An objcet or set of objects to check collisions with
+      @param {Function} callback The callback to call when an object of groupA collides
+      with an object of groupB: (a, b) ->
+      @param {Function} [detectionMethod] An optional detection method to determine when two 
+      objects are colliding.
       */
-    collide: function(groupA, groupB, callback) {
-      groupA = [].concat(groupA);
-      groupB = [].concat(groupB);
+    collide: function(groupA, groupB, callback, detectionMethod) {
+      if (detectionMethod == null) {
+        detectionMethod = collides;
+      }
+      if (Object.isString(groupA)) {
+        groupA = engine.find(groupA);
+      } else {
+        groupA = [].concat(groupA);
+      }
+      if (Object.isString(groupB)) {
+        groupB = engine.find(groupB);
+      } else {
+        groupB = [].concat(groupB);
+      }
       return groupA.each(function(a) {
         return groupB.each(function(b) {
-          if (collides(a, b)) {
+          if (detectionMethod(a, b)) {
             return callback(a, b);
           }
         });
@@ -5771,6 +6014,24 @@ player.bind "draw", (canvas) ->
 @methodOf Drawable#
 @event
 @param {PowerCanvas} canvas A reference to the canvas to draw on.
+*/
+/**
+Triggered before the object should be drawn. A canvas is passed as
+the first argument. This does not apply the current transform.
+
+@name beforeTransform
+@methodOf Drawable#
+@event
+@param {PowerCanvas} canvas A reference to the canvas to draw on.
+*/
+/**
+Triggered after the object should be drawn. A canvas is passed as
+the first argument. This applies the current transform.
+
+@name afterTransform
+@methodOf Drawable#
+@event
+@param {PowerCanvas} canvas A reference to the canvas to draw on.
 */var Drawable;
 Drawable = function(I, self) {
   var _ref;
@@ -5794,24 +6055,25 @@ Drawable = function(I, self) {
     });
   }
   self.bind('draw', function(canvas) {
-    if (I.sprite) {
-      if (I.sprite.draw != null) {
-        return I.sprite.draw(canvas, 0, 0);
+    var sprite;
+    if (sprite = I.sprite) {
+      if (sprite.draw != null) {
+        return sprite.draw(canvas, -sprite.width / 2, -sprite.height / 2);
       } else {
         return typeof warn === "function" ? warn("Sprite has no draw method!") : void 0;
       }
     } else {
       if (I.radius != null) {
         return canvas.drawCircle({
-          x: I.width / 2,
-          y: I.height / 2,
+          x: 0,
+          y: 0,
           radius: I.radius,
           color: I.color
         });
       } else {
         return canvas.drawRect({
-          x: 0,
-          y: 0,
+          x: -I.width / 2,
+          y: -I.height / 2,
           width: I.width,
           height: I.height,
           color: I.color
@@ -5856,7 +6118,6 @@ Drawable = function(I, self) {
       if (I.vflip) {
         transform = transform.concat(Matrix.VERTICAL_FLIP);
       }
-      transform = transform.concat(Matrix.translation(-I.width / 2, -I.height / 2));
       if (I.spriteOffset) {
         transform = transform.concat(Matrix.translation(I.spriteOffset.x, I.spriteOffset.y));
       }
@@ -6186,16 +6447,17 @@ Emitterable = function(I, self) {
       @returns {GameObject}
       */
       add: function(entityData) {
-        var obj;
+        var object;
         self.trigger("beforeAdd", entityData);
-        obj = GameObject.construct(entityData);
-        self.trigger("afterAdd", obj);
+        object = GameObject.construct(entityData);
+        object.create();
+        self.trigger("afterAdd", object);
         if (running && !I.paused) {
-          queuedObjects.push(obj);
+          queuedObjects.push(object);
         } else {
-          I.objects.push(obj);
+          I.objects.push(object);
         }
-        return obj;
+        return object;
       },
       objectAt: function(x, y) {
         var bounds, targetObject;
@@ -6275,7 +6537,7 @@ Emitterable = function(I, self) {
         return I.paused = false;
       },
       /**
-      Pause the simulation.
+      Toggle the paused state of the simulation.
 
       <code><pre>
       engine.pause()
@@ -6283,9 +6545,14 @@ Emitterable = function(I, self) {
 
       @methodOf Engine#
       @name pause
+      @param {Boolean} [setTo] Force to pause by passing true or unpause by passing false.
       */
-      pause: function() {
-        return I.paused = true;
+      pause: function(setTo) {
+        if (setTo != null) {
+          return I.paused = setTo;
+        } else {
+          return I.paused = !I.paused;
+        }
       },
       /**
       Query the engine to see if it is paused.
@@ -6472,7 +6739,8 @@ The <code>Delay</code> module provides methods to trigger events after a number 
 
     <code><pre>
     engine.delay 5, ->
-
+      engine.add
+        class: "Ghost"
     </pre></code>
 
     @name delay
@@ -6508,7 +6776,7 @@ The <code>SaveState</code> module provides methods to save and restore the curre
     Save the current game state and returns a JSON object representing that state.
 
     <code><pre>
-    engine.bind 'step', ->
+    engine.bind 'update', ->
       if justPressed.s
         engine.saveState()
     </pre></code>
@@ -6526,7 +6794,7 @@ The <code>SaveState</code> module provides methods to save and restore the curre
     Loads the game state passed in, or the last saved state, if any.
 
     <code><pre>
-    engine.bind 'step', ->
+    engine.bind 'update', ->
       if justPressed.l
         # loads the last saved state
         engine.loadState()
@@ -6859,6 +7127,18 @@ GameObject = function(I) {
       return I.active;
     },
     /**
+    Triggers the create event if the object has not already been created.
+
+    @name create
+    @methodOf GameObject#
+    */
+    create: function() {
+      if (!I.created) {
+        self.trigger('create');
+      }
+      return I.created = true;
+    },
+    /**
     Destroys the object and triggers the destroyed event.
 
     @name destroy
@@ -6890,10 +7170,6 @@ GameObject = function(I) {
       }
     }
   });
-  if (!I.created) {
-    self.trigger('create');
-  }
-  I.created = true;
   return self;
 };
 /**
@@ -7222,6 +7498,12 @@ $(document).bind("keydown", function(event) {
     return event.preventDefault();
   }
 });;
+/**
+This error handler captures any runtime errors and reports them to the IDE
+if present.
+*/window.onerror = function(message) {
+  return typeof parent.displayRuntimeError === "function" ? parent.displayRuntimeError(message) : void 0;
+};;
 var Joysticks;
 var __slice = Array.prototype.slice;
 Joysticks = (function() {
@@ -7420,6 +7702,7 @@ Joysticks = (function() {
       return controllers[i] || (controllers[i] = Controller(i));
     },
     init: function() {
+      var periodicCheck, promptElement;
       if (!plugin) {
         plugin = document.createElement("object");
         plugin.type = type;
@@ -7428,7 +7711,15 @@ Joysticks = (function() {
         $("body").append(plugin);
         plugin.maxAxes = 6;
         if (!plugin.status) {
-          return displayInstallPrompt("Your browser does not yet handle joysticks, please click here to install the Boomstick plugin!", "https://github.com/STRd6/Boomstick/wiki");
+          promptElement = displayInstallPrompt("Your browser does not yet handle joysticks, please click here to install the Boomstick plugin!", "https://github.com/STRd6/Boomstick/wiki");
+          periodicCheck = function() {
+            if (plugin.status) {
+              return promptElement.remove();
+            } else {
+              return setTimeout(periodicCheck, 500);
+            }
+          };
+          return periodicCheck();
         }
       }
     },
@@ -9402,6 +9693,13 @@ Animated = function(I, self) {
 /**
 The <code>FPSCounter</code> module tracks and displays the framerate.
 
+<code><pre>
+window.engine = Engine
+  ...
+  includedModules: ["FPSCounter"]
+  FPSColor: "#080"
+</pre></code>
+
 @name FPSCounter
 @fieldOf Engine
 @module
@@ -9411,16 +9709,20 @@ The <code>FPSCounter</code> module tracks and displays the framerate.
 */Engine.FPSCounter = function(I, self) {
   var framerate;
   Object.reverseMerge(I, {
-    showFPS: false
+    showFPS: true,
+    FPSColor: "#FFF"
   });
   framerate = Framerate({
     noDOM: true
   });
-  return self.bind("draw", function(canvas) {
+  return self.bind("overlay", function(canvas) {
     if (I.showFPS) {
       canvas.font("bold 9pt consolas, 'Courier New', 'andale mono', 'lucida console', monospace");
-      canvas.fillColor("#FFF");
-      canvas.fillText("fps: " + framerate.fps, 6, 18);
+      canvas.drawText({
+        color: I.FPSColor,
+        position: Point(6, 18),
+        text: "fps: " + framerate.fps
+      });
     }
     return framerate.rendered();
   });
@@ -9481,7 +9783,6 @@ the responsibility of the objects drawing on it to manage that themselves.
   @param {Object} self Reference to the engine
   */  return Engine.Joysticks = function(I, self) {
     Joysticks.init();
-    log(Joysticks.status());
     self.bind("update", function() {
       Joysticks.init();
       return Joysticks.update();
