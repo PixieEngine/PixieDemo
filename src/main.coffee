@@ -10,6 +10,11 @@ engine.add
   y: 96
   color: "#F00"
 
+engine.bind 'update', ->
+  if justPressed.f
+    engine.cameras()[0].flash()
+
 # Start the engine
 engine.start()
+
 
