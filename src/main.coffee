@@ -14,6 +14,9 @@ engine.bind 'update', ->
   if justPressed.f
     engine.flash()
 
+  if justPressed.s
+    engine.shake()
+
 # Start the engine
 engine.start()
 
