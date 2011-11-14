@@ -28,6 +28,8 @@
   
     <li></li>
   
+    <li></li>
+  
     <li><a href="../symbols/Collision.html">Collision</a></li>
   
     <li><a href="../symbols/Color.html">Color</a></li>
@@ -107,6 +109,8 @@
     <li></li>
   
     <li><a href="../symbols/Bounded.html">Bounded</a></li>
+  
+    <li><a href="../symbols/Collidable.html">Collidable</a></li>
   
     <li></li>
   
@@ -236,6 +240,14 @@
                         <div class="fixedFont">Object.<b><a href="../symbols/Object.html#.isObject">isObject</a></b>(object)
                         </div>
                         <div class="description">Helper method that tells you if something is an object.</div>
+                      </td>
+                    </tr>
+                  
+                    <tr>
+                      <td class="nameDescription">
+                        <div class="fixedFont">Object.<b><a href="../symbols/Object.html#.isString">isString</a></b>(object)
+                        </div>
+                        <div class="description">Checks whether an object is a string.</div>
                       </td>
                     </tr>
                   
@@ -489,6 +501,70 @@ Object.isObject(object)
                       
                         <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
                         <dd>true if this guy is an object.</dd>
+                      
+                    
+
+                    
+
+                    
+
+                  </dl>
+                
+              
+                <div class="fixedFont heading">
+                  <a name=".isString"></a>
+                  <span class='lighter'>
+                  <em>static</em>
+                  </span>
+
+                  <span class="light">Object.</span><b>isString</b>(object)
+                </div>
+
+                <div class="description">
+                  Checks whether an object is a string.
+
+<code><pre>
+Object.isString("a string")
+# => true
+
+Object.isString([1, 2, 4])
+# => false
+
+Object.isString({key: "value"})
+# => false
+</pre></code>
+
+                  
+                </div>
+
+                
+
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>object</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
+                        
+                      </dt>
+                      <dd>The object to check for string-ness.</dd>
+                    
+                  </dl>
+                
+
+                
+                  <dl class="detailList nomargin">
+
+                    
+
+                    
+
+                    
+
+                    
+                      
+                        <dt class="heading">Returns <span class="light fixedFont"><a href="../symbols/Boolean.html">Boolean</a></span> :</dt>
+                        <dd>A boolean expressing whether the object is an instance of String</dd>
                       
                     
 

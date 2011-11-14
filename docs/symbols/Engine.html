@@ -28,6 +28,8 @@
   
     <li></li>
   
+    <li></li>
+  
     <li><a href="../symbols/Collision.html">Collision</a></li>
   
     <li><a href="../symbols/Color.html">Color</a></li>
@@ -107,6 +109,8 @@
     <li></li>
   
     <li><a href="../symbols/Bounded.html">Bounded</a></li>
+  
+    <li><a href="../symbols/Collidable.html">Collidable</a></li>
   
     <li></li>
   
@@ -439,9 +443,9 @@
                   
                     <tr>
                       <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Engine.html#pause">pause</a></b>()
+                        <div class="fixedFont"><b><a href="../symbols/Engine.html#pause">pause</a></b>(setTo)
                         </div>
-                        <div class="description">Pause the simulation.</div>
+                        <div class="description">Toggle the paused state of the simulation.</div>
                       </td>
                     </tr>
                   
@@ -720,6 +724,13 @@
 
                 <div class="description">
                   The <code>FPSCounter</code> module tracks and displays the framerate.
+
+<code><pre>
+window.engine = Engine
+  ...
+  includedModules: ["FPSCounter"]
+  FPSColor: "#080"
+</pre></code>
 
                   
                 </div>
@@ -1101,7 +1112,8 @@ shadows.
 
     <code><pre>
     engine.delay 5, ->
-
+      engine.add
+        class: "Ghost"
     </pre></code>
 
                   
@@ -1300,7 +1312,7 @@ shadows.
                   Loads the game state passed in, or the last saved state, if any.
 
     <code><pre>
-    engine.bind 'step', ->
+    engine.bind 'update', ->
       if justPressed.l
         # loads the last saved state
         engine.loadState()
@@ -1337,11 +1349,11 @@ shadows.
                   
                   </span>
 
-                  <b>pause</b>()
+                  <b>pause</b>(setTo)
                 </div>
 
                 <div class="description">
-                  Pause the simulation.
+                  Toggle the paused state of the simulation.
 
       <code><pre>
       engine.pause()
@@ -1352,6 +1364,17 @@ shadows.
 
                 
 
+                
+                  <dl class="detailList params">
+                    <dt class="heading">Parameters:</dt>
+                    
+                      <dt>
+                        <b>setTo</b><span class='light fixedFont'> <a href="../symbols/Boolean.html">Boolean</a></span> 
+                        <i>Optional</i>
+                      </dt>
+                      <dd>Force to pause by passing true or unpause by passing false.</dd>
+                    
+                  </dl>
                 
 
                 
@@ -1503,7 +1526,7 @@ shadows.
                   Save the current game state and returns a JSON object representing that state.
 
     <code><pre>
-    engine.bind 'step', ->
+    engine.bind 'update', ->
       if justPressed.s
         engine.saveState()
     </pre></code>
