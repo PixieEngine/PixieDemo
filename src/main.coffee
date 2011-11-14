@@ -12,7 +12,7 @@ engine.add
 
 engine.bind 'update', ->
   if justPressed.f
-    engine.cameras()[0].flash()
+    engine.flash()
 
 # Start the engine
 engine.start()
