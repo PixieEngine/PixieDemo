@@ -20,4 +20,3 @@ engine.bind 'update', ->
 # Start the engine
 engine.start()
 
-
