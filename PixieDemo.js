@@ -1,4 +1,5 @@
 var App;
+
 App = {
   "directories": {
     "animations": "animations",
@@ -25,10 +26,12 @@ App = {
     "browserlib.js": "https://github.com/STRd6/browserlib/raw/pixie/browserlib.js",
     "extralib.js": "https://github.com/STRd6/extralib/raw/pixie/extralib.js"
   }
-};;
+};
 ;
 ;
 ;
+;
+
 /**
 Returns a copy of the array without null and undefined values.
 
@@ -40,12 +43,17 @@ Returns a copy of the array without null and undefined values.
 @name compact
 @methodOf Array#
 @returns {Array} A new array that contains only the non-null values.
-*/var __slice = Array.prototype.slice;
+*/
+
+var _base;
+var __slice = Array.prototype.slice;
+
 Array.prototype.compact = function() {
   return this.select(function(element) {
     return element != null;
   });
 };
+
 /**
 Creates and returns a copy of the array. The copy contains
 the same objects.
@@ -67,9 +75,11 @@ a === b
 @methodOf Array#
 @returns {Array} A new array that is a copy of the array
 */
+
 Array.prototype.copy = function() {
   return this.concat();
 };
+
 /**
 Empties the array of its contents. It is modified in place.
 
@@ -84,10 +94,12 @@ fullArray
 @methodOf Array#
 @returns {Array} this, now emptied.
 */
+
 Array.prototype.clear = function() {
   this.length = 0;
   return this;
 };
+
 /**
 Flatten out an array of arrays into a single array of elements.
 
@@ -105,11 +117,13 @@ Flatten out an array of arrays into a single array of elements.
 @methodOf Array#
 @returns {Array} A new array with all the sub-arrays flattened to the top.
 */
+
 Array.prototype.flatten = function() {
   return this.inject([], function(a, b) {
     return a.concat(b);
   });
 };
+
 /**
 Invoke the named method on each element in the array
 and return a new array containing the results of the invocation.
@@ -128,6 +142,7 @@ and return a new array containing the results of the invocation.
 @methodOf Array#
 @returns {Array} A new array containing the results of invoking the named method on each element.
 */
+
 Array.prototype.invoke = function() {
   var args, method;
   method = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
@@ -135,6 +150,7 @@ Array.prototype.invoke = function() {
     return element[method].apply(element, args);
   });
 };
+
 /**
 Randomly select an element from the array.
 
@@ -147,9 +163,11 @@ Randomly select an element from the array.
 @methodOf Array#
 @returns {Object} A random element from an array
 */
+
 Array.prototype.rand = function() {
   return this[rand(this.length)];
 };
+
 /**
 Remove the first occurrence of the given object from the array if it is
 present. The array is modified in place.
@@ -168,6 +186,7 @@ a
 @param {Object} object The object to remove from the array if present.
 @returns {Object} The removed object if present otherwise undefined.
 */
+
 Array.prototype.remove = function(object) {
   var index;
   index = this.indexOf(object);
@@ -177,6 +196,7 @@ Array.prototype.remove = function(object) {
     return;
   }
 };
+
 /**
 Returns true if the element is present in the array.
 
@@ -193,9 +213,11 @@ Returns true if the element is present in the array.
 @param {Object} element The element to check if present.
 @returns {Boolean} true if the element is in the array, false otherwise.
 */
+
 Array.prototype.include = function(element) {
   return this.indexOf(element) !== -1;
 };
+
 /**
 Call the given iterator once for each element in the array,
 passing in the element as the first argument, the index of 
@@ -224,6 +246,7 @@ indices
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} this to enable method chaining.
 */
+
 Array.prototype.each = function(iterator, context) {
   var element, i, _len;
   if (this.forEach) {
@@ -236,6 +259,7 @@ Array.prototype.each = function(iterator, context) {
   }
   return this;
 };
+
 /**
 Call the given iterator once for each element in the array, 
 passing in the element as the first argument, the index of 
@@ -254,7 +278,8 @@ third argument.
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} An array of the results of the iterator function being called on the original array elements.
 */
-Array.prototype.map || (Array.prototype.map = function(iterator, context) {
+
+(_base = Array.prototype).map || (_base.map = function(iterator, context) {
   var element, i, results, _len;
   results = [];
   for (i = 0, _len = this.length; i < _len; i++) {
@@ -263,6 +288,7 @@ Array.prototype.map || (Array.prototype.map = function(iterator, context) {
   }
   return results;
 });
+
 /**
 Call the given iterator once for each pair of objects in the array.
 
@@ -281,6 +307,7 @@ Call the given iterator once for each pair of objects in the array.
 @param {Function} iterator Function to be called once for each pair of elements in the array.
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 */
+
 Array.prototype.eachPair = function(iterator, context) {
   var a, b, i, j, length, _results;
   length = this.length;
@@ -303,6 +330,7 @@ Array.prototype.eachPair = function(iterator, context) {
   }
   return _results;
 };
+
 /**
 Call the given iterator once for each element in the array,
 passing in the element as the first argument and the given object
@@ -317,12 +345,14 @@ as the second argument. Additional arguments are passed similar to
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} this
 */
+
 Array.prototype.eachWithObject = function(object, iterator, context) {
   this.each(function(element, i, self) {
     return iterator.call(context, element, object, i, self);
   });
   return object;
 };
+
 /**
 Call the given iterator once for each group of elements in the array,
 passing in the elements in groups of n. Additional argumens are
@@ -346,6 +376,7 @@ results
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} this
 */
+
 Array.prototype.eachSlice = function(n, iterator, context) {
   var i, len;
   if (n > 0) {
@@ -357,6 +388,30 @@ Array.prototype.eachSlice = function(n, iterator, context) {
   }
   return this;
 };
+
+/**
+Pipe the input through each function in the array in turn. For example, if you have a
+list of objects you can perform a series of selection, sorting, and other processing
+methods and then receive the processed list. This array must contain functions that
+accept a single input and return the processed input. The output of the first function
+is fed to the input of the second and so on until the final processed output is returned.
+
+@name pipeline
+@methodOf Array#
+
+@param {Object} input The initial input to pass to the first function in the pipeline.
+@returns {Object} The result of processing the input by each function in the array.
+*/
+
+Array.prototype.pipeline = function(input) {
+  var fn, _i, _len;
+  for (_i = 0, _len = this.length; _i < _len; _i++) {
+    fn = this[_i];
+    input = fn(input);
+  }
+  return input;
+};
+
 /**
 Returns a new array with the elements all shuffled up.
 
@@ -373,6 +428,7 @@ a # => [1, 2, 3]
 @methodOf Array#
 @returns {Array} A new array that is randomly shuffled.
 */
+
 Array.prototype.shuffle = function() {
   var shuffledArray;
   shuffledArray = [];
@@ -381,6 +437,7 @@ Array.prototype.shuffle = function() {
   });
   return shuffledArray;
 };
+
 /**
 Returns the first element of the array, undefined if the array is empty.
 
@@ -393,9 +450,11 @@ Returns the first element of the array, undefined if the array is empty.
 @methodOf Array#
 @returns {Object} The first element, or undefined if the array is empty.
 */
+
 Array.prototype.first = function() {
   return this[0];
 };
+
 /**
 Returns the last element of the array, undefined if the array is empty.
 
@@ -408,9 +467,11 @@ Returns the last element of the array, undefined if the array is empty.
 @methodOf Array#
 @returns {Object} The last element, or undefined if the array is empty.
 */
+
 Array.prototype.last = function() {
   return this[this.length - 1];
 };
+
 /**
 Returns an object containing the extremes of this array.
 
@@ -424,6 +485,7 @@ Returns an object containing the extremes of this array.
 @param {Function} [fn] An optional funtion used to evaluate each element to calculate its value for determining extremes.
 @returns {Object} {min: minElement, max: maxElement}
 */
+
 Array.prototype.extremes = function(fn) {
   var max, maxResult, min, minResult;
   fn || (fn = function(n) {
@@ -458,6 +520,7 @@ Array.prototype.extremes = function(fn) {
     max: max
   };
 };
+
 /**
 Pretend the array is a circle and grab a new array containing length elements. 
 If length is not given return the element at start, again assuming the array 
@@ -480,6 +543,7 @@ is a circle.
 @param {Number} [length] Optional length determines how long result array should be.
 @returns {Object} or {Array} The element at start mod array.length, or an array of length elements, starting from start and wrapping.
 */
+
 Array.prototype.wrap = function(start, length) {
   var end, i, result;
   if (length != null) {
@@ -494,6 +558,7 @@ Array.prototype.wrap = function(start, length) {
     return this[start.mod(this.length)];
   }
 };
+
 /**
 Partitions the elements into two groups: those for which the iterator returns
 true, and those for which it returns false.
@@ -515,6 +580,7 @@ odds
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} An array in the form of [trueCollection, falseCollection]
 */
+
 Array.prototype.partition = function(iterator, context) {
   var falseCollection, trueCollection;
   trueCollection = [];
@@ -528,6 +594,7 @@ Array.prototype.partition = function(iterator, context) {
   });
   return [trueCollection, falseCollection];
 };
+
 /**
 Return the group of elements for which the return value of the iterator is true.
 
@@ -537,9 +604,11 @@ Return the group of elements for which the return value of the iterator is true.
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} An array containing the elements for which the iterator returned true.
 */
+
 Array.prototype.select = function(iterator, context) {
   return this.partition(iterator, context)[0];
 };
+
 /**
 Return the group of elements that are not in the passed in set.
 
@@ -553,11 +622,13 @@ Return the group of elements that are not in the passed in set.
 @param {Array} values List of elements to exclude.
 @returns {Array} An array containing the elements that are not passed in.
 */
+
 Array.prototype.without = function(values) {
   return this.reject(function(element) {
     return values.include(element);
   });
 };
+
 /**
 Return the group of elements for which the return value of the iterator is false.
 
@@ -567,9 +638,11 @@ Return the group of elements for which the return value of the iterator is false
 @param {Object} [context] Optional context parameter to be used as `this` when calling the iterator function.
 @returns {Array} An array containing the elements for which the iterator returned false.
 */
+
 Array.prototype.reject = function(iterator, context) {
   return this.partition(iterator, context)[1];
 };
+
 /**
 Combines all elements of the array by applying a binary operation.
 for each element in the arra the iterator is passed an accumulator 
@@ -579,12 +652,14 @@ value (memo) and the element.
 @methodOf Array#
 @returns {Object} The result of a
 */
+
 Array.prototype.inject = function(initial, iterator) {
   this.each(function(element) {
     return initial = iterator(initial, element);
   });
   return initial;
 };
+
 /**
 Add all the elements in the array.
 
@@ -597,11 +672,13 @@ Add all the elements in the array.
 @methodOf Array#
 @returns {Number} The sum of the elements in the array.
 */
+
 Array.prototype.sum = function() {
   return this.inject(0, function(sum, n) {
     return sum + n;
   });
 };
+
 /**
 Multiply all the elements in the array.
 
@@ -614,11 +691,13 @@ Multiply all the elements in the array.
 @methodOf Array#
 @returns {Number} The product of the elements in the array.
 */
+
 Array.prototype.product = function() {
   return this.inject(1, function(product, n) {
     return product * n;
   });
 };
+
 /**
 Merges together the values of each of the arrays with the values at the corresponding position.
 
@@ -631,6 +710,7 @@ Merges together the values of each of the arrays with the values at the correspo
 @methodOf Array#
 @returns {Array} Array groupings whose values are arranged by their positions in the original input arrays.
 */
+
 Array.prototype.zip = function() {
   var args;
   args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -642,7 +722,9 @@ Array.prototype.zip = function() {
     output.unshift(element);
     return output;
   });
-};;
+};
+;
+
 /**
 Bindable module.
 
@@ -665,8 +747,11 @@ player.bind "update", ->
 @name Bindable
 @module
 @constructor
-*/var Bindable;
+*/
+
+var Bindable;
 var __slice = Array.prototype.slice;
+
 Bindable = function() {
   var eventCallbacks;
   eventCallbacks = {};
@@ -746,8 +831,11 @@ Bindable = function() {
     }
   };
 };
-(typeof exports !== "undefined" && exports !== null ? exports : this)["Bindable"] = Bindable;;
+
+(typeof exports !== "undefined" && exports !== null ? exports : this)["Bindable"] = Bindable;
+;
 var CommandStack;
+
 CommandStack = function() {
   var index, stack;
   stack = [];
@@ -783,7 +871,9 @@ CommandStack = function() {
       return stack[index] != null;
     }
   };
-};;
+};
+;
+
 /**
 The Core class is used to add extended functionality to objects without
 extending the object class directly. Inherit from Core to gain its utility
@@ -793,61 +883,64 @@ methods.
 @constructor
 
 @param {Object} I Instance variables
-*/var Core;
+*/
+
+var Core;
 var __slice = Array.prototype.slice;
+
 Core = function(I) {
   var self;
-  I || (I = {});
+  if (I == null) I = {};
   return self = {
     /**
-      External access to instance variables. Use of this property should be avoided
-      in general, but can come in handy from time to time.
+    External access to instance variables. Use of this property should be avoided
+    in general, but can come in handy from time to time.
 
-      <code><pre>
-      I =
-        r: 255
-        g: 0
-        b: 100
+    <code><pre>
+    I =
+      r: 255
+      g: 0
+      b: 100
 
-      myObject = Core(I)
+    myObject = Core(I)
 
-      # a bad idea most of the time, but it's 
-      # pretty convenient to have available.
-      myObject.I.r
-      # => 255
+    # a bad idea most of the time, but it's 
+    # pretty convenient to have available.
+    myObject.I.r
+    # => 255
 
-      myObject.I.g
-      # => 0
+    myObject.I.g
+    # => 0
 
-      myObject.I.b
-      # => 100
-      </pre></code>
+    myObject.I.b
+    # => 100
+    </pre></code>
 
-      @name I
-      @fieldOf Core#
-      */
+    @name I
+    @fieldOf Core#
+    */
     I: I,
     /**
-      Generates a public jQuery style getter / setter method for each 
-      String argument.
+    Generates a public jQuery style getter / setter method for each 
+    String argument.
 
-      <code><pre>
-      myObject = Core
-        r: 255
-        g: 0
-        b: 100
+    <code><pre>
+    myObject = Core
+      r: 255
+      g: 0
+      b: 100
 
-      myObject.attrAccessor "r", "g", "b"
+    myObject.attrAccessor "r", "g", "b"
 
-      myObject.r(254)
-      myObject.r()
+    myObject.r(254)
+    myObject.r()
 
-      => 254
-      </pre></code>
+    => 254
+    </pre></code>
 
-      @name attrAccessor
-      @methodOf Core#
-      */
+    @name attrAccessor
+    @methodOf Core#
+    */
     attrAccessor: function() {
       var attrNames;
       attrNames = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
@@ -929,27 +1022,10 @@ Core = function(I) {
     @methodOf Core#
     */
     extend: function(options) {
-      var afterMethods, beforeMethods, fn, name;
-      afterMethods = options.after;
-      beforeMethods = options.before;
-      delete options.after;
-      delete options.before;
       Object.extend(self, options);
-      if (beforeMethods) {
-        for (name in beforeMethods) {
-          fn = beforeMethods[name];
-          self[name] = self[name].withBefore(fn);
-        }
-      }
-      if (afterMethods) {
-        for (name in afterMethods) {
-          fn = afterMethods[name];
-          self[name] = self[name].withAfter(fn);
-        }
-      }
       return self;
     },
-    /** 
+    /**
     Includes a module in this object.
 
     <code><pre>
@@ -969,7 +1045,9 @@ Core = function(I) {
       return self.extend(Module(I, self));
     }
   };
-};;
+};
+;
+
 Function.prototype.withBefore = function(interception) {
   var method;
   method = this;
@@ -978,6 +1056,7 @@ Function.prototype.withBefore = function(interception) {
     return method.apply(this, arguments);
   };
 };
+
 Function.prototype.withAfter = function(interception) {
   var method;
   method = this;
@@ -987,7 +1066,53 @@ Function.prototype.withAfter = function(interception) {
     interception.apply(this, arguments);
     return result;
   };
-};;
+};
+
+/**
+Calling a debounced function will postpone its execution until after 
+wait milliseconds have elapsed since the last time the function was 
+invoked. Useful for implementing behavior that should only happen after 
+the input has stopped arriving. For example: rendering a preview of a 
+Markdown comment, recalculating a layout after the window has stopped 
+being resized...
+
+<code><pre>
+lazyLayout = calculateLayout.debounce(300)
+$(window).resize(lazyLayout)
+</pre></code>
+
+@name debounce
+@methodOf Function#
+@returns {Function} The debounced version of this function.
+*/
+
+Function.prototype.debounce = function(wait) {
+  var func, timeout;
+  timeout = null;
+  func = this;
+  return function() {
+    var args, context, later;
+    context = this;
+    args = arguments;
+    later = function() {
+      timeout = null;
+      return func.apply(context, args);
+    };
+    clearTimeout(timeout);
+    return timeout = setTimeout(later, wait);
+  };
+};
+
+Function.prototype.returning = function(x) {
+  var func;
+  func = this;
+  return function() {
+    func.apply(this, arguments);
+    return x;
+  };
+};
+;
+
 /**
 @name Logging
 @namespace
@@ -1000,17 +1125,19 @@ Gives you some convenience methods for outputting data while developing.
   warn "Be careful, this might be a problem"
   error "Kaboom!"
 </pre></code>
-*/["log", "info", "warn", "error"].each(function(name) {
+*/
+
+["log", "info", "warn", "error"].each(function(name) {
   if (typeof console !== "undefined") {
     return (typeof exports !== "undefined" && exports !== null ? exports : this)[name] = function(message) {
-      if (console[name]) {
-        return console[name](message);
-      }
+      if (console[name]) return console[name](message);
     };
   } else {
     return (typeof exports !== "undefined" && exports !== null ? exports : this)[name] = function() {};
   }
-});;
+});
+;
+
 /**
 * Matrix.js v1.3.0pre
 * 
@@ -1036,7 +1163,9 @@ Gives you some convenience methods for outputting data while developing.
 *
 * Loosely based on flash:
 * http://www.adobe.com/livedocs/flash/9.0/ActionScriptLangRefV3/flash/geom/Matrix.html
-*/(function() {
+*/
+
+(function() {
   /**
   <pre>
      _        _
@@ -1059,7 +1188,8 @@ Gives you some convenience methods for outputting data while developing.
   @param {Number} [tx]
   @param {Number} [ty]
   @constructor
-  */  var Matrix;
+  */
+  var Matrix;
   Matrix = function(a, b, c, d, tx, ty) {
     return {
       __proto__: Matrix.prototype,
@@ -1097,16 +1227,16 @@ Gives you some convenience methods for outputting data while developing.
   };
   Matrix.prototype = {
     /**
-      Returns the result of this matrix multiplied by another matrix
-      combining the geometric effects of the two. In mathematical terms, 
-      concatenating two matrixes is the same as combining them using matrix multiplication.
-      If this matrix is A and the matrix passed in is B, the resulting matrix is A x B
-      http://mathworld.wolfram.com/MatrixMultiplication.html
-      @name concat
-      @methodOf Matrix#
-      @param {Matrix} matrix The matrix to multiply this matrix by.
-      @returns {Matrix} The result of the matrix multiplication, a new matrix.
-      */
+    Returns the result of this matrix multiplied by another matrix
+    combining the geometric effects of the two. In mathematical terms, 
+    concatenating two matrixes is the same as combining them using matrix multiplication.
+    If this matrix is A and the matrix passed in is B, the resulting matrix is A x B
+    http://mathworld.wolfram.com/MatrixMultiplication.html
+    @name concat
+    @methodOf Matrix#
+    @param {Matrix} matrix The matrix to multiply this matrix by.
+    @returns {Matrix} The result of the matrix multiplication, a new matrix.
+    */
     concat: function(matrix) {
       return Matrix(this.a * matrix.a + this.c * matrix.b, this.b * matrix.a + this.d * matrix.b, this.a * matrix.c + this.c * matrix.d, this.b * matrix.c + this.d * matrix.d, this.a * matrix.tx + this.c * matrix.ty + this.tx, this.b * matrix.tx + this.d * matrix.ty + this.ty);
     },
@@ -1204,15 +1334,15 @@ Gives you some convenience methods for outputting data while developing.
     translate: function(tx, ty) {
       return this.concat(Matrix.translation(tx, ty));
     }
-    /**
-    Creates a matrix transformation that corresponds to the given rotation,
-    around (0,0) or the specified point.
-    @see Matrix#rotate
-    @param {Number} theta Rotation in radians.
-    @param {Point} [aboutPoint] The point about which this rotation occurs. Defaults to (0,0).
-    @returns {Matrix} A new matrix rotated by the given amount.
-    */
   };
+  /**
+  Creates a matrix transformation that corresponds to the given rotation,
+  around (0,0) or the specified point.
+  @see Matrix#rotate
+  @param {Number} theta Rotation in radians.
+  @param {Point} [aboutPoint] The point about which this rotation occurs. Defaults to (0,0).
+  @returns {Matrix} A new matrix rotated by the given amount.
+  */
   Matrix.rotate = Matrix.rotation = function(theta, aboutPoint) {
     var rotationMatrix;
     rotationMatrix = Matrix(Math.cos(theta), Math.sin(theta), -Math.sin(theta), Math.cos(theta));
@@ -1276,7 +1406,9 @@ Gives you some convenience methods for outputting data while developing.
     Object.freeze(Matrix.VERTICAL_FLIP);
   }
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Matrix"] = Matrix;
-})();;
+})();
+;
+
 /** 
 Returns the absolute value of this number.
 
@@ -1288,9 +1420,12 @@ Returns the absolute value of this number.
 @name abs
 @methodOf Number#
 @returns {Number} The absolute value of the number.
-*/Number.prototype.abs = function() {
+*/
+
+Number.prototype.abs = function() {
   return Math.abs(this);
 };
+
 /**
 Returns the mathematical ceiling of this number.
 
@@ -1309,9 +1444,11 @@ Returns the mathematical ceiling of this number.
 @methodOf Number#
 @returns {Number} The number truncated to the nearest integer of greater than or equal value.
 */
+
 Number.prototype.ceil = function() {
   return Math.ceil(this);
 };
+
 /**
 Returns the mathematical floor of this number.
 
@@ -1330,9 +1467,11 @@ Returns the mathematical floor of this number.
 @methodOf Number#
 @returns {Number} The number truncated to the nearest integer of less than or equal value.
 */
+
 Number.prototype.floor = function() {
   return Math.floor(this);
 };
+
 /**
 Returns this number rounded to the nearest integer.
 
@@ -1348,9 +1487,11 @@ Returns this number rounded to the nearest integer.
 @methodOf Number#
 @returns {Number} The number rounded to the nearest integer.
 */
+
 Number.prototype.round = function() {
   return Math.round(this);
 };
+
 /**
 Returns a number whose value is limited to the given range.
 
@@ -1366,9 +1507,11 @@ Returns a number whose value is limited to the given range.
 @param {Number} max The upper boundary of the output range
 @returns {Number} A number in the range [min, max]
 */
+
 Number.prototype.clamp = function(min, max) {
   return Math.min(Math.max(this, min), max);
 };
+
 /**
 A mod method useful for array wrapping. The range of the function is
 constrained to remain in bounds of array indices.
@@ -1383,14 +1526,14 @@ constrained to remain in bounds of array indices.
 @param {Number} base
 @returns {Number} An integer between 0 and (base - 1) if base is positive.
 */
+
 Number.prototype.mod = function(base) {
   var result;
   result = this % base;
-  if (result < 0 && base > 0) {
-    result += base;
-  }
+  if (result < 0 && base > 0) result += base;
   return result;
 };
+
 /**
 Get the sign of this number as an integer (1, -1, or 0).
 
@@ -1409,6 +1552,7 @@ Get the sign of this number as an integer (1, -1, or 0).
 @methodOf Number#
 @returns {Number} The sign of this number, 0 if the number is 0.
 */
+
 Number.prototype.sign = function() {
   if (this > 0) {
     return 1;
@@ -1418,6 +1562,7 @@ Number.prototype.sign = function() {
     return 0;
   }
 };
+
 /**
 Returns true if this number is even (evenly divisible by 2).
 
@@ -1436,9 +1581,11 @@ Returns true if this number is even (evenly divisible by 2).
 @methodOf Number#
 @returns {Boolean} true if this number is an even integer, false otherwise.
 */
+
 Number.prototype.even = function() {
   return this % 2 === 0;
 };
+
 /**
 Returns true if this number is odd (has remainder of 1 when divided by 2).
 
@@ -1457,6 +1604,7 @@ Returns true if this number is odd (has remainder of 1 when divided by 2).
 @methodOf Number#
 @returns {Boolean} true if this number is an odd integer, false otherwise.
 */
+
 Number.prototype.odd = function() {
   if (this > 0) {
     return this % 2 === 1;
@@ -1464,6 +1612,7 @@ Number.prototype.odd = function() {
     return this % 2 === -1;
   }
 };
+
 /**
 Calls iterator the specified number of times, passing in the number of the 
 current iteration as a parameter: 0 on first call, 1 on the second call, etc. 
@@ -1484,6 +1633,7 @@ output
 @param {Object} [context] The optional context parameter specifies an object to treat as <code>this</code> in the iterator block.
 @returns {Number} The number of times the iterator was called.
 */
+
 Number.prototype.times = function(iterator, context) {
   var i;
   i = -1;
@@ -1492,6 +1642,7 @@ Number.prototype.times = function(iterator, context) {
   }
   return i;
 };
+
 /**
 Returns the the nearest grid resolution less than or equal to the number. 
 
@@ -1511,12 +1662,14 @@ Returns the the nearest grid resolution less than or equal to the number.
 @param {Number} resolution The grid resolution to snap to.
 @returns {Number} The nearest multiple of resolution lower than the number.
 */
+
 Number.prototype.snap = function(resolution) {
   var n;
   n = this / resolution;
   1 / 1;
   return n.floor() * resolution;
 };
+
 /**
 In number theory, integer factorization or prime factorization is the
 breaking down of a composite number into smaller non-trivial divisors,
@@ -1536,13 +1689,12 @@ Floors the number for purposes of factorization.
 @methodOf Number#
 @returns {Array} An array containing the factorization of this number.
 */
+
 Number.prototype.primeFactors = function() {
   var factors, i, iSquared, n;
   factors = [];
   n = Math.floor(this);
-  if (n === 0) {
-    return;
-  }
+  if (n === 0) return;
   if (n < 0) {
     factors.push(-1);
     n /= -1;
@@ -1557,11 +1709,10 @@ Number.prototype.primeFactors = function() {
     i += 1;
     iSquared = i * i;
   }
-  if (n !== 1) {
-    factors.push(n);
-  }
+  if (n !== 1) factors.push(n);
   return factors;
 };
+
 /**
 Returns the two character hexidecimal 
 representation of numbers 0 through 255.
@@ -1581,14 +1732,14 @@ representation of numbers 0 through 255.
 @methodOf Number#
 @returns {String} Hexidecimal representation of the number
 */
+
 Number.prototype.toColorPart = function() {
   var s;
   s = parseInt(this.clamp(0, 255), 10).toString(16);
-  if (s.length === 1) {
-    s = '0' + s;
-  }
+  if (s.length === 1) s = '0' + s;
   return s;
 };
+
 /**
 Returns a number that is maxDelta closer to target.
 
@@ -1604,9 +1755,11 @@ Returns a number that is maxDelta closer to target.
 @methodOf Number#
 @returns {Number} A number maxDelta toward target
 */
+
 Number.prototype.approach = function(target, maxDelta) {
   return (target - this).clamp(-maxDelta, maxDelta) + this;
 };
+
 /**
 Returns a number that is closer to the target by the ratio.
 
@@ -1619,9 +1772,11 @@ Returns a number that is closer to the target by the ratio.
 @methodOf Number#
 @returns {Number} A number toward target by the ratio
 */
+
 Number.prototype.approachByRatio = function(target, ratio) {
   return this.approach(target, this * ratio);
 };
+
 /**
 Returns a number that is closer to the target angle by the delta.
 
@@ -1634,6 +1789,7 @@ Math.PI.approachRotation(0, Math.PI/4)
 @methodOf Number#
 @returns {Number} A number toward the target angle by maxDelta
 */
+
 Number.prototype.approachRotation = function(target, maxDelta) {
   while (target > this + Math.PI) {
     target -= Math.TAU;
@@ -1643,6 +1799,7 @@ Number.prototype.approachRotation = function(target, maxDelta) {
   }
   return (target - this).clamp(-maxDelta, maxDelta) + this;
 };
+
 /**
 Constrains a rotation to between -PI and PI.
 
@@ -1655,6 +1812,7 @@ Constrains a rotation to between -PI and PI.
 @methodOf Number#
 @returns {Number} This number constrained between -PI and PI.
 */
+
 Number.prototype.constrainRotation = function() {
   var target;
   target = this;
@@ -1666,6 +1824,7 @@ Number.prototype.constrainRotation = function() {
   }
   return target;
 };
+
 /**
 The mathematical d operator. Useful for simulating dice rolls.
 
@@ -1673,6 +1832,7 @@ The mathematical d operator. Useful for simulating dice rolls.
 @methodOf Number#
 @returns {Number} The sum of rolling <code>this</code> many <code>sides</code>-sided dice
 */
+
 Number.prototype.d = function(sides) {
   var sum;
   sum = 0;
@@ -1681,13 +1841,98 @@ Number.prototype.d = function(sides) {
   });
   return sum;
 };
+
+/**
+Utility method to convert a number to a duration of seconds.
+
+<code><pre>
+3.seconds
+# => 3000
+
+setTimout doSometing, 3.seconds
+</pre></code>
+
+@name seconds
+@propertyOf Number#
+@returns {Number} This number as a duration of seconds
+*/
+
+Object.defineProperty(Number.prototype, 'seconds', {
+  get: function() {
+    return this * 1000;
+  }
+});
+
+Object.defineProperty(Number.prototype, 'second', {
+  get: function() {
+    return this * 1000;
+  }
+});
+
+/**
+Utility method to convert a number to an amount of rotations.
+
+<code><pre>
+0.5.rotations
+# => 3.141592653589793
+
+I.rotation = 0.25.rotations
+</pre></code>
+
+@name rotations
+@propertyOf Number#
+@returns {Number} This number as an amount of rotations
+*/
+
+Object.defineProperty(Number.prototype, 'rotations', {
+  get: function() {
+    return this * Math.TAU;
+  }
+});
+
+Object.defineProperty(Number.prototype, 'rotation', {
+  get: function() {
+    return this * Math.TAU;
+  }
+});
+
+/**
+Utility method to convert a number to an amount of degrees.
+
+<code><pre>
+180.degrees
+# => 3.141592653589793
+
+I.rotation = 90.degrees
+</pre></code>
+
+@name degrees
+@propertyOf Number#
+@returns {Number} This number as an amount of degrees
+*/
+
+Object.defineProperty(Number.prototype, 'degrees', {
+  get: function() {
+    return this * Math.TAU / 360;
+  }
+});
+
+Object.defineProperty(Number.prototype, 'degree', {
+  get: function() {
+    return this * Math.TAU / 360;
+  }
+});
+
 /** 
 The mathematical circle constant of 1 turn.
 
 @name TAU
 @fieldOf Math
 */
-Math.TAU = 2 * Math.PI;;
+
+Math.TAU = 2 * Math.PI;
+;
+
 /**
 Checks whether an object is an array.
 
@@ -1702,11 +1947,15 @@ Object.isArray({key: "value"})
 @name isArray
 @methodOf Object
 @param {Object} object The object to check for array-ness.
-@returns {Boolean} A boolean expressing whether the object is an instance of Array 
-*/var __slice = Array.prototype.slice;
+@returns {Boolean} A boolean expressing whether the object is an instance of Array
+*/
+
+var __slice = Array.prototype.slice;
+
 Object.isArray = function(object) {
   return Object.prototype.toString.call(object) === "[object Array]";
 };
+
 /**
 Checks whether an object is a string.
 
@@ -1724,11 +1973,13 @@ Object.isString({key: "value"})
 @name isString
 @methodOf Object
 @param {Object} object The object to check for string-ness.
-@returns {Boolean} A boolean expressing whether the object is an instance of String 
+@returns {Boolean} A boolean expressing whether the object is an instance of String
 */
+
 Object.isString = function(object) {
   return Object.prototype.toString.call(object) === "[object String]";
 };
+
 /**
 Merges properties from objects into target without overiding.
 First come, first served.
@@ -1751,19 +2002,19 @@ First come, first served.
 @param {Object} target The object to merge the properties into.
 @returns {Object} target
 */
+
 Object.reverseMerge = function() {
   var name, object, objects, target, _i, _len;
   target = arguments[0], objects = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
   for (_i = 0, _len = objects.length; _i < _len; _i++) {
     object = objects[_i];
     for (name in object) {
-      if (!target.hasOwnProperty(name)) {
-        target[name] = object[name];
-      }
+      if (!target.hasOwnProperty(name)) target[name] = object[name];
     }
   }
   return target;
 };
+
 /**
 Merges properties from sources into target with overiding.
 Last in covers earlier properties.
@@ -1786,6 +2037,7 @@ Last in covers earlier properties.
 @param {Object} target The object to merge the properties into.
 @returns {Object} target
 */
+
 Object.extend = function() {
   var name, source, sources, target, _i, _len;
   target = arguments[0], sources = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
@@ -1797,6 +2049,7 @@ Object.extend = function() {
   }
   return target;
 };
+
 /**
 Helper method that tells you if something is an object.
 
@@ -1812,9 +2065,13 @@ Object.isObject(object)
 @param {Object} object Maybe this guy is an object.
 @returns {Boolean} true if this guy is an object.
 */
+
 Object.isObject = function(object) {
   return Object.prototype.toString.call(object) === '[object Object]';
-};;
+};
+;
+var __slice = Array.prototype.slice;
+
 (function() {
   /**
   Create a new point with given x and y coordinates. If no arguments are given
@@ -1842,7 +2099,8 @@ Object.isObject = function(object) {
   @param {Number} [x]
   @param {Number} [y]
   @constructor
-  */  var Point;
+  */
+  var Point;
   Point = function(x, y) {
     return {
       __proto__: Point.prototype,
@@ -1862,23 +2120,23 @@ Object.isObject = function(object) {
   };
   Point.prototype = {
     /**
-      Creates a copy of this point.
+    Creates a copy of this point.
 
-      @name copy
-      @methodOf Point#
-      @returns {Point} A new point with the same x and y value as this point.
+    @name copy
+    @methodOf Point#
+    @returns {Point} A new point with the same x and y value as this point.
 
-      <code><pre>
-      point = Point(1, 1)
-      pointCopy = point.copy()
+    <code><pre>
+    point = Point(1, 1)
+    pointCopy = point.copy()
 
-      point.equal(pointCopy)
-      # => true
+    point.equal(pointCopy)
+    # => true
 
-      point == pointCopy
-      # => false     
-      </pre></code>
-      */
+    point == pointCopy
+    # => false     
+    </pre></code>
+    */
     copy: function() {
       return Point(this.x, this.y);
     },
@@ -2113,9 +2371,7 @@ Object.isObject = function(object) {
     @returns {Point} The unit vector pointing in the same direction as this vector.
     */
     norm: function(length) {
-      if (length == null) {
-        length = 1.0;
-      }
+      if (length == null) length = 1.0;
       return this.copy().norm$(length);
     },
     /**
@@ -2146,9 +2402,7 @@ Object.isObject = function(object) {
     */
     norm$: function(length) {
       var m;
-      if (length == null) {
-        length = 1.0;
-      }
+      if (length == null) length = 1.0;
       if (m = this.length()) {
         return this.scale$(length / m);
       } else {
@@ -2324,24 +2578,24 @@ Object.isObject = function(object) {
     toString: function() {
       return "Point(" + this.x + ", " + this.y + ")";
     }
-    /**
-    Compute the Euclidean distance between two points.
-
-    <code><pre>
-    pointA = Point(2, 3)
-    pointB = Point(9, 2)
-
-    Point.distance(pointA, pointB)
-    # => 7.0710678118654755 # Math.sqrt(50)
-    </pre></code>
-
-    @name distance
-    @fieldOf Point
-    @param {Point} p1
-    @param {Point} p2
-    @returns {Number} The Euclidean distance between two points.
-    */
   };
+  /**
+  Compute the Euclidean distance between two points.
+
+  <code><pre>
+  pointA = Point(2, 3)
+  pointB = Point(9, 2)
+
+  Point.distance(pointA, pointB)
+  # => 7.0710678118654755 # Math.sqrt(50)
+  </pre></code>
+
+  @name distance
+  @fieldOf Point
+  @param {Point} p1
+  @param {Point} p2
+  @returns {Number} The Euclidean distance between two points.
+  */
   Point.distance = function(p1, p2) {
     return Math.sqrt(Point.distanceSquared(p1, p2));
   };
@@ -2419,6 +2673,20 @@ Object.isObject = function(object) {
     return Math.atan2(p2.y - p1.y, p2.x - p1.x);
   };
   /**
+  The centroid of a set of points is their arithmetic mean.
+
+  @name centroid
+  @methodOf Point
+  @param points... The points to find the centroid of.
+  */
+  Point.centroid = function() {
+    var points;
+    points = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    return points.inject(Point(0, 0), function(sumPoint, point) {
+      return sumPoint.add(point);
+    }).scale(1 / points.length);
+  };
+  /**
   @name ZERO
   @fieldOf Point
   @returns {Point} The point (0, 0)
@@ -2456,19 +2724,21 @@ Object.isObject = function(object) {
     Object.freeze(Point.DOWN);
   }
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Point"] = Point;
-})();;
+})();
+;
+
 (function() {
   /**
   @name Random
   @namespace Some useful methods for generating random things.
   */  (typeof exports !== "undefined" && exports !== null ? exports : this)["Random"] = {
     /**
-      Returns a random angle, uniformly distributed, between 0 and 2pi.
+    Returns a random angle, uniformly distributed, between 0 and 2pi.
 
-      @name angle
-      @methodOf Random
-      @returns {Number} A random angle between 0 and 2pi
-      */
+    @name angle
+    @methodOf Random
+    @returns {Number} A random angle between 0 and 2pi
+    */
     angle: function() {
       return rand() * Math.TAU;
     },
@@ -2500,16 +2770,16 @@ Object.isObject = function(object) {
     sometimes: function() {
       return !rand(3);
     }
-    /**
-    Returns random integers from [0, n) if n is given.
-    Otherwise returns random float between 0 and 1.
-
-    @name rand
-    @methodOf window
-    @param {Number} n
-    @returns {Number} A random integer from 0 to n - 1 if n is given. If n is not given, a random float between 0 and 1. 
-    */
   };
+  /**
+  Returns random integers from [0, n) if n is given.
+  Otherwise returns random float between 0 and 1.
+
+  @name rand
+  @methodOf window
+  @param {Number} n
+  @returns {Number} A random integer from 0 to n - 1 if n is given. If n is not given, a random float between 0 and 1.
+  */
   (typeof exports !== "undefined" && exports !== null ? exports : this)["rand"] = function(n) {
     if (n) {
       return Math.floor(n * Math.random());
@@ -2524,7 +2794,7 @@ Object.isObject = function(object) {
   @name signedRand
   @methodOf window
   @param {Number} n
-  @returns {Number} A random float from -n / 2 to n / 2 if n is given. If n is not given, a random float between -0.5 and 0.5. 
+  @returns {Number} A random float from -n / 2 to n / 2 if n is given. If n is not given, a random float between -0.5 and 0.5.
   */
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["signedRand"] = function(n) {
     if (n) {
@@ -2533,7 +2803,9 @@ Object.isObject = function(object) {
       return Math.random() - 0.5;
     }
   };
-})();;
+})();
+;
+
 (function() {
   var Rectangle;
   Rectangle = function(_arg) {
@@ -2568,7 +2840,9 @@ Object.isObject = function(object) {
     return this.y + this.height;
   });
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Rectangle"] = Rectangle;
-})();;
+})();
+;
+
 /**
 Returns true if this string only contains whitespace characters.
 
@@ -2586,9 +2860,12 @@ Returns true if this string only contains whitespace characters.
 @name blank
 @methodOf String#
 @returns {Boolean} Whether or not this string is blank.
-*/String.prototype.blank = function() {
+*/
+
+String.prototype.blank = function() {
   return /^\s*$/.test(this);
 };
+
 /**
 Returns a new string that is a camelCase version.
 
@@ -2602,8 +2879,9 @@ Returns a new string that is a camelCase version.
 
 @name camelize
 @methodOf String#
-@returns {String} A new string. camelCase version of `this`. 
+@returns {String} A new string. camelCase version of `this`.
 */
+
 String.prototype.camelize = function() {
   return this.trim().replace(/(\-|_|\s)+(.)?/g, function(match, separator, chr) {
     if (chr) {
@@ -2613,6 +2891,7 @@ String.prototype.camelize = function() {
     }
   });
 };
+
 /**
 Returns a new string with the first letter capitalized and the rest lower cased.
 
@@ -2629,9 +2908,11 @@ Returns a new string with the first letter capitalized and the rest lower cased.
 @methodOf String#
 @returns {String} A new string. Capitalized version of `this`
 */
+
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();
 };
+
 /**
 Return the class or constant named in this string.
 
@@ -2646,6 +2927,7 @@ Return the class or constant named in this string.
 @methodOf String#
 @returns {Object} The class or constant named in this string.
 */
+
 String.prototype.constantize = function() {
   if (this.match(/[A-Z][A-Za-z0-9]*/)) {
     eval("var that = " + this);
@@ -2654,6 +2936,7 @@ String.prototype.constantize = function() {
     throw "String#constantize: '" + this + "' is not a valid constant name.";
   }
 };
+
 /**
 Returns a new string that is a more human readable version.
 
@@ -2669,9 +2952,11 @@ Returns a new string that is a more human readable version.
 @methodOf String#
 @returns {String} A new string. Replaces _id and _ with "" and capitalizes the word.
 */
+
 String.prototype.humanize = function() {
   return this.replace(/_id$/, "").replace(/_/g, " ").capitalize();
 };
+
 /**
 Returns true.
 
@@ -2679,9 +2964,11 @@ Returns true.
 @methodOf String#
 @returns {Boolean} true
 */
+
 String.prototype.isString = function() {
   return true;
 };
+
 /**
 Parse this string as though it is JSON and return the object it represents. If it
 is not valid JSON returns the string itself.
@@ -2701,6 +2988,7 @@ is not valid JSON returns the string itself.
 @methodOf String#
 @returns {Object} Returns an object from the JSON this string contains. If it is not valid JSON returns the string itself.
 */
+
 String.prototype.parse = function() {
   try {
     return JSON.parse(this.toString());
@@ -2708,6 +2996,7 @@ String.prototype.parse = function() {
     return this.toString();
   }
 };
+
 /**
 Returns a new string in Title Case.
 
@@ -2723,11 +3012,13 @@ Returns a new string in Title Case.
 @methodOf String#
 @returns {String} A new string. Title Cased.
 */
+
 String.prototype.titleize = function() {
   return this.split(/[- ]/).map(function(word) {
     return word.capitalize();
   }).join(' ');
 };
+
 /**
 Underscore a word, changing camelCased with under_scored.
 
@@ -2746,9 +3037,11 @@ Underscore a word, changing camelCased with under_scored.
 @methodOf String#
 @returns {String} A new string. Separated by _.
 */
+
 String.prototype.underscore = function() {
   return this.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2').replace(/([a-z\d])([A-Z])/g, '$1_$2').replace(/-/g, '_').toLowerCase();
 };
+
 /**
 Assumes the string is something like a file name and returns the 
 contents of the string without the extension.
@@ -2762,15 +3055,19 @@ contents of the string without the extension.
 @methodOf String#
 @returns {String} A new string without the extension name.
 */
+
 String.prototype.withoutExtension = function() {
   return this.replace(/\.[^\.]*$/, '');
-};;
+};
+;
+
 /**
 Non-standard
 
 @name toSource
 @methodOf Boolean#
 */
+
 /**
 Returns a string representing the specified Boolean object.
 
@@ -2779,6 +3076,7 @@ Returns a string representing the specified Boolean object.
 @name toString
 @methodOf Boolean#
 */
+
 /**
 Returns the primitive value of a Boolean object.
 
@@ -2787,6 +3085,7 @@ Returns the primitive value of a Boolean object.
 @name valueOf
 @methodOf Boolean#
 */
+
 /**
 Returns a string representing the Number object in exponential notation
 
@@ -2797,6 +3096,7 @@ to as many digits as necessary to specify the number.
 @name toExponential
 @methodOf Number#
 */
+
 /**
 Formats a number using fixed-point notation
 
@@ -2808,12 +3108,14 @@ support a larger range of values. If this argument is omitted, it is treated as
 @name toFixed
 @methodOf Number#
 */
+
 /**
 number.toLocaleString();
 
 @name toLocaleString
 @methodOf Number#
 */
+
 /**
 Returns a string representing the Number object to the specified precision. 
 
@@ -2822,12 +3124,14 @@ Returns a string representing the Number object to the specified precision.
 @name toPrecision
 @methodOf Number#
 */
+
 /**
 Non-standard
 
 @name toSource
 @methodOf Number#
 */
+
 /**
 Returns a string representing the specified Number object
 
@@ -2838,12 +3142,14 @@ numeric values.
 @name toString
 @methodOf Number#
 */
+
 /**
 Returns the primitive value of a Number object.
 
 @name valueOf
 @methodOf Number#
 */
+
 /**
 Returns the specified character from a string.
 
@@ -2852,6 +3158,7 @@ Returns the specified character from a string.
 @name charAt
 @methodOf String#
 */
+
 /**
 Returns the numeric Unicode value of the character at the given index (except
 for unicode codepoints > 0x10000).
@@ -2862,6 +3169,7 @@ if it is not a number, it defaults to 0.
 @name charCodeAt
 @methodOf String#
 */
+
 /**
 Combines the text of two or more strings and returns a new string.
 
@@ -2870,6 +3178,7 @@ Combines the text of two or more strings and returns a new string.
 @name concat
 @methodOf String#
 */
+
 /**
 Returns the index within the calling String object of the first occurrence of
 the specified value, starting the search at fromIndex,
@@ -2883,6 +3192,7 @@ value is 0.
 @name indexOf
 @methodOf String#
 */
+
 /**
 Returns the index within the calling String object of the last occurrence of the
 specified value, or -1 if not found. The calling string is searched backward,
@@ -2896,6 +3206,7 @@ of the string. The default value is the length of the string.
 @name lastIndexOf
 @methodOf String#
 */
+
 /**
 Returns a number indicating whether a reference string comes before or after or
 is the same as the given string in sort order.
@@ -2905,6 +3216,7 @@ is the same as the given string in sort order.
 @name localeCompare
 @methodOf String#
 */
+
 /**
 Used to retrieve the matches when matching a string against a regular
 expression.
@@ -2915,6 +3227,7 @@ it is implicitly converted to a RegExp by using new RegExp(obj).
 @name match
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -2923,6 +3236,7 @@ Non-standard
 @name quote
 @methodOf String#
 */
+
 /**
 Returns a new string with some or all matches of a pattern replaced by a
 replacement.  The pattern can be a string or a RegExp, and the replacement can
@@ -2949,6 +3263,7 @@ sticky global matchignore casematch over multiple linesNon-standard     sticky
 @name replace
 @methodOf String#
 */
+
 /**
 Executes the search for a match between a regular expression and this String
 object.
@@ -2959,6 +3274,7 @@ passed, it is implicitly converted to a RegExp by using new RegExp(obj).
 @name search
 @methodOf String#
 */
+
 /**
 Extracts a section of a string and returns a new string.
 
@@ -2969,6 +3285,7 @@ slice extracts to the end of the string.
 @name slice
 @methodOf String#
 */
+
 /**
 Splits a String object into an array of strings by separating the string into
 substrings.
@@ -2982,6 +3299,7 @@ string.
 @name split
 @methodOf String#
 */
+
 /**
 Returns the characters in a string beginning at the specified location through
 the specified number of characters.
@@ -2992,6 +3310,7 @@ the specified number of characters.
 @name substr
 @methodOf String#
 */
+
 /**
 Returns a subset of a string between one index and another, or through the end
 of the string.
@@ -3002,6 +3321,7 @@ of the string.
 @name substring
 @methodOf String#
 */
+
 /**
 Returns the calling string value converted to lower case, according to any
 locale-specific case mappings.
@@ -3011,6 +3331,7 @@ locale-specific case mappings.
 @name toLocaleLowerCase
 @methodOf String#
 */
+
 /**
 Returns the calling string value converted to upper case, according to any
 locale-specific case mappings.
@@ -3020,6 +3341,7 @@ locale-specific case mappings.
 @name toLocaleUpperCase
 @methodOf String#
 */
+
 /**
 Returns the calling string value converted to lowercase.
 
@@ -3028,6 +3350,7 @@ Returns the calling string value converted to lowercase.
 @name toLowerCase
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3036,6 +3359,7 @@ Non-standard
 @name toSource
 @methodOf String#
 */
+
 /**
 Returns a string representing the specified object.
 
@@ -3044,6 +3368,7 @@ Returns a string representing the specified object.
 @name toString
 @methodOf String#
 */
+
 /**
 Returns the calling string value converted to uppercase.
 
@@ -3052,6 +3377,7 @@ Returns the calling string value converted to uppercase.
 @name toUpperCase
 @methodOf String#
 */
+
 /**
 Removes whitespace from both ends of the string.
 
@@ -3060,6 +3386,7 @@ Removes whitespace from both ends of the string.
 @name trim
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3068,6 +3395,7 @@ Non-standard
 @name trimLeft
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3076,6 +3404,7 @@ Non-standard
 @name trimRight
 @methodOf String#
 */
+
 /**
 Returns the primitive value of a String object.
 
@@ -3084,6 +3413,7 @@ Returns the primitive value of a String object.
 @name valueOf
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3092,6 +3422,7 @@ Non-standard
 @name anchor
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3100,6 +3431,7 @@ Non-standard
 @name big
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3108,6 +3440,7 @@ Non-standard
 @name blink
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3116,6 +3449,7 @@ Non-standard
 @name bold
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3124,6 +3458,7 @@ Non-standard
 @name fixed
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3132,6 +3467,7 @@ Non-standard
 @name fontcolor
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3140,6 +3476,7 @@ Non-standard
 @name fontsize
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3148,6 +3485,7 @@ Non-standard
 @name italics
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3156,6 +3494,7 @@ Non-standard
 @name link
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3164,6 +3503,7 @@ Non-standard
 @name small
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3172,6 +3512,7 @@ Non-standard
 @name strike
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3180,6 +3521,7 @@ Non-standard
 @name sub
 @methodOf String#
 */
+
 /**
 Non-standard
 
@@ -3188,6 +3530,7 @@ Non-standard
 @name sup
 @methodOf String#
 */
+
 /**
 Removes the last element from an array and returns that element.
 
@@ -3198,6 +3541,7 @@ Removes the last element from an array and returns that element.
 @name pop
 @methodOf Array#
 */
+
 /**
 Mutates an array by appending the given elements and returning the new length of
 the array.
@@ -3207,6 +3551,7 @@ the array.
 @name push
 @methodOf Array#
 */
+
 /**
 Reverses an array in place.  The first array element becomes the last and the
 last becomes the first.
@@ -3216,6 +3561,7 @@ last becomes the first.
 @name reverse
 @methodOf Array#
 */
+
 /**
 Removes the first element from an array and returns that element. This method
 changes the length of the array.
@@ -3225,6 +3571,7 @@ changes the length of the array.
 @name shift
 @methodOf Array#
 */
+
 /**
 Sorts the elements of an array in place.
 
@@ -3235,6 +3582,7 @@ to the string conversion of each element.
 @name sort
 @methodOf Array#
 */
+
 /**
 Changes the content of an array, adding new elements while removing old
 elements.
@@ -3252,6 +3600,7 @@ specify any elements, splice simply removes elements from the array.
 @name splice
 @methodOf Array#
 */
+
 /**
 Adds one or more elements to the beginning of an array and returns the new
 length of the array.
@@ -3261,6 +3610,7 @@ length of the array.
 @name unshift
 @methodOf Array#
 */
+
 /**
 Returns a new array comprised of this array joined with other array(s) and/or
 value(s).
@@ -3270,6 +3620,7 @@ value(s).
 @name concat
 @methodOf Array#
 */
+
 /**
 Joins all elements of an array into a string.
 
@@ -3280,6 +3631,7 @@ are separated with a comma.
 @name join
 @methodOf Array#
 */
+
 /**
 Returns a one-level deep copy of a portion of an array.
 
@@ -3296,6 +3648,7 @@ extracts to the end of the sequence.
 @name slice
 @methodOf Array#
 */
+
 /**
 Non-standard
 
@@ -3304,6 +3657,7 @@ Non-standard
 @name toSource
 @methodOf Array#
 */
+
 /**
 Returns a string representing the specified array and its elements.
 
@@ -3312,6 +3666,7 @@ Returns a string representing the specified array and its elements.
 @name toString
 @methodOf Array#
 */
+
 /**
 Returns the first index at which a given element can be found in the array, or
 -1 if it is not present.
@@ -3327,6 +3682,7 @@ array is still searched from front to back. If the calculated index is less than
 @name indexOf
 @methodOf Array#
 */
+
 /**
 Returns the last index at which a given element can be found in the array, or -1
 if it is not present. The array is searched backwards, starting at fromIndex.
@@ -3342,6 +3698,7 @@ index is less than 0, -1 is returned, i.e. the array will not be searched.
 @name lastIndexOf
 @methodOf Array#
 */
+
 /**
 Creates a new array with all elements that pass the test implemented by the
 provided function.
@@ -3352,6 +3709,7 @@ use as this when executing callback.
 @name filter
 @methodOf Array#
 */
+
 /**
 Executes a provided function once per array element.
 
@@ -3361,6 +3719,7 @@ as this when executing callback.
 @name forEach
 @methodOf Array#
 */
+
 /**
 Tests whether all elements in the array pass the test implemented by the
 provided function.
@@ -3371,6 +3730,7 @@ this when executing callback.
 @name every
 @methodOf Array#
 */
+
 /**
 Creates a new array with the results of calling a provided function on every
 element in this array.
@@ -3382,6 +3742,7 @@ callback.
 @name map
 @methodOf Array#
 */
+
 /**
 Tests whether some element in the array passes the test implemented by the
 provided function.
@@ -3392,6 +3753,7 @@ this when executing callback.
 @name some
 @methodOf Array#
 */
+
 /**
 Apply a function against an accumulator and each value of the array (from
 left-to-right) as to reduce it to a single value.
@@ -3402,6 +3764,7 @@ array.Object to use as the first argument to the first call of the callback.
 @name reduce
 @methodOf Array#
 */
+
 /**
 Apply a function simultaneously against two values of the array (from
 right-to-left) as to reduce it to a single value.
@@ -3412,6 +3775,7 @@ array.Object to use as the first argument to the first call of the callback.
 @name reduceRight
 @methodOf Array#
 */
+
 /**
 Returns a boolean indicating whether the object has the specified property.
 
@@ -3420,6 +3784,7 @@ Returns a boolean indicating whether the object has the specified property.
 @name hasOwnProperty
 @methodOf Object#
 */
+
 /**
 Calls a function with a given this value and arguments provided as an array.
 
@@ -3436,6 +3801,7 @@ provided to the function.
 @name apply
 @methodOf Function#
 */
+
 /**
 Creates a new function that, when called, itself calls this function in the
 context of the provided this value, with a given sequence of arguments preceding
@@ -3449,6 +3815,7 @@ arguments provided to the bound function when invoking the target function.
 @name bind
 @methodOf Function#
 */
+
 /**
 Calls a function with a given this value and arguments provided individually.
 
@@ -3463,6 +3830,7 @@ executes.
 @name call
 @methodOf Function#
 */
+
 /**
 Non-standard
 
@@ -3471,6 +3839,7 @@ Non-standard
 @name toSource
 @methodOf Function#
 */
+
 /**
 Returns a string representing the source code of the function.
 
@@ -3481,6 +3850,7 @@ most unnecessary spaces are removed.
 @name toString
 @methodOf Function#
 */
+
 /**
 Executes a search for a match in a specified string. Returns a result array, or
 null.
@@ -3492,6 +3862,7 @@ a literal.
 @name exec
 @methodOf RegExp#
 */
+
 /**
 Executes the search for a match between a regular expression and a specified
 string. Returns true or false.
@@ -3503,6 +3874,7 @@ a literal.
 @name test
 @methodOf RegExp#
 */
+
 /**
 Non-standard
 
@@ -3511,6 +3883,7 @@ Non-standard
 @name toSource
 @methodOf RegExp#
 */
+
 /**
 Returns a string representing the specified object.
 
@@ -3519,6 +3892,7 @@ Returns a string representing the specified object.
 @name toString
 @methodOf RegExp#
 */
+
 /**
 Returns a reference to the Date function that created the instance's prototype.
 Note that the value of this property is a reference to the function itself, not
@@ -3529,6 +3903,7 @@ a string containing the function's name.
 @name constructor
 @methodOf Date#
 */
+
 /**
 Returns the day of the month for the specified date according to local time.
 
@@ -3539,6 +3914,7 @@ getDate()
 @name getDate
 @methodOf Date#
 */
+
 /**
 Returns the day of the week for the specified date according to local time.
 
@@ -3549,6 +3925,7 @@ getDay()
 @name getDay
 @methodOf Date#
 */
+
 /**
 Returns the year of the specified date according to local time.
 
@@ -3559,6 +3936,7 @@ getFullYear()
 @name getFullYear
 @methodOf Date#
 */
+
 /**
 Returns the hour for the specified date according to local time.
 
@@ -3569,6 +3947,7 @@ getHours()
 @name getHours
 @methodOf Date#
 */
+
 /**
 Returns the milliseconds in the specified date according to local time.
 
@@ -3579,6 +3958,7 @@ getMilliseconds()
 @name getMilliseconds
 @methodOf Date#
 */
+
 /**
 Returns the minutes in the specified date according to local time.
 
@@ -3589,6 +3969,7 @@ getMinutes()
 @name getMinutes
 @methodOf Date#
 */
+
 /**
 Returns the month in the specified date according to local time.
 
@@ -3599,6 +3980,7 @@ getMonth()
 @name getMonth
 @methodOf Date#
 */
+
 /**
 Returns the seconds in the specified date according to local time.
 
@@ -3609,6 +3991,7 @@ getSeconds()
 @name getSeconds
 @methodOf Date#
 */
+
 /**
 Returns the numeric value corresponding to the time for the specified date
 according to universal time.
@@ -3618,6 +4001,7 @@ according to universal time.
 @name getTime
 @methodOf Date#
 */
+
 /**
 Returns the time-zone offset from UTC, in minutes, for the current locale.
 
@@ -3626,6 +4010,7 @@ Returns the time-zone offset from UTC, in minutes, for the current locale.
 @name getTimezoneOffset
 @methodOf Date#
 */
+
 /**
 Returns the day (date) of the month in the specified date according to universal
 time.
@@ -3637,6 +4022,7 @@ getUTCDate()
 @name getUTCDate
 @methodOf Date#
 */
+
 /**
 Returns the day of the week in the specified date according to universal time.
 
@@ -3647,6 +4033,7 @@ getUTCDay()
 @name getUTCDay
 @methodOf Date#
 */
+
 /**
 Returns the year in the specified date according to universal time.
 
@@ -3657,6 +4044,7 @@ getUTCFullYear()
 @name getUTCFullYear
 @methodOf Date#
 */
+
 /**
 Returns the hours in the specified date according to universal time.
 
@@ -3667,6 +4055,7 @@ getUTCHours
 @name getUTCHours
 @methodOf Date#
 */
+
 /**
 Returns the milliseconds in the specified date according to universal time.
 
@@ -3677,6 +4066,7 @@ getUTCMilliseconds()
 @name getUTCMilliseconds
 @methodOf Date#
 */
+
 /**
 Returns the minutes in the specified date according to universal time.
 
@@ -3687,6 +4077,7 @@ getUTCMinutes()
 @name getUTCMinutes
 @methodOf Date#
 */
+
 /**
 Returns the month of the specified date according to universal time.
 
@@ -3697,6 +4088,7 @@ getUTCMonth()
 @name getUTCMonth
 @methodOf Date#
 */
+
 /**
 Returns the seconds in the specified date according to universal time.
 
@@ -3707,6 +4099,7 @@ getUTCSeconds()
 @name getUTCSeconds
 @methodOf Date#
 */
+
 /**
 Deprecated
 
@@ -3715,6 +4108,7 @@ Deprecated
 @name getYear
 @methodOf Date#
 */
+
 /**
 Sets the day of the month for a specified date according to local time.
 
@@ -3723,6 +4117,7 @@ Sets the day of the month for a specified date according to local time.
 @name setDate
 @methodOf Date#
 */
+
 /**
 Sets the full year for a specified date according to local time.
 
@@ -3739,6 +4134,7 @@ monthValue.
 @name setFullYear
 @methodOf Date#
 */
+
 /**
 Sets the hours for a specified date according to local time.
 
@@ -3755,6 +4151,7 @@ secondsValue.
 @name setHours
 @methodOf Date#
 */
+
 /**
 Sets the milliseconds for a specified date according to local time.
 
@@ -3766,6 +4163,7 @@ milliseconds.
 @name setMilliseconds
 @methodOf Date#
 */
+
 /**
 Sets the minutes for a specified date according to local time.
 
@@ -3781,6 +4179,7 @@ secondsValue.
 @name setMinutes
 @methodOf Date#
 */
+
 /**
 Set the month for a specified date according to local time.
 
@@ -3793,6 +4192,7 @@ January through December).
 @name setMonth
 @methodOf Date#
 */
+
 /**
 Sets the seconds for a specified date according to local time.
 
@@ -3804,6 +4204,7 @@ setSeconds(<i>secondsValue</i>[, <em>msValue</em>])
 @name setSeconds
 @methodOf Date#
 */
+
 /**
 Sets the Date object to the time represented by a number of milliseconds since
 January 1, 1970, 00:00:00 UTC.
@@ -3816,6 +4217,7 @@ January 1970, 00:00:00 UTC.
 @name setTime
 @methodOf Date#
 */
+
 /**
 Sets the day of the month for a specified date according to universal time.
 
@@ -3826,6 +4228,7 @@ setUTCDate(<i>dayValue</i>)
 @name setUTCDate
 @methodOf Date#
 */
+
 /**
 Sets the full year for a specified date according to universal time.
 
@@ -3842,6 +4245,7 @@ monthValue.
 @name setUTCFullYear
 @methodOf Date#
 */
+
 /**
 Sets the hour for a specified date according to universal time.
 
@@ -3858,6 +4262,7 @@ secondsValue.
 @name setUTCHours
 @methodOf Date#
 */
+
 /**
 Sets the milliseconds for a specified date according to universal time.
 
@@ -3869,6 +4274,7 @@ milliseconds.
 @name setUTCMilliseconds
 @methodOf Date#
 */
+
 /**
 Sets the minutes for a specified date according to universal time.
 
@@ -3884,6 +4290,7 @@ secondsValue.
 @name setUTCMinutes
 @methodOf Date#
 */
+
 /**
 Sets the month for a specified date according to universal time.
 
@@ -3896,6 +4303,7 @@ January through December.
 @name setUTCMonth
 @methodOf Date#
 */
+
 /**
 Sets the seconds for a specified date according to universal time.
 
@@ -3907,6 +4315,7 @@ setUTCSeconds(<i>secondsValue</i>[, <em>msValue</em>])
 @name setUTCSeconds
 @methodOf Date#
 */
+
 /**
 Deprecated
 
@@ -3915,6 +4324,7 @@ Deprecated
 @name setYear
 @methodOf Date#
 */
+
 /**
 Returns the date portion of a Date object in human readable form in American
 English.
@@ -3924,6 +4334,7 @@ English.
 @name toDateString
 @methodOf Date#
 */
+
 /**
 Returns a JSON representation of the Date object.
 
@@ -3932,6 +4343,7 @@ Returns a JSON representation of the Date object.
 @name toJSON
 @methodOf Date#
 */
+
 /**
 Deprecated
 
@@ -3940,6 +4352,7 @@ Deprecated
 @name toGMTString
 @methodOf Date#
 */
+
 /**
 Converts a date to a string, returning the "date" portion using the operating
 system's locale's conventions.
@@ -3951,6 +4364,7 @@ toLocaleDateString()
 @name toLocaleDateString
 @methodOf Date#
 */
+
 /**
 Non-standard
 
@@ -3959,6 +4373,7 @@ Non-standard
 @name toLocaleFormat
 @methodOf Date#
 */
+
 /**
 Converts a date to a string, using the operating system's locale's conventions.
 
@@ -3969,6 +4384,7 @@ toLocaleString()
 @name toLocaleString
 @methodOf Date#
 */
+
 /**
 Converts a date to a string, returning the "time" portion using the current
 locale's conventions.
@@ -3978,6 +4394,7 @@ locale's conventions.
 @name toLocaleTimeString
 @methodOf Date#
 */
+
 /**
 Non-standard
 
@@ -3986,6 +4403,7 @@ Non-standard
 @name toSource
 @methodOf Date#
 */
+
 /**
 Returns a string representing the specified Date object.
 
@@ -3994,6 +4412,7 @@ Returns a string representing the specified Date object.
 @name toString
 @methodOf Date#
 */
+
 /**
 Returns the time portion of a Date object in human readable form in American
 English.
@@ -4003,6 +4422,7 @@ English.
 @name toTimeString
 @methodOf Date#
 */
+
 /**
 Converts a date to a string, using the universal time convention.
 
@@ -4011,6 +4431,7 @@ Converts a date to a string, using the universal time convention.
 @name toUTCString
 @methodOf Date#
 */
+
 /**
 Returns the primitive value of a Date object.
 
@@ -4020,7 +4441,10 @@ valueOf()
 
 @name valueOf
 @methodOf Date#
-*/;
+*/
+
+
+;
 /*!
 Math.uuid.js (v1.4)
 http://www.broofa.com
@@ -4119,6 +4543,7 @@ Generate a random uuid.
 })();;
 ;
 ;
+
 /**
 The Bounded module is used to provide basic data about the
 location and dimensions of the including object. This module is included
@@ -4151,11 +4576,12 @@ Bounded module
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Bounded;
+*/
+
+var Bounded;
+
 Bounded = function(I, self) {
-  if (I == null) {
-    I = {};
-  }
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     x: 0,
     y: 0,
@@ -4218,7 +4644,7 @@ Bounded = function(I, self) {
     @returns {Point} The position of this object
     */
     collides: function(bounds) {
-      return Collision.rectangular(I, bounds);
+      return Collision.rectangular(self.bounds(), bounds);
     },
     /**
     This returns a modified bounds based on the collision margin.
@@ -4376,13 +4802,13 @@ Bounded = function(I, self) {
       return circle;
     }
   };
-};;
+};
+;
 var Camera;
+
 Camera = function(I) {
-  var currentObject, currentType, filterObjects, filterTransform, followTypes, objectFilters, self, transformCamera, transformFilters;
-  if (I == null) {
-    I = {};
-  }
+  var currentObject, currentType, focusOn, followTypes, objectFilters, self, transformFilters;
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     cameraBounds: Rectangle({
       x: 0,
@@ -4398,31 +4824,14 @@ Camera = function(I) {
     }),
     deadzone: Point(0, 0),
     zoom: 1,
-    cameraRotation: 0,
     transform: Matrix(),
     scroll: Point(0, 0)
   });
   currentType = "centered";
   currentObject = null;
   objectFilters = [];
-  filterObjects = function(objects) {
-    var filter, _i, _len;
-    for (_i = 0, _len = objectFilters.length; _i < _len; _i++) {
-      filter = objectFilters[_i];
-      objects = filter(objects);
-    }
-    return objects;
-  };
   transformFilters = [];
-  filterTransform = function(transform) {
-    var filter, _i, _len;
-    for (_i = 0, _len = transformFilters.length; _i < _len; _i++) {
-      filter = transformFilters[_i];
-      transform = filter(transform);
-    }
-    return transform;
-  };
-  transformCamera = function(object) {
+  focusOn = function(object) {
     var centerOffset, centerRect, deadzone, objectCenter;
     objectCenter = object.center();
     centerOffset = objectCenter.subtract(I.screen.width / 2, I.screen.height / 2);
@@ -4433,30 +4842,30 @@ Camera = function(I) {
       width: 2 * deadzone.x,
       height: 2 * deadzone.y
     });
-    I.scroll = Point(I.scroll.x.clamp(centerRect.left, centerRect.right).clamp(I.cameraBounds.left, I.cameraBounds.right - I.screen.width), I.scroll.y.clamp(centerRect.top, centerRect.bottom).clamp(I.cameraBounds.top, I.cameraBounds.bottom - I.screen.height));
-    return I.transform = Matrix.translate(-I.scroll.x, -I.scroll.y).scale(I.zoom, I.zoom, objectCenter).rotate(I.cameraRotation, objectCenter);
+    return I.scroll = Point(I.scroll.x.clamp(centerRect.left, centerRect.right).clamp(I.cameraBounds.left, I.cameraBounds.right - I.screen.width), I.scroll.y.clamp(centerRect.top, centerRect.bottom).clamp(I.cameraBounds.top, I.cameraBounds.bottom - I.screen.height));
   };
   followTypes = {
     centered: function(object) {
       I.deadzone = Point(0, 0);
-      return transformCamera(object);
+      return focusOn(object);
     },
     topdown: function(object) {
       var helper;
-      helper = Math.max(I.cameraBounds.width, I.cameraBounds.height) / 4;
+      helper = Math.max(I.screen.width, I.screen.height) / 4;
       I.deadzone = Point(helper, helper);
-      return transformCamera(object);
+      return focusOn(object);
     },
     platformer: function(object) {
       var height, width;
-      width = I.cameraBounds.width / 8;
-      height = I.cameraBounds.height / 3;
+      width = I.screen.width / 8;
+      height = I.screen.height / 3;
       I.deadzone = Point(width, height);
-      return transformCamera(object);
+      return focusOn(object);
     }
   };
   self = Core(I).extend({
     follow: function(object, type) {
+      if (type == null) type = "centered";
       currentObject = object;
       currentType = type;
       return I.scroll = object.center();
@@ -4468,21 +4877,18 @@ Camera = function(I) {
       return transformFilters.push(fn);
     }
   });
-  self.attrAccessor("transform");
+  self.attrAccessor("transform", "scroll");
   self.include(Bindable);
   self.bind("afterUpdate", function() {
-    if (currentObject) {
-      return followTypes[currentType](currentObject);
-    }
+    if (currentObject) followTypes[currentType](currentObject);
+    return I.transform = Matrix.translate(-I.scroll.x, -I.scroll.y);
   });
   self.bind("draw", function(canvas, objects) {
     return canvas.withTransform(Matrix.translate(I.screen.x, I.screen.y), function(canvas) {
       var transform;
-      canvas.context().beginPath();
-      canvas.context().rect(0, 0, I.screen.width, I.screen.height);
-      canvas.context().clip();
-      objects = filterObjects(objects);
-      transform = filterTransform(self.transform().copy());
+      canvas.clip(0, 0, I.screen.width, I.screen.height);
+      objects = objectFilters.pipeline(objects);
+      transform = transformFilters.pipeline(self.transform().copy());
       canvas.withTransform(transform, function(canvas) {
         self.trigger("beforeDraw", canvas);
         return objects.invoke("draw", canvas);
@@ -4491,13 +4897,15 @@ Camera = function(I) {
     });
   });
   self.include(Camera.ZSort);
-  self.include(Camera.Rotate);
   self.include(Camera.Zoom);
+  self.include(Camera.Rotate);
   self.include(Camera.Shake);
   self.include(Camera.Flash);
   self.include(Camera.Fade);
   return self;
-};;
+};
+;
+
 /**
 The <code>Fade</code> module provides convenience methods for accessing common Engine.Flash presets.
 
@@ -4507,7 +4915,9 @@ The <code>Fade</code> module provides convenience methods for accessing common E
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
 @see Camera.Flash
-*/Camera.Fade = function(I, self) {
+*/
+
+Camera.Fade = function(I, self) {
   var configureFade;
   configureFade = function(duration, color, alpha) {
     I.flashDuration = duration;
@@ -4534,12 +4944,8 @@ The <code>Fade</code> module provides convenience methods for accessing common E
     @param {Color} [color="black"] The color to fade from
     */
     fadeIn: function(duration, color) {
-      if (duration == null) {
-        duration = 30;
-      }
-      if (color == null) {
-        color = 'black';
-      }
+      if (duration == null) duration = 30;
+      if (color == null) color = 'black';
       return configureFade(duration, color, 0);
     },
     /**
@@ -4560,16 +4966,14 @@ The <code>Fade</code> module provides convenience methods for accessing common E
     @param {Color} [color="transparent"] The color to fade to
     */
     fadeOut: function(duration, color) {
-      if (duration == null) {
-        duration = 30;
-      }
-      if (color == null) {
-        color = 'transparent';
-      }
+      if (duration == null) duration = 30;
+      if (color == null) color = 'transparent';
       return configureFade(duration, color, 1);
     }
   };
-};;
+};
+;
+
 /**
 The <code>Flash</code> module allows you to flash a color onscreen and then fade to transparent over a time period. 
 This is nice for lightning type effects or to accentuate major game events.
@@ -4579,22 +4983,26 @@ This is nice for lightning type effects or to accentuate major game events.
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the camera
-*/Camera.Flash = function(I, self) {
+*/
+
+Camera.Flash = function(I, self) {
+  var defaultParams;
   Object.reverseMerge(I, {
     flashColor: Color(0, 0, 0, 0),
     flashDuration: 12,
     flashCooldown: 0,
     flashTargetAlpha: 0
   });
+  defaultParams = {
+    color: 'white',
+    duration: 12,
+    targetAlpha: 0
+  };
   self.bind('afterUpdate', function() {
     if (I.flashCooldown > 0) {
       I.flashColor.a = I.flashColor.a.approach(I.flashTargetAlpha, 1 / I.flashDuration).clamp(0, 1);
-      if (I.flashColor.a < 0.00001) {
-        I.flashColor.a = 0;
-      }
-      if (I.flashColor.a > 0.9999) {
-        I.flashColor.a = 1;
-      }
+      if (I.flashColor.a < 0.00001) I.flashColor.a = 0;
+      if (I.flashColor.a > 0.9999) I.flashColor.a = 1;
       return I.flashCooldown = I.flashCooldown.approach(0, 1);
     }
   });
@@ -4610,10 +5018,15 @@ This is nice for lightning type effects or to accentuate major game events.
     camera.flash()
     # => Sets the flash effect variables to their default state. This will cause a white flash that will turn transparent in the next 12 frames.
 
-    camera.flash('green', 30)
+    camera.flash
+      color: 'green'
+      duration: 30
     # => This flash effect will start off green and fade to transparent over 30 frames.
 
-    camera.flash(Color(255, 0, 0, 0), 20, 1)
+    camera.flash
+      color: Color(255, 0, 0, 0)
+      duration: 20
+      targetAlpha: 1
     # => This flash effect will start off transparent and move toward red over 20 frames 
     </pre></code>  
 
@@ -4623,43 +5036,47 @@ This is nice for lightning type effects or to accentuate major game events.
     @param {Number} [duration=12] How long the effect lasts
     @param {Number} [targetAlpha=0] The alpha value to fade to. By default, this is set to 0, which fades the color to transparent.
     */
-    flash: function(color, duration, targetAlpha) {
-      if (color == null) {
-        color = 'white';
-      }
-      if (duration == null) {
-        duration = 12;
-      }
-      if (targetAlpha == null) {
-        targetAlpha = 0;
-      }
+    flash: function(options) {
+      var color, duration, targetAlpha;
+      if (options == null) options = {};
+      Object.reverseMerge(options, defaultParams);
+      color = options.color, duration = options.duration, targetAlpha = options.targetAlpha;
       I.flashColor = Color(color);
       I.flashTargetAlpha = targetAlpha;
       I.flashCooldown = duration;
-      return I.flashDuration = duration;
+      I.flashDuration = duration;
+      return self;
     }
   };
-};;
+};
+;
+
 Camera.Rotate = function(I, self) {
+  Object.reverseMerge(I, {
+    rotation: 0
+  });
+  self.transformFilterChain(function(transform) {
+    return transform.rotate(I.rotation);
+  });
+  self.attrAccessor("rotation");
   return {
     rotate: function(amount) {
-      return self.rotation(I.cameraRotation + amount);
-    },
-    rotation: function(value) {
-      if (value != null) {
-        I.cameraRotation = value;
-        return self;
-      } else {
-        return I.cameraRotation;
-      }
+      return self.rotation(I.rotation + amount);
     }
   };
-};;
+};
+;
+
 Camera.Shake = function(I, self) {
+  var defaultParams;
   Object.reverseMerge(I, {
     shakeIntensity: 20,
     shakeCooldown: 0
   });
+  defaultParams = {
+    duration: 10,
+    intensity: 20
+  };
   self.bind("afterUpdate", function() {
     return I.shakeCooldown = I.shakeCooldown.approach(0, 1);
   });
@@ -4671,24 +5088,27 @@ Camera.Shake = function(I, self) {
     return transform;
   });
   return {
-    shake: function(duration, intensity) {
-      if (duration == null) {
-        duration = 10;
-      }
-      if (intensity == null) {
-        intensity = 20;
-      }
+    shake: function(options) {
+      var duration, intensity, _ref;
+      if (options == null) options = {};
+      _ref = Object.reverseMerge(options, defaultParams), duration = _ref.duration, intensity = _ref.intensity;
       I.shakeCooldown = duration * I.zoom;
-      return I.shakeIntensity = intensity * I.zoom;
+      I.shakeIntensity = intensity * I.zoom;
+      return self;
     }
   };
-};;
+};
+;
+
 Camera.Zoom = function(I, self) {
   var clampZoom;
   Object.reverseMerge(I, {
     maxZoom: 10,
     minZoom: 0.1,
     zoom: 1
+  });
+  self.transformFilterChain(function(transform) {
+    return transform.scale(I.zoom, I.zoom);
   });
   clampZoom = function(value) {
     return value.clamp(I.minZoom, I.maxZoom);
@@ -4709,7 +5129,9 @@ Camera.Zoom = function(I, self) {
       }
     }
   };
-};;
+};
+;
+
 Camera.ZSort = function(I, self) {
   Object.reverseMerge(I, {
     zSort: true
@@ -4723,7 +5145,9 @@ Camera.ZSort = function(I, self) {
     return objects;
   });
   return {};
-};;
+};
+;
+
 (function() {
   /**
   Use this to handle generic rectangular collisions among game object a-la Flixel.
@@ -4731,7 +5155,8 @@ Camera.ZSort = function(I, self) {
   @name Collidable
   @module
   @constructor
-  */  var ANY, CEILING, Collidable, DOWN, FLOOR, LEFT, NONE, RIGHT, UP, WALL, _ref, _ref2;
+  */
+  var ANY, CEILING, Collidable, DOWN, FLOOR, LEFT, NONE, RIGHT, UP, WALL, _ref, _ref2;
   Collidable = function(I, self) {
     Object.reverseMerge(I, {
       allowCollisions: ANY,
@@ -4758,7 +5183,6 @@ Camera.ZSort = function(I, self) {
   };
   (typeof exports !== "undefined" && exports !== null ? exports : this)["Collidable"] = Collidable;
   /**
-
   */
   _ref = Object.extend(Collidable, {
     NONE: 0x0000,
@@ -4776,9 +5200,7 @@ Camera.ZSort = function(I, self) {
   return Object.extend(Collidable, {
     separate: function(a, b) {
       var aBounds, aMass, aVelocity, average, bBounds, bMass, bVelocity, deltaVelocity, normal, overlap, pushA, pushB, relativeVelocity, totalMass;
-      if (a.immovable() && b.immovable()) {
-        return;
-      }
+      if (a.immovable() && b.immovable()) return;
       aBounds = a.bounds();
       bBounds = b.bounds();
       aVelocity = a.velocity();
@@ -4848,7 +5270,9 @@ Camera.ZSort = function(I, self) {
       }
     }
   });
-})();;
+})();
+;
+
 (function() {
   var Collision, collides;
   collides = function(a, b) {
@@ -4862,53 +5286,51 @@ Camera.ZSort = function(I, self) {
   */
   Collision = {
     /**
-      Collision holds many useful class methods for checking geometric overlap of various objects.
+    Collision holds many useful class methods for checking geometric overlap of various objects.
 
-      <code><pre>
-      player = engine.add
-        class: "Player"
-        x: 0
-        y: 0
-        width: 10
-        height: 10
+    <code><pre>
+    player = engine.add
+      class: "Player"
+      x: 0
+      y: 0
+      width: 10
+      height: 10
 
-      enemy = engine.add
-        class: "Enemy"
-        x: 5
-        y: 5
-        width: 10
-        height: 10
+    enemy = engine.add
+      class: "Enemy"
+      x: 5
+      y: 5
+      width: 10
+      height: 10
 
-      enemy2 = engine.add
-        class: "Enemy"
-        x: -5
-        y: -5
-        width: 10
-        height: 10
+    enemy2 = engine.add
+      class: "Enemy"
+      x: -5
+      y: -5
+      width: 10
+      height: 10
 
-      Collision.collide(player, enemy, (p, e) -> ...)
-      # => callback is called once
+    Collision.collide(player, enemy, (p, e) -> ...)
+    # => callback is called once
 
-      Collision.collide(player, [enemy, enemy2], (p, e) -> ...)
-      # => callback is called twice
+    Collision.collide(player, [enemy, enemy2], (p, e) -> ...)
+    # => callback is called twice
 
-      Collision.collide("Player", "Enemy", (p, e) -> ...)
-      # => callback is also called twice
-      </pre></code>
+    Collision.collide("Player", "Enemy", (p, e) -> ...)
+    # => callback is also called twice
+    </pre></code>
 
-      @name collide
-      @methodOf Collision
-      @param {Object|Array|String} groupA An object or set of objects to check collisions with
-      @param {Object|Array|String} groupB An objcet or set of objects to check collisions with
-      @param {Function} callback The callback to call when an object of groupA collides
-      with an object of groupB: (a, b) ->
-      @param {Function} [detectionMethod] An optional detection method to determine when two 
-      objects are colliding.
-      */
+    @name collide
+    @methodOf Collision
+    @param {Object|Array|String} groupA An object or set of objects to check collisions with
+    @param {Object|Array|String} groupB An object or set of objects to check collisions with
+    @param {Function} callback The callback to call when an object of groupA collides
+    with an object of groupB: (a, b) ->
+    @param {Function} [detectionMethod] An optional detection method to determine when two 
+    objects are colliding.
+    */
     collide: function(groupA, groupB, callback, detectionMethod) {
-      if (detectionMethod == null) {
-        detectionMethod = collides;
-      }
+      if (detectionMethod == null) detectionMethod = collides;
       if (Object.isString(groupA)) {
         groupA = engine.find(groupA);
       } else {
@@ -4921,9 +5343,7 @@ Camera.ZSort = function(I, self) {
       }
       return groupA.each(function(a) {
         return groupB.each(function(b) {
-          if (detectionMethod(a, b)) {
-            return callback(a, b);
-          }
+          if (detectionMethod(a, b)) return callback(a, b);
         });
       });
     },
@@ -5027,16 +5447,12 @@ Camera.ZSort = function(I, self) {
       target = target.position();
       laserToTarget = target.subtract(source);
       projectionLength = direction.dot(laserToTarget);
-      if (projectionLength < 0) {
-        return false;
-      }
+      if (projectionLength < 0) return false;
       projection = direction.scale(projectionLength);
       intersection = source.add(projection);
       intersectionToTarget = target.subtract(intersection);
       intersectionToTargetLength = intersectionToTarget.length();
-      if (intersectionToTargetLength < radius) {
-        hit = true;
-      }
+      if (intersectionToTargetLength < radius) hit = true;
       if (hit) {
         dt = Math.sqrt(radius * radius - intersectionToTargetLength * intersectionToTargetLength);
         return hit = direction.scale(projectionLength - dt).add(source);
@@ -5102,24 +5518,22 @@ Camera.ZSort = function(I, self) {
       if (t > 0) {
         areaPQ0 = direction.cross(p0.subtract(source));
         areaPQ1 = direction.cross(p1.subtract(source));
-        if (areaPQ0 * areaPQ1 < 0) {
-          return hit = direction.scale(t).add(source);
-        }
+        if (areaPQ0 * areaPQ1 < 0) return hit = direction.scale(t).add(source);
       }
     }
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Collision"] = Collision;
-})();;
+})();
+;
 var __slice = Array.prototype.slice;
+
 (function() {
   var Color, channelize, hslParser, hslToRgb, hsvToRgb, lookup, names, normalizeKey, parseHSL, parseHex, parseRGB, rgbParser;
   rgbParser = /^rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),?\s*(\d?\.?\d*)?\)$/;
   hslParser = /^hsla?\((\d{1,3}),\s*(\d?\.?\d*),\s*(\d?\.?\d*),?\s*(\d?\.?\d*)?\)$/;
   parseRGB = function(colorString) {
     var channel, channels, parsedColor;
-    if (!(channels = rgbParser.exec(colorString))) {
-      return;
-    }
+    if (!(channels = rgbParser.exec(colorString))) return;
     parsedColor = (function() {
       var _i, _len, _ref, _results;
       _ref = channels.slice(1, 5);
@@ -5130,9 +5544,7 @@ var __slice = Array.prototype.slice;
       }
       return _results;
     })();
-    if (isNaN(parsedColor[3])) {
-      parsedColor[3] = 1;
-    }
+    if (isNaN(parsedColor[3])) parsedColor[3] = 1;
     return parsedColor;
   };
   parseHex = function(hexString) {
@@ -5177,9 +5589,7 @@ var __slice = Array.prototype.slice;
   };
   parseHSL = function(colorString) {
     var channel, channels, parsedColor;
-    if (!(channels = hslParser.exec(colorString))) {
-      return;
-    }
+    if (!(channels = hslParser.exec(colorString))) return;
     parsedColor = (function() {
       var _i, _len, _ref, _results;
       _ref = channels.slice(1, 5);
@@ -5190,18 +5600,14 @@ var __slice = Array.prototype.slice;
       }
       return _results;
     })();
-    if (isNaN(parsedColor[3])) {
-      parsedColor[3] = 1;
-    }
+    if (isNaN(parsedColor[3])) parsedColor[3] = 1;
     return hslToRgb(parsedColor);
   };
   hsvToRgb = function(hsv) {
     var a, b, f, g, h, i, p, q, r, rgb, s, t, v;
     r = g = b = null;
     h = hsv[0], s = hsv[1], v = hsv[2], a = hsv[3];
-    if (a == null) {
-      a = 1;
-    }
+    if (a == null) a = 1;
     i = (h / 60).floor();
     f = h / 60 - i;
     p = v * (1 - s);
@@ -5245,21 +5651,13 @@ var __slice = Array.prototype.slice;
     var a, b, channel, g, h, hueToRgb, l, p, q, r, rgbMap, s;
     h = hsl[0], s = hsl[1], l = hsl[2], a = hsl[3];
     h = h % 360;
-    if (a == null) {
-      a = 1;
-    }
+    if (a == null) a = 1;
     r = g = b = null;
     hueToRgb = function(p, q, hue) {
       hue = hue.mod(360);
-      if (hue < 60) {
-        return p + (q - p) * (hue / 60);
-      }
-      if (hue < 180) {
-        return q;
-      }
-      if (hue < 240) {
-        return p + (q - p) * ((240 - hue) / 60);
-      }
+      if (hue < 60) return p + (q - p) * (hue / 60);
+      if (hue < 180) return q;
+      if (hue < 240) return p + (q - p) * ((240 - hue) / 60);
       return p;
     };
     if (s === 0) {
@@ -5288,9 +5686,7 @@ var __slice = Array.prototype.slice;
   };
   channelize = function(color, alpha) {
     var channel, result;
-    if (color.channels != null) {
-      return color.channels();
-    }
+    if (color.channels != null) return color.channels();
     if (Object.isArray(color)) {
       if (alpha != null) {
         alpha = parseFloat(alpha);
@@ -5311,9 +5707,7 @@ var __slice = Array.prototype.slice;
       })()).concat(alpha);
     } else {
       result = lookup[normalizeKey(color)] || parseHex(color) || parseRGB(color) || parseHSL(color);
-      if (alpha != null) {
-        result[3] = parseFloat(alpha);
-      }
+      if (alpha != null) result[3] = parseFloat(alpha);
     }
     return result;
   };
@@ -5384,9 +5778,7 @@ var __slice = Array.prototype.slice;
           return channelize(args);
       }
     })();
-    if (!parsedColor) {
-      throw "" + (args.join(',')) + " is an unknown color";
-    }
+    if (!parsedColor) throw "" + (args.join(',')) + " is an unknown color";
     return {
       __proto__: Color.prototype,
       r: parsedColor[0].round(),
@@ -5397,30 +5789,30 @@ var __slice = Array.prototype.slice;
   };
   Color.prototype = {
     /**
-      Returns the rgba color channels in an array.
+    Returns the rgba color channels in an array.
 
-      <code><pre>
-      transparent =  Color()
+    <code><pre>
+    transparent =  Color()
 
-      transparent.channels()
-      # => [0, 0, 0, 0]
+    transparent.channels()
+    # => [0, 0, 0, 0]
 
-      red = Color("#FF0000")
+    red = Color("#FF0000")
 
-      red.channels()
-      # => [255, 0, 0, 1]
+    red.channels()
+    # => [255, 0, 0, 1]
 
-      rgb = Color(200, 34, 2)
+    rgb = Color(200, 34, 2)
 
-      rgb.channels()
-      # => [200, 34, 2, 1]
-      </pre></code>
+    rgb.channels()
+    # => [200, 34, 2, 1]
+    </pre></code>
 
-      @name channels
-      @methodOf Color#
+    @name channels
+    @methodOf Color#
 
-      @returns {Array} Array of r, g, b, and alpha values of the color
-      */
+    @returns {Array} Array of r, g, b, and alpha values of the color
+    */
     channels: function() {
       return [this.r, this.g, this.b, this.a];
     },
@@ -5700,7 +6092,7 @@ var __slice = Array.prototype.slice;
     @methodOf Color#
     @param {Number} [newVal] the new hue value
 
-    @returns {Color|Number} returns the color object if you pass a new hue value and returns the hue otherwise 
+    @returns {Color|Number} returns the color object if you pass a new hue value and returns the hue otherwise
     */
     hue: function(newVal) {
       var hsl, _ref;
@@ -5739,7 +6131,7 @@ var __slice = Array.prototype.slice;
     @methodOf Color#
     @param {Number} [newVal] the new lightness value
 
-    @returns {Color|Number} returns the color object if you pass a new lightness value and returns the lightness otherwise 
+    @returns {Color|Number} returns the color object if you pass a new lightness value and returns the lightness otherwise
     */
     lightness: function(newVal) {
       var hsl, _ref;
@@ -6052,7 +6444,7 @@ var __slice = Array.prototype.slice;
     @methodOf Color#
     @param {Number} [newVal] the new saturation value
 
-    @returns {Color|Number} returns the color object if you pass a new saturation value and returns the saturation otherwise 
+    @returns {Color|Number} returns the color object if you pass a new saturation value and returns the saturation otherwise
     */
     saturation: function(newVal, mode) {
       var hsl, hsv, _ref, _ref2;
@@ -6095,7 +6487,7 @@ var __slice = Array.prototype.slice;
     @methodOf Color#
     @param {Boolean} [leadingHash] if passed as false excludes the leading `#` from the string
 
-    @returns {String} returns the Hex representation of the color 
+    @returns {String} returns the Hex representation of the color
     */
     toHex: function(leadingHash) {
       var hexFromNumber, padString;
@@ -6130,7 +6522,7 @@ var __slice = Array.prototype.slice;
     @name toHsl
     @methodOf Color#
 
-    @returns {Array} An array of the hue, saturation, lightness, and alpha values of the color. 
+    @returns {Array} An array of the hue, saturation, lightness, and alpha values of the color.
     */
     toHsl: function() {
       var b, channel, chroma, g, hue, lightness, max, min, r, saturation, _ref, _ref2;
@@ -6205,7 +6597,7 @@ var __slice = Array.prototype.slice;
     @name toString
     @methodOf Color#
 
-    @returns {String} The rgba string representation of the color 
+    @returns {String} The rgba string representation of the color
     */
     toString: function() {
       return "rgba(" + this.r + ", " + this.g + ", " + this.b + ", " + this.a + ")";
@@ -6237,7 +6629,7 @@ var __slice = Array.prototype.slice;
     @name transparentize
     @methodOf Color#
 
-    @returns {Color} A copy of the calling color with its alpha reduced by `amount`   
+    @returns {Color} A copy of the calling color with its alpha reduced by `amount`
     */
     transparentize: function(amount) {
       return this.copy().transparentize$(amount);
@@ -6261,7 +6653,7 @@ var __slice = Array.prototype.slice;
     @name transparentize$
     @methodOf Color#
 
-    @returns {Color} The calling color with its alpha reduced by `amount`   
+    @returns {Color} The calling color with its alpha reduced by `amount`
     */
     transparentize$: function(amount) {
       this.a = (this.a - amount).clamp(0, 1);
@@ -6294,7 +6686,7 @@ var __slice = Array.prototype.slice;
     @name opacify
     @methodOf Color#
 
-    @returns {Color} A copy of the calling color with its alpha increased by `amount`   
+    @returns {Color} A copy of the calling color with its alpha increased by `amount`
     */
     opacify: function(amount) {
       return this.copy().opacify$(amount);
@@ -6318,7 +6710,7 @@ var __slice = Array.prototype.slice;
     @name opacify$
     @methodOf Color#
 
-    @returns {Color} The calling color with its alpha increased by `amount`   
+    @returns {Color} The calling color with its alpha increased by `amount`
     */
     opacify$: function(amount) {
       this.a = (this.a + amount).clamp(0, 1);
@@ -6344,7 +6736,7 @@ var __slice = Array.prototype.slice;
   @name random
   @methodOf Color
 
-  @returns {Color} A random color. 
+  @returns {Color} A random color.
   */
   Color.random = function() {
     return Color(rand(256), rand(256), rand(256));
@@ -6376,7 +6768,7 @@ var __slice = Array.prototype.slice;
   @param {Color} color2 the second color to mix
   @param {Number} amount the ratio to mix the colors 
 
-  @returns {Color} A new color that is the two colors mixed at the ratio defined by `amount` 
+  @returns {Color} A new color that is the two colors mixed at the ratio defined by `amount`
   */
   Color.mix = function(color1, color2, amount) {
     var newColors;
@@ -6387,7 +6779,9 @@ var __slice = Array.prototype.slice;
     return Color(newColors);
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Color"] = Color;
-})();;
+})();
+;
+
 /**
 The Drawable module is used to provide a simple draw method to the including
 object.
@@ -6425,6 +6819,7 @@ engine.bind 'draw', (canvas) ->
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
 */
+
 /**
 Triggered every time the object should be drawn. A canvas is passed as
 the first argument. 
@@ -6450,6 +6845,7 @@ player.bind "draw", (canvas) ->
 @event
 @param {PowerCanvas} canvas A reference to the canvas to draw on.
 */
+
 /**
 Triggered before the object should be drawn. A canvas is passed as
 the first argument. This does not apply the current transform.
@@ -6459,6 +6855,7 @@ the first argument. This does not apply the current transform.
 @event
 @param {PowerCanvas} canvas A reference to the canvas to draw on.
 */
+
 /**
 Triggered after the object should be drawn. A canvas is passed as
 the first argument. This applies the current transform.
@@ -6467,7 +6864,10 @@ the first argument. This applies the current transform.
 @methodOf Drawable#
 @event
 @param {PowerCanvas} canvas A reference to the canvas to draw on.
-*/var Drawable;
+*/
+
+var Drawable;
+
 Drawable = function(I, self) {
   var _ref;
   I || (I = {});
@@ -6500,9 +6900,7 @@ Drawable = function(I, self) {
       if (sprite.draw != null) {
         sprite.draw(canvas, -sprite.width / 2, -sprite.height / 2);
       } else {
-        if (typeof warn === "function") {
-          warn("Sprite has no draw method!");
-        }
+        if (typeof warn === "function") warn("Sprite has no draw method!");
       }
     } else {
       if (I.radius != null) {
@@ -6556,22 +6954,21 @@ Drawable = function(I, self) {
       var center, transform;
       center = self.center();
       transform = Matrix.translation(center.x, center.y);
-      if (I.rotation) {
-        transform = transform.concat(Matrix.rotation(I.rotation));
+      if ((I.scale != null) && I.scale !== 1) {
+        transform = transform.concat(Matrix.scale(I.scale));
       }
-      if (I.hflip) {
-        transform = transform.concat(Matrix.HORIZONTAL_FLIP);
-      }
-      if (I.vflip) {
-        transform = transform.concat(Matrix.VERTICAL_FLIP);
-      }
+      if (I.rotation) transform = transform.concat(Matrix.rotation(I.rotation));
+      if (I.hflip) transform = transform.concat(Matrix.HORIZONTAL_FLIP);
+      if (I.vflip) transform = transform.concat(Matrix.VERTICAL_FLIP);
       if (I.spriteOffset) {
         transform = transform.concat(Matrix.translation(I.spriteOffset.x, I.spriteOffset.y));
       }
       return transform;
     }
   };
-};;
+};
+;
+
 /**
 The Durable module deactives a <code>GameObject</code> after a specified duration.
 If a duration is specified the object will update that many times. If -1 is
@@ -6600,31 +6997,33 @@ enemy.I.active
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Durable;
-Durable = function(I) {
+*/
+
+var Durable;
+
+Durable = function(I, self) {
   Object.reverseMerge(I, {
     duration: -1
   });
-  return {
-    before: {
-      update: function() {
-        if (I.duration !== -1 && I.age >= I.duration) {
-          return I.active = false;
-        }
-      }
-    }
-  };
-};;
+  self.bind("update", function() {
+    if (I.duration !== -1 && I.age >= I.duration) return I.active = false;
+  });
+  return {};
+};
+;
 var Emitter;
+
 Emitter = function(I) {
   var self;
   self = GameObject(I);
   return self.include(Emitterable);
-};;
+};
+;
 var Emitterable;
+
 Emitterable = function(I, self) {
-  var n, particles;
-  I || (I = {});
+  var n;
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     batchSize: 1,
     emissionRate: 1,
@@ -6632,6 +7031,7 @@ Emitterable = function(I, self) {
     width: 0,
     height: 0,
     generator: {},
+    particles: [],
     particleCount: Infinity,
     particleData: {
       acceleration: Point(0, 0.1),
@@ -6645,50 +7045,44 @@ Emitterable = function(I, self) {
       sprite: false,
       spriteName: false,
       velocity: Point(-0.25, 1),
-      width: 2
+      width: 2,
+      x: 0,
+      y: 0
     }
   });
-  particles = [];
   n = 0;
-  return {
-    before: {
-      draw: function(canvas) {
-        return particles.invoke("draw", canvas);
-      },
-      update: function() {
-        I.batchSize.times(function() {
-          var center, key, particleProperties, value, _ref;
-          if (n < I.particleCount && rand() < I.emissionRate) {
-            center = self.center();
-            particleProperties = Object.reverseMerge({
-              x: center.x,
-              y: center.y
-            }, I.particleData);
-            _ref = I.generator;
-            for (key in _ref) {
-              value = _ref[key];
-              if (I.generator[key].call) {
-                particleProperties[key] = I.generator[key](n, I);
-              } else {
-                particleProperties[key] = I.generator[key];
-              }
-            }
-            particleProperties.x += particleProperties.offset.x;
-            particleProperties.y += particleProperties.offset.y;
-            particles.push(GameObject(particleProperties));
-            return n += 1;
+  self.bind('draw', function(canvas) {
+    return I.particles.invoke("draw", canvas);
+  });
+  self.bind('update', function() {
+    I.batchSize.times(function() {
+      var key, particleProperties, value, _ref;
+      if (n < I.particleCount && rand() < I.emissionRate) {
+        particleProperties = Object.extend({}, I.particleData);
+        _ref = I.generator;
+        for (key in _ref) {
+          value = _ref[key];
+          if (I.generator[key].call) {
+            particleProperties[key] = I.generator[key](n, I);
+          } else {
+            particleProperties[key] = I.generator[key];
           }
-        });
-        particles = particles.select(function(particle) {
-          return particle.update();
-        });
-        if (n === I.particleCount && !particles.length) {
-          return I.active = false;
         }
+        particleProperties.x += particleProperties.offset.x;
+        particleProperties.y += particleProperties.offset.y;
+        I.particles.push(GameObject(particleProperties));
+        return n += 1;
       }
-    }
-  };
-};;
+    });
+    I.particles = I.particles.select(function(particle) {
+      return particle.update();
+    });
+    if (n === I.particleCount && !I.particles.length) return I.active = false;
+  });
+  return {};
+};
+;
+
 (function() {
   var Engine, defaults;
   defaults = {
@@ -6714,7 +7108,7 @@ Emitterable = function(I, self) {
 
   @name Engine
   @constructor
-  @param {Object} I Instance variables of the engine 
+  @param {Object} I Instance variables of the engine
   */
   /**
   Observe or modify the 
@@ -6795,16 +7189,13 @@ Emitterable = function(I, self) {
   @name overlay
   @methodOf Engine#
   @event
-  @params {PixieCanvas} canvas A reference to the canvas to draw on. 
+  @params {PixieCanvas} canvas A reference to the canvas to draw on.
   */
   Engine = function(I) {
-    var animLoop, defaultModules, draw, frameAdvance, lastStepTime, modules, queuedObjects, running, self, startTime, step, update;
-    I || (I = {});
-    Object.reverseMerge(I, {
-      objects: []
-    }, defaults);
+    var animLoop, defaultModules, draw, frameAdvance, lastStepTime, modules, running, self, startTime, step, update;
+    if (I == null) I = {};
+    Object.reverseMerge(I, defaults);
     frameAdvance = false;
-    queuedObjects = [];
     running = false;
     startTime = +new Date();
     lastStepTime = -Infinity;
@@ -6818,9 +7209,7 @@ Emitterable = function(I, self) {
         lastStepTime = timestamp - Math.min(remainder, msPerFrame);
         step();
       }
-      if (running) {
-        return window.requestAnimationFrame(animLoop);
-      }
+      if (running) return window.requestAnimationFrame(animLoop);
     };
     update = function() {
       self.trigger("beforeUpdate");
@@ -6829,9 +7218,7 @@ Emitterable = function(I, self) {
     };
     draw = function() {
       var canvas;
-      if (!(canvas = I.canvas)) {
-        return;
-      }
+      if (!(canvas = I.canvas)) return;
       self.trigger("beforeDraw", canvas);
       self.trigger("draw", canvas);
       return self.trigger("overlay", I.canvas);
@@ -6973,7 +7360,9 @@ Emitterable = function(I, self) {
     return self;
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Engine"] = Engine;
-})();;
+})();
+;
+
 /**
 This module clears or fills the canvas before drawing the scene.
 
@@ -6982,7 +7371,9 @@ This module clears or fills the canvas before drawing the scene.
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Clear = function(I, self) {
+*/
+
+Engine.Clear = function(I, self) {
   Object.reverseMerge(I, {
     backgroundColor: "#00010D",
     clear: false
@@ -6996,7 +7387,9 @@ This module clears or fills the canvas before drawing the scene.
     }
   });
   return {};
-};;
+};
+;
+
 /**
 The <code>Collision</code> module provides some simple collision detection methods to engine.
 
@@ -7005,7 +7398,9 @@ The <code>Collision</code> module provides some simple collision detection metho
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Collision = function(I, self) {
+*/
+
+Engine.Collision = function(I, self) {
   return {
     /**
     Detects collisions between a bounds and the game objects.
@@ -7017,7 +7412,7 @@ The <code>Collision</code> module provides some simple collision detection metho
     @returns {Boolean} true if the bounds object collides with any of the game objects, false otherwise.
     */
     collides: function(bounds, sourceObject) {
-      return I.objects.inject(false, function(collided, object) {
+      return self.objects().inject(false, function(collided, object) {
         return collided || (object.solid() && (object !== sourceObject) && object.collides(bounds));
       });
     },
@@ -7034,17 +7429,13 @@ The <code>Collision</code> module provides some simple collision detection metho
     collidesWith: function(bounds, sourceObject) {
       var collided;
       collided = [];
-      I.objects.each(function(object) {
-        if (!object.solid()) {
-          return;
-        }
+      self.objects().each(function(object) {
+        if (!object.solid()) return;
         if (object !== sourceObject && object.collides(bounds)) {
           return collided.push(object);
         }
       });
-      if (collided.length) {
-        return collided;
-      }
+      if (collided.length) return collided;
     },
     /**
     Detects collisions between a ray and the game objects.
@@ -7057,12 +7448,10 @@ The <code>Collision</code> module provides some simple collision detection metho
     */
     rayCollides: function(source, direction, sourceObject) {
       var hits, nearestDistance, nearestHit;
-      hits = I.objects.map(function(object) {
+      hits = self.objects().map(function(object) {
         var hit;
         hit = object.solid() && (object !== sourceObject) && Collision.rayRectangle(source, direction, object.centeredBounds());
-        if (hit) {
-          hit.object = object;
-        }
+        if (hit) hit.object = object;
         return hit;
       });
       nearestDistance = Infinity;
@@ -7077,7 +7466,9 @@ The <code>Collision</code> module provides some simple collision detection metho
       return nearestHit;
     }
   };
-};;
+};
+;
+
 /**
 The <code>Delay</code> module provides methods to trigger events after a number of steps have passed.
 
@@ -7086,7 +7477,9 @@ The <code>Delay</code> module provides methods to trigger events after a number 
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Delay = function(I, self) {
+*/
+
+Engine.Delay = function(I, self) {
   var delayedEvents;
   delayedEvents = [];
   self.bind('afterUpdate', function() {
@@ -7123,7 +7516,9 @@ The <code>Delay</code> module provides methods to trigger events after a number 
       return self;
     }
   };
-};;
+};
+;
+
 Engine.GameState = function(I, self) {
   var requestedState;
   Object.reverseMerge(I, {
@@ -7158,11 +7553,21 @@ Engine.GameState = function(I, self) {
       self.trigger("afterAdd", object);
       return object;
     },
-    cameras: function() {
-      return I.currentState.cameras();
+    camera: function(n) {
+      if (n == null) n = 0;
+      return self.cameras()[n];
     },
-    flash: function() {
-      return I.currentState.flash();
+    cameras: function(newCameras) {
+      if (newCameras != null) {
+        I.currentState.cameras(newCameras);
+        return self;
+      } else {
+        return I.currentState.cameras();
+      }
+    },
+    flash: function(options) {
+      if (options == null) options = {};
+      return self.camera(options.camera).flash(options);
     },
     objects: function() {
       return I.currentState.objects();
@@ -7170,8 +7575,9 @@ Engine.GameState = function(I, self) {
     setState: function(newState) {
       return requestedState = newState;
     },
-    shake: function() {
-      return I.currentState.shake();
+    shake: function(options) {
+      if (options == null) options = {};
+      return self.camera(options.camera).shake(options);
     },
     saveState: function() {
       return I.currentState.saveState();
@@ -7183,7 +7589,9 @@ Engine.GameState = function(I, self) {
       return I.currentState.reload();
     }
   };
-};;
+};
+;
+
 /**
 This module sets up the keyboard inputs for each engine update.
 
@@ -7192,12 +7600,16 @@ This module sets up the keyboard inputs for each engine update.
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Keyboard = function(I, self) {
+*/
+
+Engine.Keyboard = function(I, self) {
   self.bind("beforeUpdate", function() {
     return typeof updateKeys === "function" ? updateKeys() : void 0;
   });
   return {};
-};;
+};
+;
+
 /**
 The <code>Selector</code> module provides methods to query the engine to find game objects.
 
@@ -7206,7 +7618,9 @@ The <code>Selector</code> module provides methods to query the engine to find ga
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Selector = function(I, self) {
+*/
+
+Engine.Selector = function(I, self) {
   var instanceMethods;
   instanceMethods = {
     set: function(attr, value) {
@@ -7266,14 +7680,13 @@ The <code>Selector</code> module provides methods to query the engine to find ga
       results = [];
       matcher = Engine.Selector.generate(selector);
       self.objects().each(function(object) {
-        if (matcher.match(object)) {
-          return results.push(object);
-        }
+        if (matcher.match(object)) return results.push(object);
       });
       return Object.extend(results, instanceMethods);
     }
   };
 };
+
 Object.extend(Engine.Selector, {
   parse: function(selector) {
     return selector.split(",").invoke("trim");
@@ -7282,9 +7695,7 @@ Object.extend(Engine.Selector, {
     var result;
     result = /^(\w+)?#?([\w\-]+)?\.?([\w\-]+)?=?([\w\-]+)?/.exec(item);
     if (result) {
-      if (result[4]) {
-        result[4] = result[4].parse();
-      }
+      if (result[4]) result[4] = result[4].parse();
       return result.splice(1);
     } else {
       return [];
@@ -7315,15 +7726,15 @@ Object.extend(Engine.Selector, {
           } else {
             attrMatch = true;
           }
-          if (idMatch && typeMatch && attrMatch) {
-            return true;
-          }
+          if (idMatch && typeMatch && attrMatch) return true;
         }
         return false;
       }
     };
   }
-});;
+});
+;
+
 /**
 The <code>Stats</code> module provides methods to query the engine to find game objects.
 
@@ -7332,18 +7743,20 @@ The <code>Stats</code> module provides methods to query the engine to find game 
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Stats = function(I, self) {
+*/
+
+Engine.Stats = function(I, self) {
   return {
     measure: function(objects, field, frequency) {
-      if (frequency == null) {
-        frequency = 30;
-      }
+      if (frequency == null) frequency = 30;
     },
     gatherData: function() {
       return self.find();
     }
   };
-};;
+};
+;
+
 /**
 The <code>Fadeable</code> module provides a method to fade a sprite to transparent. 
 You may also provide a callback function that is executed when the sprite has finished fading out.
@@ -7353,7 +7766,10 @@ You may also provide a callback function that is executed when the sprite has fi
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Fadeable;
+*/
+
+var Fadeable;
+
 Fadeable = function(I, self) {
   Object.reverseMerge(I, {
     fadeDuration: 30,
@@ -7400,15 +7816,15 @@ Fadeable = function(I, self) {
     @param {Function} [callback=null] The function to execute when the sprite has finished fading.
     */
     fadeOut: function(duration, callback) {
-      if (duration == null) {
-        duration = 30;
-      }
+      if (duration == null) duration = 30;
       I.fadeDuration = duration;
       I.fadeCooldown = duration;
       return I.fadeCallback = callback;
     }
   };
-};;
+};
+;
+
 /**
 The <code>Flickerable</code> module provides a method to flicker a sprite between solid and 50% opacity. 
 
@@ -7417,7 +7833,10 @@ The <code>Flickerable</code> module provides a method to flicker a sprite betwee
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Flickerable;
+*/
+
+var Flickerable;
+
 Flickerable = function(I, self) {
   var originalAlpha;
   Object.reverseMerge(I, {
@@ -7426,20 +7845,15 @@ Flickerable = function(I, self) {
     flickerFrequency: 3
   });
   originalAlpha = I.alpha;
+  self.bind('update', function() {
+    I.flickerDuration = I.flickerDuration.approach(0, 1);
+    if (I.flickerDuration > 0 && (I.age / I.flickerFrequency).floor() % 2) {
+      return I.alpha = I.flickerAlpha;
+    } else {
+      return I.alpha = originalAlpha;
+    }
+  });
   return {
-    before: {
-      draw: function(canvas) {
-        I.flickerDuration = I.flickerDuration.approach(0, 1);
-        if ((I.age % I.flickerFrequency === 0) && I.flickerDuration > 0) {
-          return I.alpha = I.flickerAlpha;
-        }
-      }
-    },
-    after: {
-      draw: function(canvas) {
-        return I.alpha = originalAlpha;
-      }
-    },
     /**
     A convenient way to set the flicker instance variables on a sprite. You can modify the
     instance variables by hand but the suggested way to do it is through this method.
@@ -7465,21 +7879,17 @@ Flickerable = function(I, self) {
     @param {Number} [alpha=0.5] The alpha value to flicker to
     */
     flicker: function(duration, frequency, alpha) {
-      if (duration == null) {
-        duration = 30;
-      }
-      if (frequency == null) {
-        frequency = 3;
-      }
-      if (alpha == null) {
-        alpha = 0.5;
-      }
+      if (duration == null) duration = 30;
+      if (frequency == null) frequency = 3;
+      if (alpha == null) alpha = 0.5;
       I.flickerDuration = duration;
       I.flickerFrequency = frequency;
       return I.flickerAlpha = alpha;
     }
   };
-};;
+};
+;
+
 /**
 The default base class for all objects you can add to the engine.
 
@@ -7491,6 +7901,7 @@ may be bound with <code>object.bind(eventName, callback)</code>
 @constructor
 @instanceVariables age, active, created, destroyed, solid, includedModules, excludedModules
 */
+
 /**
 Triggered when the object is created.
 
@@ -7508,6 +7919,7 @@ enemy.bind 'create', ->
 @methodOf GameObject#
 @event
 */
+
 /**
 Triggered when object is destroyed. Use 
 the destroy event to add particle effects, play sounds, etc.
@@ -7524,6 +7936,7 @@ bomb.bind 'destroy', ->
 @methodOf GameObject#
 @event
 */
+
 /**
 Triggered during every update step.
 
@@ -7545,6 +7958,7 @@ player.bind 'step', ->
 @methodOf GameObject#
 @event
 */
+
 /**
 Triggered every update after the <code>step</code> event is triggered.
 
@@ -7568,6 +7982,7 @@ player.bind 'update', ->
 @methodOf GameObject#
 @event
 */
+
 /**
 Triggered when the object is removed from
 the engine. Use the remove event to handle any clean up.
@@ -7582,7 +7997,10 @@ boss.bind 'remove', ->
 @name remove
 @methodOf GameObject#
 @event
-*/var GameObject;
+*/
+
+var GameObject;
+
 GameObject = function(I) {
   var autobindEvents, defaultModules, modules, self;
   I || (I = {});
@@ -7621,9 +8039,7 @@ GameObject = function(I) {
     @methodOf GameObject#
     */
     create: function() {
-      if (!I.created) {
-        self.trigger('create');
-      }
+      if (!I.created) self.trigger('create');
       return I.created = true;
     },
     /**
@@ -7633,9 +8049,7 @@ GameObject = function(I) {
     @methodOf GameObject#
     */
     destroy: function() {
-      if (!I.destroyed) {
-        self.trigger('destroy');
-      }
+      if (!I.destroyed) self.trigger('destroy');
       I.destroyed = true;
       return I.active = false;
     }
@@ -7660,25 +8074,27 @@ GameObject = function(I) {
   });
   return self;
 };
+
 /**
 Construct an object instance from the given entity data.
 @name construct
 @memberOf GameObject
 @param {Object} entityData
 */
+
 GameObject.construct = function(entityData) {
   if (entityData["class"]) {
     return entityData["class"].constantize()(entityData);
   } else {
     return GameObject(entityData);
   }
-};;
+};
+;
 var GameState;
+
 GameState = function(I) {
   var queuedObjects, self;
-  if (I == null) {
-    I = {};
-  }
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     objects: []
   });
@@ -7737,7 +8153,9 @@ GameState = function(I) {
   self.include(GameState.Cameras);
   self.include(GameState.SaveState);
   return self;
-};;
+};
+;
+
 GameState.Cameras = function(I, self) {
   var cameras;
   cameras = [Camera()];
@@ -7765,17 +8183,18 @@ GameState.Cameras = function(I, self) {
     @methodOf Engine#
     @returns {Array}
     */
-    cameras: function() {
-      return cameras;
-    },
-    flash: function() {
-      return cameras.first().flash();
-    },
-    shake: function() {
-      return cameras.first().shake();
+    cameras: function(newCameras) {
+      if (newCameras) {
+        cameras = newCameras;
+        return self;
+      } else {
+        return cameras;
+      }
     }
   };
-};;
+};
+;
+
 /**
 The <code>SaveState</code> module provides methods to save and restore the current game state.
 
@@ -7784,7 +8203,9 @@ The <code>SaveState</code> module provides methods to save and restore the curre
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the game state
-*/GameState.SaveState = function(I, self) {
+*/
+
+GameState.SaveState = function(I, self) {
   var savedState;
   savedState = null;
   return {
@@ -7861,7 +8282,9 @@ The <code>SaveState</code> module provides methods to save and restore the curre
       });
     }
   };
-};;
+};
+;
+
 /**
 The <code>SingleCamera</code> module provides provides a single camera view of the game.
 Its transform can be adjusted to view different areas and provide various camera effects.
@@ -7871,7 +8294,9 @@ Its transform can be adjusted to view different areas and provide various camera
 @module
 @param {Object} I Instance variables
 @param {Object} self Reference to the game state
-*/GameState.SingleCamera = function(I, self) {
+*/
+
+GameState.SingleCamera = function(I, self) {
   Object.reverseMerge(I, {
     cameraTransform: Matrix.IDENTITY,
     zSort: true
@@ -7890,7 +8315,9 @@ Its transform can be adjusted to view different areas and provide various camera
     });
   });
   return {};
-};;
+};
+;
+
 /**
 The Movable module automatically updates the position and velocity of
 GameObjects based on the velocity and acceleration. It does not check
@@ -7924,57 +8351,61 @@ player.update()
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Movable;
-Movable = function(I) {
+*/
+
+var Movable;
+
+Movable = function(I, self) {
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     acceleration: Point(0, 0),
     velocity: Point(0, 0)
   });
   I.acceleration = Point(I.acceleration.x, I.acceleration.y);
   I.velocity = Point(I.velocity.x, I.velocity.y);
-  return {
-    before: {
-      update: function() {
-        var currentSpeed;
-        I.velocity = I.velocity.add(I.acceleration);
-        if (I.maxSpeed != null) {
-          currentSpeed = I.velocity.magnitude();
-          if (currentSpeed > I.maxSpeed) {
-            I.velocity = I.velocity.scale(I.maxSpeed / currentSpeed);
-          }
-        }
-        I.x += I.velocity.x;
-        return I.y += I.velocity.y;
+  return self.bind('update', function() {
+    var currentSpeed;
+    I.velocity = I.velocity.add(I.acceleration);
+    if (I.maxSpeed != null) {
+      currentSpeed = I.velocity.magnitude();
+      if (currentSpeed > I.maxSpeed) {
+        I.velocity = I.velocity.scale(I.maxSpeed / currentSpeed);
       }
     }
-  };
-};;
+    I.x += I.velocity.x;
+    return I.y += I.velocity.y;
+  });
+};
+;
+
 /**
 @name ResourceLoader
 @namespace
 
 Helps access the assets in your game.
-*/(function() {
+*/
+
+(function() {
   var ResourceLoader, typeTable;
   typeTable = {
-    images: "png"
+    images: "png",
+    data: "json"
   };
   ResourceLoader = {
     /**
-      Return the url for a particular asset.
+    Return the url for a particular asset.
 
-      <code><pre>
-      ResourceLoader.urlFor("images", "player")
-      # => This returns the url for the file "player.png" in your images directory.
-      </pre></code>
+    <code><pre>
+    ResourceLoader.urlFor("images", "player")
+    # => This returns the url for the file "player.png" in your images directory.
+    </pre></code>
 
-      @name urlFor
-      @methodOf ResourceLoader#
-      @param {String} directory The directory your file is in.
-      @param {String} name The name of the file.
-      @returns {String} The full url of your asset
-
-      */
+    @name urlFor
+    @methodOf ResourceLoader#
+    @param {String} directory The directory your file is in.
+    @param {String} name The name of the file.
+    @returns {String} The full url of your asset
+    */
     urlFor: function(directory, name) {
       var type, _ref;
       directory = (typeof App !== "undefined" && App !== null ? (_ref = App.directories) != null ? _ref[directory] : void 0 : void 0) || directory;
@@ -7983,7 +8414,9 @@ Helps access the assets in your game.
     }
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["ResourceLoader"] = ResourceLoader;
-})();;
+})();
+;
+
 /**
 The Rotatable module rotates the object
 based on its rotational velocity.
@@ -8015,21 +8448,23 @@ player.I.rotation
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
-*/var Rotatable;
-Rotatable = function(I) {
-  I || (I = {});
+*/
+
+var Rotatable;
+
+Rotatable = function(I, self) {
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     rotation: 0,
     rotationalVelocity: 0
   });
-  return {
-    before: {
-      update: function() {
-        return I.rotation += I.rotationalVelocity;
-      }
-    }
-  };
-};;
+  self.bind('update', function() {
+    return I.rotation += I.rotationalVelocity;
+  });
+  return {};
+};
+;
+
 /**
 The Sprite class provides a way to load images for use in games.
 
@@ -8039,7 +8474,9 @@ draw anything to the screen until the image has been loaded.
 
 @name Sprite
 @constructor
-*/(function() {
+*/
+
+(function() {
   var LoaderProxy, Sprite;
   LoaderProxy = function() {
     return {
@@ -8071,9 +8508,7 @@ draw anything to the screen until the image has been loaded.
       },
       fill: function(canvas, x, y, width, height, repeat) {
         var pattern;
-        if (repeat == null) {
-          repeat = "repeat";
-        }
+        if (repeat == null) repeat = "repeat";
         pattern = canvas.createPattern(image, repeat);
         return canvas.drawRect({
           x: x,
@@ -8132,9 +8567,7 @@ draw anything to the screen until the image has been loaded.
       var tile;
       tile = Sprite(this);
       Object.extend(proxy, tile);
-      if (loadedCallback) {
-        return loadedCallback(proxy);
-      }
+      if (loadedCallback) return loadedCallback(proxy);
     };
     img.src = url;
     return proxy;
@@ -8191,27 +8624,37 @@ draw anything to the screen until the image has been loaded.
     return Sprite.load(ResourceLoader.urlFor("images", name), callback);
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Sprite"] = Sprite;
-})();;
+})();
 ;
 ;
 ;
 ;
+;
+
 document.oncontextmenu = function() {
   return false;
 };
+
 $(document).bind("keydown", function(event) {
-  if (!$(event.target).is("input")) {
-    return event.preventDefault();
-  }
-});;
+  if (!$(event.target).is("input")) return event.preventDefault();
+});
+;
+
 /**
 This error handler captures any runtime errors and reports them to the IDE
 if present.
-*/window.onerror = function(message) {
-  return typeof parent.displayRuntimeError === "function" ? parent.displayRuntimeError(message) : void 0;
-};;
+*/
+
+window.onerror = function(message, url, lineNumber) {
+  var errorContext;
+  errorContext = $('script').last().text().split('\n').slice(lineNumber - 5, (lineNumber + 4) + 1 || 9e9);
+  errorContext[4] = "<b style='font-weight: bold; text-decoration: underline;'>" + errorContext[4] + "</b>";
+  return typeof displayRuntimeError === "function" ? displayRuntimeError("<code>" + message + "</code> <br /><br />(Sometimes this context may be wrong.)<br /><code><pre>" + (errorContext.join('\n')) + "</pre></code>") : void 0;
+};
+;
 var Joysticks;
 var __slice = Array.prototype.slice;
+
 Joysticks = (function() {
   var AXIS_MAX, Controller, DEAD_ZONE, MAX_BUFFER, TRIP_HIGH, TRIP_LOW, axisMappingDefault, axisMappingOSX, buttonMappingDefault, buttonMappingOSX, controllers, displayInstallPrompt, joysticks, plugin, previousJoysticks, type;
   type = "application/x-boomstickjavascriptjoysticksupport";
@@ -8302,9 +8745,7 @@ Joysticks = (function() {
   };
   Controller = function(i, remapOSX) {
     var axisMapping, axisTrips, buttonMapping, currentState, previousState, self;
-    if (remapOSX === void 0) {
-      remapOSX = navigator.platform.match(/^Mac/);
-    }
+    if (remapOSX === void 0) remapOSX = navigator.platform.match(/^Mac/);
     if (remapOSX) {
       buttonMapping = buttonMappingOSX;
       axisMapping = axisMappingOSX;
@@ -8338,9 +8779,7 @@ Joysticks = (function() {
       },
       position: function(stick) {
         var magnitude, p, ratio, state;
-        if (stick == null) {
-          stick = 0;
-        }
+        if (stick == null) stick = 0;
         if (state = currentState()) {
           p = Point(self.axis(2 * stick), self.axis(2 * stick + 1));
           magnitude = p.magnitude();
@@ -8370,9 +8809,7 @@ Joysticks = (function() {
       },
       buttons: function() {
         var state;
-        if (state = currentState()) {
-          return state.buttons;
-        }
+        if (state = currentState()) return state.buttons;
       },
       processEvents: function() {
         var x, y, _ref;
@@ -8381,14 +8818,10 @@ Joysticks = (function() {
             axisTrips[n] = true;
             return self.axis(n).sign();
           }
-          if (axisTrips[n] && self.axis(n).abs() < TRIP_LOW) {
-            axisTrips[n] = false;
-          }
+          if (axisTrips[n] && self.axis(n).abs() < TRIP_LOW) axisTrips[n] = false;
           return 0;
         }), x = _ref[0], y = _ref[1];
-        if (!x || !y) {
-          return self.trigger("tap", Point(x, y));
-        }
+        if (!x || !y) return self.trigger("tap", Point(x, y));
       },
       drawDebug: function(canvas) {
         var axis, i, lineHeight, _len, _ref;
@@ -8449,7 +8882,9 @@ Joysticks = (function() {
       return joysticks;
     }
   };
-})();;
+})();
+;
+
 /**
 jQuery Hotkeys Plugin
 Copyright 2010, John Resig
@@ -8460,7 +8895,9 @@ http://github.com/tzuryby/hotkeys
 
 Original idea by:
 Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
-*/(function(jQuery) {
+*/
+
+(function(jQuery) {
   var isFunctionKey, isTextAcceptingInput, keyHandler;
   isTextAcceptingInput = function(element) {
     return /textarea|select/i.test(element.nodeName) || element.type === "text" || element.type === "password";
@@ -8557,9 +8994,7 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
   };
   keyHandler = function(handleObj) {
     var keys, origHandler;
-    if (typeof handleObj.data !== "string") {
-      return;
-    }
+    if (typeof handleObj.data !== "string") return;
     origHandler = handleObj.handler;
     keys = handleObj.data.toLowerCase().split(" ");
     return handleObj.handler = function(event) {
@@ -8569,23 +9004,15 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
       modif = "";
       possible = {};
       target = event.target;
-      if (event.altKey && special !== "alt") {
-        modif += "alt+";
-      }
-      if (event.ctrlKey && special !== "ctrl") {
-        modif += "ctrl+";
-      }
-      if (event.metaKey && !event.ctrlKey && special !== "meta") {
-        modif += "meta+";
-      }
+      if (event.altKey && special !== "alt") modif += "alt+";
+      if (event.ctrlKey && special !== "ctrl") modif += "ctrl+";
+      if (event.metaKey && !event.ctrlKey && special !== "meta") modif += "meta+";
       if (this !== target) {
         if (isTextAcceptingInput(target) && !modif && !isFunctionKey(event)) {
           return;
         }
       }
-      if (event.shiftKey && special !== "shift") {
-        modif += "shift+";
-      }
+      if (event.shiftKey && special !== "shift") modif += "shift+";
       if (special) {
         possible[modif + special] = true;
       } else {
@@ -8597,9 +9024,7 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
       }
       for (_i = 0, _len = keys.length; _i < _len; _i++) {
         key = keys[_i];
-        if (possible[key]) {
-          return origHandler.apply(this, arguments);
-        }
+        if (possible[key]) return origHandler.apply(this, arguments);
       }
     };
   };
@@ -8608,7 +9033,9 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
       add: keyHandler
     };
   });
-})(jQuery);;
+})(jQuery);
+;
+
 /**
 Merges properties from objects into target without overiding.
 First come, first served.
@@ -8620,7 +9047,10 @@ First come, first served.
 @param {Object} objects... one or more objects whose properties are merged onto target
 
 @return {Object} target
-*/var __slice = Array.prototype.slice;
+*/
+
+var __slice = Array.prototype.slice;
+
 jQuery.extend({
   reverseMerge: function() {
     var name, object, objects, target, _i, _len;
@@ -8628,14 +9058,14 @@ jQuery.extend({
     for (_i = 0, _len = objects.length; _i < _len; _i++) {
       object = objects[_i];
       for (name in object) {
-        if (!target.hasOwnProperty(name)) {
-          target[name] = object[name];
-        }
+        if (!target.hasOwnProperty(name)) target[name] = object[name];
       }
     }
     return target;
   }
-});;
+});
+;
+
 $(function() {
   /**
   The global keydown property lets your query the status of keys.
@@ -8677,7 +9107,8 @@ $(function() {
 
   @name justPressed
   @namespace
-  */  var keyName, prevKeysDown;
+  */
+  var keyName, prevKeysDown;
   window.keydown = {};
   window.justPressed = {};
   prevKeysDown = {};
@@ -8699,9 +9130,7 @@ $(function() {
     window.justPressed = {};
     for (key in keydown) {
       value = keydown[key];
-      if (!prevKeysDown[key]) {
-        justPressed[key] = value;
-      }
+      if (!prevKeysDown[key]) justPressed[key] = value;
     }
     prevKeysDown = {};
     _results = [];
@@ -8711,7 +9140,9 @@ $(function() {
     }
     return _results;
   };
-});;
+});
+;
+
 /**
 The Music object provides an easy API to play
 songs from your sounds project directory. By
@@ -8723,7 +9154,10 @@ default, the track is looped.
 
 @name Music
 @namespace
-*/var Music;
+*/
+
+var Music;
+
 Music = (function() {
   var track;
   track = $("<audio />", {
@@ -8734,10 +9168,20 @@ Music = (function() {
     play: function(name) {
       track.src = "" + BASE_URL + "/sounds/" + name + ".mp3";
       return track.play();
+    },
+    volume: function(newVolume) {
+      if (newVolume != null) {
+        track.volume = newVolume;
+        return this;
+      } else {
+        return track.volume;
+      }
     }
   };
-})();;
+})();
+;
 var __slice = Array.prototype.slice;
+
 (function($) {
   return $.fn.pixieCanvas = function(options) {
     var $canvas, canvas, canvasAttrAccessor, context, contextAttrAccessor;
@@ -8754,7 +9198,7 @@ var __slice = Array.prototype.slice;
     @name PixieCanvas
     @constructor
     */
-    $canvas = $(canvas).extend((function() {
+    $canvas = $(canvas).extend({
       /**
       Passes this canvas to the block with the given matrix transformation
       applied. All drawing methods called within the block will draw
@@ -8769,7 +9213,6 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       withTransform: function(matrix, block) {
         context.save();
         context.transform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
@@ -8779,8 +9222,7 @@ var __slice = Array.prototype.slice;
           context.restore();
         }
         return this;
-      }
-    }, (function() {
+      },
       /**
       Clear the canvas (or a portion of it).
 
@@ -8821,27 +9263,19 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       clear: function(x, y, width, height) {
         var _ref;
-        if (x == null) {
-          x = {};
-        }
+        if (x == null) x = {};
         if (y == null) {
           _ref = x, x = _ref.x, y = _ref.y, width = _ref.width, height = _ref.height;
         }
         x || (x = 0);
         y || (y = 0);
-        if (width == null) {
-          width = canvas.width;
-        }
-        if (height == null) {
-          height = canvas.height;
-        }
+        if (width == null) width = canvas.width;
+        if (height == null) height = canvas.height;
         context.clearRect(x, y, width, height);
         return this;
-      }
-    }, (function() {
+      },
       /**
       Fills the entire canvas (or a specified section of it) with
       the given color.
@@ -8871,12 +9305,9 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       fill: function(color) {
         var bounds, height, width, x, y, _ref;
-        if (color == null) {
-          color = {};
-        }
+        if (color == null) color = {};
         if (!((typeof color.isString === "function" ? color.isString() : void 0) || color.channels)) {
           _ref = color, x = _ref.x, y = _ref.y, width = _ref.width, height = _ref.height, bounds = _ref.bounds, color = _ref.color;
         }
@@ -8885,17 +9316,12 @@ var __slice = Array.prototype.slice;
         }
         x || (x = 0);
         y || (y = 0);
-        if (width == null) {
-          width = canvas.width;
-        }
-        if (height == null) {
-          height = canvas.height;
-        }
+        if (width == null) width = canvas.width;
+        if (height == null) height = canvas.height;
         this.fillColor(color);
         context.fillRect(x, y, width, height);
         return this;
-      }
-    }, (function() {
+      },
       /**
       A direct map to the Context2d draw image. `GameObject`s
       that implement drawable will have this wrapped up nicely,
@@ -8917,12 +9343,10 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawImage: function(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) {
         context.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draws a circle at the specified position with the specified
       radius and color.
@@ -8985,16 +9409,11 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawCircle: function(_arg) {
         var circle, color, position, radius, stroke, x, y;
         x = _arg.x, y = _arg.y, radius = _arg.radius, position = _arg.position, color = _arg.color, stroke = _arg.stroke, circle = _arg.circle;
-        if (circle) {
-          x = circle.x, y = circle.y, radius = circle.radius;
-        }
-        if (position) {
-          x = position.x, y = position.y;
-        }
+        if (circle) x = circle.x, y = circle.y, radius = circle.radius;
+        if (position) x = position.x, y = position.y;
         context.beginPath();
         context.arc(x, y, radius, 0, Math.TAU, true);
         context.closePath();
@@ -9008,8 +9427,7 @@ var __slice = Array.prototype.slice;
           context.stroke();
         }
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draws a rectangle at the specified position with given 
       width and height. Optionally takes a position, bounds
@@ -9070,16 +9488,13 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawRect: function(_arg) {
         var bounds, color, height, position, stroke, width, x, y;
         x = _arg.x, y = _arg.y, width = _arg.width, height = _arg.height, position = _arg.position, bounds = _arg.bounds, color = _arg.color, stroke = _arg.stroke;
         if (bounds) {
           x = bounds.x, y = bounds.y, width = bounds.width, height = bounds.height;
         }
-        if (position) {
-          x = position.x, y = position.y;
-        }
+        if (position) x = position.x, y = position.y;
         if (color) {
           this.fillColor(color);
           context.fillRect(x, y, width, height);
@@ -9090,8 +9505,7 @@ var __slice = Array.prototype.slice;
           context.strokeRect(x, y, width, height);
         }
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draw a line from `start` to `end`.
 
@@ -9128,14 +9542,11 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawLine: function(_arg) {
         var color, direction, end, length, start, width;
         start = _arg.start, end = _arg.end, width = _arg.width, color = _arg.color, direction = _arg.direction, length = _arg.length;
         width || (width = 3);
-        if (direction) {
-          end = direction.norm(length).add(start);
-        }
+        if (direction) end = direction.norm(length).add(start);
         this.lineWidth(width);
         this.strokeColor(color);
         context.beginPath();
@@ -9144,8 +9555,7 @@ var __slice = Array.prototype.slice;
         context.closePath();
         context.stroke();
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draw a polygon.
 
@@ -9173,7 +9583,6 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawPoly: function(_arg) {
         var color, points, stroke;
         points = _arg.points, color = _arg.color, stroke = _arg.stroke;
@@ -9196,8 +9605,7 @@ var __slice = Array.prototype.slice;
           context.stroke();
         }
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draw a rounded rectangle.
 
@@ -9231,19 +9639,14 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawRoundRect: function(_arg) {
         var bounds, color, height, position, radius, stroke, width, x, y;
         x = _arg.x, y = _arg.y, width = _arg.width, height = _arg.height, radius = _arg.radius, position = _arg.position, bounds = _arg.bounds, color = _arg.color, stroke = _arg.stroke;
-        if (radius == null) {
-          radius = 5;
-        }
+        if (radius == null) radius = 5;
         if (bounds) {
           x = bounds.x, y = bounds.y, width = bounds.width, height = bounds.height;
         }
-        if (position) {
-          x = position.x, y = position.y;
-        }
+        if (position) x = position.x, y = position.y;
         context.beginPath();
         context.moveTo(x + radius, y);
         context.lineTo(x + width - radius, y);
@@ -9265,8 +9668,7 @@ var __slice = Array.prototype.slice;
           context.stroke();
         }
         return this;
-      }
-    }, (function() {
+      },
       /**
       Draws text on the canvas at the given position, in the given color.
       If no color is given then the previous fill color is used.
@@ -9302,18 +9704,14 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       drawText: function(_arg) {
         var color, position, text, x, y;
         x = _arg.x, y = _arg.y, text = _arg.text, position = _arg.position, color = _arg.color;
-        if (position) {
-          x = position.x, y = position.y;
-        }
+        if (position) x = position.x, y = position.y;
         this.fillColor(color);
         context.fillText(text, x, y);
         return this;
-      }
-    }, (function() {
+      },
       /**
       Centers the given text on the canvas at the given y position. An x position
       or point position can also be given in which case the text is centered at the
@@ -9356,16 +9754,11 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       centerText: function(_arg) {
         var color, position, text, textWidth, x, y;
         text = _arg.text, x = _arg.x, y = _arg.y, position = _arg.position, color = _arg.color;
-        if (position) {
-          x = position.x, y = position.y;
-        }
-        if (x == null) {
-          x = canvas.width / 2;
-        }
+        if (position) x = position.x, y = position.y;
+        if (x == null) x = canvas.width / 2;
         textWidth = this.measureText(text);
         return this.drawText({
           text: text,
@@ -9373,8 +9766,7 @@ var __slice = Array.prototype.slice;
           x: x - textWidth / 2,
           y: y
         });
-      }
-    }, (function() {
+      },
       /**
       A getter / setter method to set the canvas fillColor.
 
@@ -9397,7 +9789,6 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       fillColor: function(color) {
         if (color) {
           if (color.channels) {
@@ -9409,8 +9800,7 @@ var __slice = Array.prototype.slice;
         } else {
           return context.fillStyle;
         }
-      }
-    }, (function() {
+      },
       /**
       A getter / setter method to set the canvas strokeColor.
 
@@ -9433,7 +9823,6 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       strokeColor: function(color) {
         if (color) {
           if (color.channels) {
@@ -9445,8 +9834,7 @@ var __slice = Array.prototype.slice;
         } else {
           return context.strokeStyle;
         }
-      }
-    }, (function() {
+      },
       /**
       Determine how wide some text is.
 
@@ -9462,7 +9850,6 @@ var __slice = Array.prototype.slice;
 
       @returns {PixieCanvas} this
       */
-    })(), {
       measureText: function(text) {
         return context.measureText(text).width;
       },
@@ -9478,6 +9865,12 @@ var __slice = Array.prototype.slice;
       },
       createPattern: function(image, repitition) {
         return context.createPattern(image, repitition);
+      },
+      clip: function(x, y, width, height) {
+        context.beginPath();
+        context.rect(x, y, width, height);
+        context.clip();
+        return this;
       }
     });
     contextAttrAccessor = function() {
@@ -9512,14 +9905,14 @@ var __slice = Array.prototype.slice;
     canvasAttrAccessor("height", "width");
     if (canvas != null ? canvas.getContext : void 0) {
       context = canvas.getContext('2d');
-      if (options.init) {
-        options.init($canvas);
-      }
+      if (options.init) options.init($canvas);
       return $canvas;
     }
   };
-})(jQuery);;
+})(jQuery);
+;
 var __slice = Array.prototype.slice;
+
 (function($) {
   return $.fn.powerCanvas = function(options) {
     var $canvas, canvas, context;
@@ -9532,7 +9925,7 @@ var __slice = Array.prototype.slice;
     * @deprecated Use {@link PixieCanvas} instead
     * @constructor
     */
-    $canvas = $(canvas).extend((function() {
+    $canvas = $(canvas).extend({
       /**
        * Passes this canvas to the block with the given matrix transformation
        * applied. All drawing methods called within the block will draw
@@ -9546,7 +9939,6 @@ var __slice = Array.prototype.slice;
        * @param {Function} block
        * @returns this
       */
-    })(), {
       withTransform: function(matrix, block) {
         context.save();
         context.transform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
@@ -9630,8 +10022,7 @@ var __slice = Array.prototype.slice;
         $canvas.fillColor(color);
         context.fillRect(0, 0, canvas.width, canvas.height);
         return this;
-      }
-    }, (function() {
+      },
       /**
        * Fills a circle at the specified position with the specified
        * radius and color.
@@ -9646,7 +10037,6 @@ var __slice = Array.prototype.slice;
        * @see PowerCanvas#fillColor 
        * @returns this
       */
-    })(), {
       fillCircle: function(x, y, radius, color) {
         $canvas.fillColor(color);
         context.beginPath();
@@ -9654,8 +10044,7 @@ var __slice = Array.prototype.slice;
         context.closePath();
         context.fill();
         return this;
-      }
-    }, (function() {
+      },
       /**
        * Fills a rectangle with the current fillColor
        * at the specified position with the specified
@@ -9671,7 +10060,6 @@ var __slice = Array.prototype.slice;
        * @see PowerCanvas#fillColor 
        * @returns this
       */
-    })(), {
       fillRect: function(x, y, width, height) {
         context.fillRect(x, y, width, height);
         return this;
@@ -9689,12 +10077,10 @@ var __slice = Array.prototype.slice;
         });
         context.lineTo(points[0].x, points[0].y);
         return context.fill();
-      }
-    }, (function() {
+      },
       /**
       * Adapted from http://js-bits.blogspot.com/2010/07/canvas-rounded-corner-rectangles.html
       */
-    })(), {
       fillRoundRect: function(x, y, width, height, radius, strokeWidth) {
         radius || (radius = 5);
         context.beginPath();
@@ -9805,13 +10191,13 @@ var __slice = Array.prototype.slice;
     });
     if (canvas != null ? canvas.getContext : void 0) {
       context = canvas.getContext('2d');
-      if (options.init) {
-        options.init($canvas);
-      }
+      if (options.init) options.init($canvas);
       return $canvas;
     }
   };
-})(jQuery);;
+})(jQuery);
+;
+
 /**
 A browser polyfill so you can consistently 
 call requestAnimationFrame. Using 
@@ -9822,18 +10208,23 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 
 @name requestAnimationFrame
 @namespace
-*/window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+*/
+
+window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
   return window.setTimeout(function() {
     return callback(+new Date());
   }, 1000 / 60);
-});;
+});
+;
+
 (function($) {
   /**
   A simple interface for playing sounds in games.
 
   @name Sound
   @namespace
-  */  var Sound, directory, format, loadSoundChannel, sounds, _ref;
+  */
+  var Sound, directory, format, loadSoundChannel, sounds, _ref;
   directory = (typeof App !== "undefined" && App !== null ? (_ref = App.directories) != null ? _ref.sounds : void 0 : void 0) || "sounds";
   format = "wav";
   sounds = {};
@@ -9856,7 +10247,7 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
       }
     };
   };
-  return Object.extend(Sound, (function() {
+  return Object.extend(Sound, {
     /**
     Play a sound from your sounds 
     directory with the name of `id`.
@@ -9872,13 +10263,10 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
     @param {String} id id or name of the sound file to play
     @param {String} maxChannels max number of sounds able to be played simultaneously
     */
-  })(), {
     play: function(id, maxChannels) {
       var channel, channels, freeChannels, sound;
       maxChannels || (maxChannels = 4);
-      if (!sounds[id]) {
-        sounds[id] = [loadSoundChannel(id)];
-      }
+      if (!sounds[id]) sounds[id] = [loadSoundChannel(id)];
       channels = sounds[id];
       freeChannels = $.grep(channels, function(sound) {
         return sound.currentTime === sound.duration || sound.currentTime === 0;
@@ -9886,7 +10274,7 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
       if (channel = freeChannels.first()) {
         try {
           channel.currentTime = 0;
-        } catch (_e) {}
+        } catch (_error) {}
         return channel.play();
       } else {
         if (!maxChannels || channels.length < maxChannels) {
@@ -9895,8 +10283,7 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
           return sound.play();
         }
       }
-    }
-  }, (function() {
+    },
     /**
     Play a sound from the given
     url with the name of `id`.
@@ -9913,15 +10300,13 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 
     @returns {Sound} this sound object
     */
-  })(), {
     playFromUrl: function(url) {
       var sound;
       sound = $('<audio />').get(0);
       sound.src = url;
       sound.play();
       return sound;
-    }
-  }, (function() {
+    },
     /**
     Stop a sound while it is playing.
 
@@ -9936,13 +10321,14 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 
     @param {String} id id or name of sound to stop playing.
     */
-  })(), {
     stop: function(id) {
       var _ref2;
       return (_ref2 = sounds[id]) != null ? _ref2.stop() : void 0;
     }
   }, (typeof exports !== "undefined" && exports !== null ? exports : this)["Sound"] = Sound);
-})(jQuery);;
+})(jQuery);
+;
+
 (function() {
   /**
   A wrapper on the Local Storage API 
@@ -9971,7 +10357,8 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
   @param {Object} value value of the object you are storing
 
   @returns {Object} value
-  */  var retrieve, store;
+  */
+  var retrieve, store;
   store = function(key, value) {
     localStorage[key] = JSON.stringify(value);
     return value;
@@ -10000,9 +10387,7 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
   retrieve = function(key) {
     var value;
     value = localStorage[key];
-    if (value != null) {
-      return JSON.parse(value);
-    }
+    if (value != null) return JSON.parse(value);
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Local"] = {
     get: retrieve,
@@ -10032,11 +10417,13 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
       };
     }
   };
-})();;
+})();
 ;
 ;
 ;
 ;
+;
+
 /**
 The Animated module, when included in a GameObject, gives the object 
 methods to transition from one animation state to another
@@ -10047,11 +10434,14 @@ methods to transition from one animation state to another
 
 @param {Object} I Instance variables
 @param {Object} self Reference to including object
-*/var Animated;
+*/
+
+var Animated;
+
 Animated = function(I, self) {
   var advanceFrame, find, initializeState, loadByName, updateSprite, _name, _ref;
   I || (I = {});
-  $.reverseMerge(I, {
+  Object.reverseMerge(I, {
     animationName: (_ref = I["class"]) != null ? _ref.underscore() : void 0,
     data: {
       version: "",
@@ -10163,9 +10553,7 @@ Animated = function(I, self) {
     result = null;
     nameLower = name.toLowerCase();
     I.data.animations.each(function(animation) {
-      if (animation.name.toLowerCase() === nameLower) {
-        return result = animation;
-      }
+      if (animation.name.toLowerCase() === nameLower) return result = animation;
     });
     return result;
   };
@@ -10183,9 +10571,7 @@ Animated = function(I, self) {
     */
     transition: function(newState, force) {
       var toNextState;
-      if (newState === I.activeAnimation.name) {
-        return;
-      }
+      if (newState === I.activeAnimation.name) return;
       toNextState = function(state) {
         var firstFrame, firstSprite, nextState;
         if (nextState = find(state)) {
@@ -10237,7 +10623,9 @@ Animated = function(I, self) {
       }
     }
   };
-};;
+};
+;
+
 (function() {
   var Animation, fromPixieId;
   Animation = function(data) {
@@ -10296,106 +10684,9 @@ Animated = function(I, self) {
     return proxy;
   };
   return window.Animation.fromPixieId = fromPixieId;
-})();;
-(function($) {
-  /**
-  The <code>Developer</code> module provides a debug overlay and methods for debugging and live coding.
+})();
+;
 
-  @name Developer
-  @fieldOf Engine
-  @module
-
-  @param {Object} I Instance variables
-  @param {Object} self Reference to the engine
-  */  var developerHotkeys, developerMode, developerModeMousedown, namespace, objectToUpdate;
-  Engine.Developer = function(I, self) {
-    var boxHeight, boxWidth, font, lineHeight, margin, screenHeight, screenWidth, textStart;
-    screenWidth = (typeof App !== "undefined" && App !== null ? App.width : void 0) || 480;
-    screenHeight = (typeof App !== "undefined" && App !== null ? App.height : void 0) || 320;
-    margin = 10;
-    boxWidth = 240;
-    boxHeight = 60;
-    textStart = screenWidth - boxWidth + margin;
-    font = "bold 9pt arial";
-    lineHeight = 16;
-    self.bind("draw", function(canvas) {
-      if (I.paused) {
-        canvas.withTransform(I.cameraTransform, function(canvas) {
-          return I.objects.each(function(object) {
-            canvas.fillColor('rgba(255, 0, 0, 0.5)');
-            return canvas.fillRect(object.bounds().x, object.bounds().y, object.bounds().width, object.bounds().height);
-          });
-        });
-        canvas.font(font);
-        canvas.fillColor('rgba(0, 0, 0, 0.5)');
-        canvas.fillRect(screenWidth - boxWidth, 0, boxWidth, boxHeight);
-        canvas.fillColor('#fff');
-        canvas.fillText("Developer Mode. Press Esc to resume", textStart, margin + 5);
-        canvas.fillText("Shift+Left click to add boxes", textStart, margin + 5 + lineHeight);
-        return canvas.fillText("Right click red boxes to edit properties", textStart, margin + 5 + 2 * lineHeight);
-      }
-    });
-    self.bind("init", function() {
-      var fn, key, _results;
-      window.updateObjectProperties = function(newProperties) {
-        if (objectToUpdate) {
-          return Object.extend(objectToUpdate, GameObject.construct(newProperties));
-        }
-      };
-      $(document).unbind("." + namespace);
-      $(document).bind("mousedown." + namespace, developerModeMousedown);
-      _results = [];
-      for (key in developerHotkeys) {
-        fn = developerHotkeys[key];
-        _results.push((function(key, fn) {
-          return $(document).bind("keydown." + namespace, key, function(event) {
-            event.preventDefault();
-            return fn();
-          });
-        })(key, fn));
-      }
-      return _results;
-    });
-    return {};
-  };
-  namespace = "engine_developer";
-  developerMode = false;
-  objectToUpdate = null;
-  developerModeMousedown = function(event) {
-    var object;
-    if (developerMode) {
-      console.log(event.which);
-      if (event.which === 3) {
-        if (object = engine.objectAt(event.pageX, event.pageY)) {
-          parent.editProperties(object.I);
-          objectToUpdate = object;
-        }
-        return console.log(object);
-      } else if (event.which === 2 || keydown.shift) {
-        return typeof window.developerAddObject === "function" ? window.developerAddObject(event) : void 0;
-      }
-    }
-  };
-  return developerHotkeys = {
-    esc: function() {
-      developerMode = !developerMode;
-      if (developerMode) {
-        return engine.pause();
-      } else {
-        return engine.play();
-      }
-    },
-    f3: function() {
-      return Local.set("level", engine.saveState());
-    },
-    f4: function() {
-      return engine.loadState(Local.get("level"));
-    },
-    f5: function() {
-      return engine.reload();
-    }
-  };
-})(jQuery);;
 /**
 The <code>FPSCounter</code> module tracks and displays the framerate.
 
@@ -10412,7 +10703,9 @@ window.engine = Engine
 
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.FPSCounter = function(I, self) {
+*/
+
+Engine.FPSCounter = function(I, self) {
   var framerate;
   Object.reverseMerge(I, {
     showFPS: true,
@@ -10432,32 +10725,9 @@ window.engine = Engine
     }
     return framerate.rendered();
   });
-};;
-/**
-The <code>HUD</code> module provides an extra canvas to draw to. GameObjects that respond to the
-<code>drawHUD</code> method will draw to the HUD canvas. The HUD canvas is not cleared each frame, it is
-the responsibility of the objects drawing on it to manage that themselves.
+};
+;
 
-@name HUD
-@fieldOf Engine
-@module
-
-@param {Object} I Instance variables
-@param {Object} self Reference to the engine
-*/Engine.HUD = function(I, self) {
-  var hudCanvas;
-  hudCanvas = $("<canvas width=" + App.width + " height=" + App.height + " />").powerCanvas();
-  hudCanvas.font("bold 9pt consolas, 'Courier New', 'andale mono', 'lucida console', monospace");
-  self.bind("draw", function(canvas) {
-    var hud;
-    I.objects.each(function(object) {
-      return typeof object.drawHUD === "function" ? object.drawHUD(hudCanvas) : void 0;
-    });
-    hud = hudCanvas.element();
-    return canvas.drawImage(hud, 0, 0, hud.width, hud.height, 0, 0, hud.width, hud.height);
-  });
-  return {};
-};;
 (function($) {
   /**
   The <code>Joysticks</code> module gives the engine access to joysticks.
@@ -10507,42 +10777,9 @@ the responsibility of the objects drawing on it to manage that themselves.
       }
     };
   };
-})();;
-/**
-The <code>Shadows</code> module provides a lighting extension to the Engine. Objects that have
-an illuminate method will add light to the scene. Objects that have an true opaque attribute will cast
-shadows.
+})();
+;
 
-@name Shadows
-@fieldOf Engine
-@module
-
-@param {Object} I Instance variables
-@param {Object} self Reference to the engine
-*/Engine.Shadows = function(I, self) {
-  var shadowCanvas;
-  shadowCanvas = $("<canvas width=640 height=480 />").powerCanvas();
-  self.bind("draw", function(canvas) {
-    var shadows;
-    if (I.ambientLight < 1) {
-      shadowCanvas.compositeOperation("source-over");
-      shadowCanvas.clear();
-      shadowCanvas.fill("rgba(0, 0, 0, " + (1 - I.ambientLight) + ")");
-      shadowCanvas.compositeOperation("destination-out");
-      shadowCanvas.withTransform(I.cameraTransform, function(shadowCanvas) {
-        return I.objects.each(function(object, i) {
-          if (object.illuminate) {
-            shadowCanvas.globalAlpha(1);
-            return object.illuminate(shadowCanvas);
-          }
-        });
-      });
-      shadows = shadowCanvas.element();
-      return canvas.drawImage(shadows, 0, 0, shadows.width, shadows.height, 0, 0, shadows.width, shadows.height);
-    }
-  });
-  return {};
-};;
 /**
 The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
 
@@ -10552,12 +10789,14 @@ The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
 
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
-*/Engine.Tilemap = function(I, self) {
+*/
+
+Engine.Tilemap = function(I, self) {
   var clearObjects, map, updating;
   map = null;
   updating = false;
   clearObjects = false;
-  self.bind("preDraw", function(canvas) {
+  self.bind("beforeDraw", function(canvas) {
     return map != null ? map.draw(canvas) : void 0;
   });
   self.bind("update", function() {
@@ -10566,7 +10805,7 @@ The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
   self.bind("afterUpdate", function() {
     updating = false;
     if (clearObjects) {
-      I.objects.clear();
+      self.objects().clear();
       return clearObjects = false;
     }
   });
@@ -10586,7 +10825,9 @@ The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
       });
     }
   };
-};;
+};
+;
+
 /**
 This object keeps track of framerate and displays it by creating and appending an
 html element to the DOM.
@@ -10595,7 +10836,10 @@ Once created you call snapshot at the end of every rendering cycle.
 
 @name Framerate
 @constructor
-*/var Framerate;
+*/
+
+var Framerate;
+
 Framerate = function(options) {
   var element, framerateUpdateInterval, framerates, numFramerates, renderTime, self, updateFramerate;
   options || (options = {});
@@ -10625,9 +10869,7 @@ Framerate = function(options) {
     }
     framerate = (tot / framerates.length).round();
     self.fps = framerate;
-    if (element) {
-      return element.innerHTML = "fps: " + framerate;
-    }
+    if (element) return element.innerHTML = "fps: " + framerate;
   };
   setInterval(updateFramerate, framerateUpdateInterval);
   /**
@@ -10653,7 +10895,9 @@ Framerate = function(options) {
       }
     }
   };
-};;
+};
+;
+
 (function() {
   var Map, Tilemap, fromPixieId, loadByName;
   Map = function(data, entityCallback) {
@@ -10667,9 +10911,7 @@ Framerate = function(options) {
       spriteLookup[uuid] = Sprite.fromURL(entity.tileSrc);
     }
     loadEntities = function() {
-      if (!entityCallback) {
-        return;
-      }
+      if (!entityCallback) return;
       return data.layers.each(function(layer, layerIndex) {
         var entities, entity, entityData, x, y, _i, _len, _results;
         if (layer.name.match(/entities/i)) {
@@ -10681,8 +10923,8 @@ Framerate = function(options) {
               entityData = Object.extend({
                 layer: layerIndex,
                 sprite: spriteLookup[uuid],
-                x: x,
-                y: y
+                x: x + tileWidth / 2,
+                y: y + tileHeight / 2
               }, App.entities[uuid], entity.properties);
               _results.push(entityCallback(entityData));
             }
@@ -10696,9 +10938,7 @@ Framerate = function(options) {
       draw: function(canvas, x, y) {
         return canvas.withTransform(Matrix.translation(x, y), function() {
           return data.layers.each(function(layer) {
-            if (layer.name.match(/entities/i)) {
-              return;
-            }
+            if (layer.name.match(/entities/i)) return;
             return layer.tiles.each(function(row, y) {
               return row.each(function(uuid, x) {
                 var sprite;
@@ -10749,10 +10989,12 @@ Framerate = function(options) {
     }
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Tilemap"] = Tilemap;
-})();;
+})();
+;
 ;
 ;
 var Player;
+
 Player = function(I) {
   var self;
   Object.reverseMerge(I, {
@@ -10762,40 +11004,36 @@ Player = function(I) {
   });
   self = GameObject(I);
   self.bind("update", function() {
-    if (keydown.left) {
-      I.x -= I.speed;
-    }
-    if (keydown.right) {
-      I.x += I.speed;
-    }
-    if (keydown.up) {
-      I.y -= I.speed;
-    }
-    if (keydown.down) {
-      I.y += I.speed;
-    }
+    if (keydown.left) I.x -= I.speed;
+    if (keydown.right) I.x += I.speed;
+    if (keydown.up) I.y -= I.speed;
+    if (keydown.down) I.y += I.speed;
     I.x = I.x.clamp(I.width / 2, App.width - I.width / 2);
     return I.y = I.y.clamp(I.height / 2, App.height - I.height / 2);
   });
   return self;
-};;
-App.entities = {};;
-;$(function(){ window.engine = Engine({
+};
+;
+
+App.entities = {};
+;
+;$(function(){ 
+window.engine = Engine({
   backgroundColor: Color("light yellow"),
   canvas: $("canvas").pixieCanvas()
 });
+
 engine.add({
   "class": "Player",
   x: 160,
   y: 96,
   color: "#F00"
 });
+
 engine.bind('update', function() {
-  if (justPressed.f) {
-    engine.flash();
-  }
-  if (justPressed.s) {
-    return engine.shake();
-  }
+  if (justPressed.f) engine.flash();
+  if (justPressed.s) return engine.shake();
 });
-engine.start(); });
+
+engine.start();
+ });
