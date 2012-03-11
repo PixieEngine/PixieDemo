@@ -424,37 +424,37 @@
                 <div class="description">
                   Collision holds many useful class methods for checking geometric overlap of various objects.
 
-      <code><pre>
-      player = engine.add
-        class: "Player"
-        x: 0
-        y: 0
-        width: 10
-        height: 10
+    <code><pre>
+    player = engine.add
+      class: "Player"
+      x: 0
+      y: 0
+      width: 10
+      height: 10
 
-      enemy = engine.add
-        class: "Enemy"
-        x: 5
-        y: 5
-        width: 10
-        height: 10
+    enemy = engine.add
+      class: "Enemy"
+      x: 5
+      y: 5
+      width: 10
+      height: 10
 
-      enemy2 = engine.add
-        class: "Enemy"
-        x: -5
-        y: -5
-        width: 10
-        height: 10
+    enemy2 = engine.add
+      class: "Enemy"
+      x: -5
+      y: -5
+      width: 10
+      height: 10
 
-      Collision.collide(player, enemy, (p, e) -> ...)
-      # => callback is called once
+    Collision.collide(player, enemy, (p, e) -> ...)
+    # => callback is called once
 
-      Collision.collide(player, [enemy, enemy2], (p, e) -> ...)
-      # => callback is called twice
+    Collision.collide(player, [enemy, enemy2], (p, e) -> ...)
+    # => callback is called twice
 
-      Collision.collide("Player", "Enemy", (p, e) -> ...)
-      # => callback is also called twice
-      </pre></code>
+    Collision.collide("Player", "Enemy", (p, e) -> ...)
+    # => callback is also called twice
+    </pre></code>
 
                   
                 </div>
@@ -475,21 +475,21 @@
                         <b>groupB</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a>|<a href="../symbols/Array.html">Array</a>|<a href="../symbols/String.html">String</a></span> 
                         
                       </dt>
-                      <dd>An objcet or set of objects to check collisions with</dd>
+                      <dd>An object or set of objects to check collisions with</dd>
                     
                       <dt>
                         <b>callback</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         
                       </dt>
                       <dd>The callback to call when an object of groupA collides
-      with an object of groupB: (a, b) -></dd>
+    with an object of groupB: (a, b) -></dd>
                     
                       <dt>
                         <b>detectionMethod</b><span class='light fixedFont'> <a href="../symbols/Function.html">Function</a></span> 
                         <i>Optional</i>
                       </dt>
                       <dd>An optional detection method to determine when two 
-      objects are colliding.</dd>
+    objects are colliding.</dd>
                     
                   </dl>
                 
