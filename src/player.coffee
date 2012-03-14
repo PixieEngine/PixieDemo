@@ -1,5 +1,5 @@
 # Player class constructor
-Player = (I) ->
+Player = (I={}) ->
 
   # Default values that can be overriden when creating a new player.
   Object.reverseMerge I,
