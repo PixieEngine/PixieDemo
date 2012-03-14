@@ -10802,6 +10802,7 @@ var Player;
 
 Player = function(I) {
   var self;
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     width: 16,
     height: 16,
