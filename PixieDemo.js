@@ -6666,6 +6666,44 @@ var __slice = Array.prototype.slice;
   };
 })();
 ;
+var Cooldown;
+
+Cooldown = function(I, self) {
+  Object.reverseMerge(I, {
+    cooldowns: {}
+  });
+  self.bind("update", function() {
+    var approachBy, cooldownOptions, name, target, _ref, _results;
+    _ref = I.cooldowns;
+    _results = [];
+    for (name in _ref) {
+      cooldownOptions = _ref[name];
+      approachBy = cooldownOptions.approachBy, target = cooldownOptions.target;
+      _results.push(I[name] = I[name].approach(target, approachBy));
+    }
+    return _results;
+  });
+  return {
+    cooldown: function(name, options) {
+      if (options == null) {
+        options = {
+          target: 0,
+          approachBy: 1,
+          value: null
+        };
+      }
+      if (!I.cooldowns[name]) {
+        I.cooldowns[name] = options;
+        if (options.value != null) {
+          return I[name] = options.value;
+        } else {
+          if (!I[name]) return I[name] = 100;
+        }
+      }
+    }
+  };
+};
+;
 /**
 The Drawable module is used to provide a simple draw method to the including
 object.
@@ -6892,6 +6930,63 @@ Durable = function(I, self) {
   });
   return {};
 };
+;
+
+(function() {
+  var Easing, polynomialEasings;
+  Easing = {
+    sinusoidal: function(begin, end) {
+      var change;
+      change = end - begin;
+      return function(t) {
+        return begin + change * (1 - Math.cos(t * Math.TAU / 4));
+      };
+    },
+    sinusoidalOut: function(begin, end) {
+      var change;
+      change = end - begin;
+      return function(t) {
+        return begin + change * (0 + Math.sin(t * Math.TAU / 4));
+      };
+    }
+  };
+  polynomialEasings = ["linear", "quadratic", "cubic", "quartic", "quintic"];
+  polynomialEasings.each(function(easing, i) {
+    var exponent, sign;
+    exponent = i + 1;
+    sign = exponent % 2 ? 1 : -1;
+    Easing[easing] = function(begin, end) {
+      var change;
+      change = end - begin;
+      return function(t) {
+        return begin + change * Math.pow(t, exponent);
+      };
+    };
+    return Easing["" + easing + "Out"] = function(begin, end) {
+      var change;
+      change = end - begin;
+      return function(t) {
+        return begin + change * (1 + sign * Math.pow(t - 1, exponent));
+      };
+    };
+  });
+  ["sinusoidal"].concat(polynomialEasings).each(function(easing) {
+    return Easing["" + easing + "InOut"] = function(begin, end) {
+      var easeIn, easeOut, midpoint;
+      midpoint = (begin + end) / 2;
+      easeIn = Easing[easing](begin, midpoint);
+      easeOut = Easing["" + easing + "Out"](midpoint, end);
+      return function(t) {
+        if (t < 0.5) {
+          return easeIn(2 * t);
+        } else {
+          return easeOut(2 * t - 1);
+        }
+      };
+    };
+  });
+  return (typeof exports !== "undefined" && exports !== null ? exports : this)["Easing"] = Easing;
+})();
 ;
 var Emitter;
 
@@ -7229,7 +7324,7 @@ Emitterable = function(I, self) {
       draw: draw
     });
     self.include(Bindable);
-    defaultModules = ["Keyboard", "Clear", "Delay", "GameState", "Selector", "Collision"];
+    defaultModules = ["Keyboard", "Mouse", "Clear", "Delay", "GameState", "Selector", "Collision"];
     modules = defaultModules.concat(I.includedModules);
     modules = modules.without([].concat(I.excludedModules));
     modules.each(function(moduleName) {
@@ -7479,6 +7574,22 @@ This module sets up the keyboard inputs for each engine update.
 Engine.Keyboard = function(I, self) {
   self.bind("beforeUpdate", function() {
     return typeof updateKeys === "function" ? updateKeys() : void 0;
+  });
+  return {};
+};
+;
+/**
+This module sets up the mouse inputs for each engine update.
+
+@name Mouse
+@fieldOf Engine
+@module
+@param {Object} I Instance variables
+@param {Object} self Reference to the engine
+*/
+Engine.Mouse = function(I, self) {
+  self.bind("beforeUpdate", function() {
+    return typeof updateMouse === "function" ? updateMouse() : void 0;
   });
   return {};
 };
@@ -8230,6 +8341,20 @@ Movable = function(I, self) {
   });
 };
 ;
+var Oscillator;
+
+Oscillator = function(options) {
+  var amplitude, offset, period;
+  if (options == null) options = {};
+  amplitude = options.amplitude, period = options.period, offset = options.offset;
+  if (amplitude == null) amplitude = 1;
+  if (period == null) period = 1;
+  if (offset == null) offset = 0;
+  return function(t) {
+    return amplitude * Math.cos(Math.TAU * t / period + offset);
+  };
+};
+;
 /**
 @name ResourceLoader
 @namespace
@@ -8487,12 +8612,10 @@ $(document).bind("keydown", function(event) {
   if (!$(event.target).is("input")) return event.preventDefault();
 });
 ;
-
 /**
 This error handler captures any runtime errors and reports them to the IDE
 if present.
 */
-
 window.onerror = function(message, url, lineNumber) {
   var errorContext;
   errorContext = $('script').last().text().split('\n').slice(lineNumber - 5, (lineNumber + 4) + 1 || 9e9);
@@ -8500,8 +8623,8 @@ window.onerror = function(message, url, lineNumber) {
   return typeof displayRuntimeError === "function" ? displayRuntimeError("<code>" + message + "</code> <br /><br />(Sometimes this context may be wrong.)<br /><code><pre>" + (errorContext.join('\n')) + "</pre></code>") : void 0;
 };
 ;
-var Joysticks;
-var __slice = Array.prototype.slice;
+var Joysticks,
+  __slice = Array.prototype.slice;
 
 Joysticks = (function() {
   var AXIS_MAX, Controller, DEAD_ZONE, MAX_BUFFER, TRIP_HIGH, TRIP_LOW, axisMappingDefault, axisMappingOSX, buttonMappingDefault, buttonMappingOSX, controllers, displayInstallPrompt, joysticks, plugin, previousJoysticks, type;
@@ -8732,7 +8855,6 @@ Joysticks = (function() {
   };
 })();
 ;
-
 /**
 jQuery Hotkeys Plugin
 Copyright 2010, John Resig
@@ -8744,7 +8866,6 @@ http://github.com/tzuryby/hotkeys
 Original idea by:
 Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
 */
-
 (function(jQuery) {
   var isFunctionKey, isTextAcceptingInput, keyHandler;
   isTextAcceptingInput = function(element) {
@@ -8883,7 +9004,6 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
   });
 })(jQuery);
 ;
-
 /**
 Merges properties from objects into target without overiding.
 First come, first served.
@@ -8896,7 +9016,6 @@ First come, first served.
 
 @return {Object} target
 */
-
 var __slice = Array.prototype.slice;
 
 jQuery.extend({
@@ -8991,6 +9110,77 @@ $(function() {
 });
 ;
 
+$(function() {
+  /**
+  The global mouseDown property lets your query the status of mouse buttons.
+
+  <code><pre>
+  if mouseDown.left
+    moveLeft()
+
+  if mouseDown.right
+    attack()
+  </pre></code>
+
+  @name mouseDown
+  @namespace
+  */
+  /**
+  The global mousePressed property lets your query the status of mouse buttons.
+  However, unlike mouseDown it will only trigger the first time the button
+  pressed.
+
+  <code><pre>
+  if mousePressed.left
+    moveLeft()
+
+  if mousePressed.right
+    attack()
+  </pre></code>
+
+  @name justPressed
+  @namespace
+  */
+  var buttonName, buttonNames, prevButtonsDown;
+  window.mouseDown = {};
+  window.mousePressed = {};
+  window.mousePosition = Point(0, 0);
+  prevButtonsDown = {};
+  buttonNames = {
+    1: "left",
+    2: "middle",
+    3: "right"
+  };
+  buttonName = function(event) {
+    return buttonNames[event.which];
+  };
+  $(document).bind("mousemove", function(event) {
+    mousePosition.x = event.pageX;
+    return mousePosition.y = event.pageY;
+  });
+  $(document).bind("mousedown", function(event) {
+    return mouseDown[buttonName(event)] = true;
+  });
+  $(document).bind("mouseup", function(event) {
+    return mouseDown[buttonName(event)] = false;
+  });
+  return window.updateMouse = function() {
+    var button, value, _results;
+    window.mousePressed = {};
+    for (button in mouseDown) {
+      value = mouseDown[button];
+      if (!prevButtonsDown[button]) mousePressed[button] = value;
+    }
+    prevButtonsDown = {};
+    _results = [];
+    for (button in mouseDown) {
+      value = mouseDown[button];
+      _results.push(prevButtonsDown[button] = value);
+    }
+    return _results;
+  };
+});
+;
 /**
 The Music object provides an easy API to play
 songs from your sounds project directory. By
@@ -9003,7 +9193,6 @@ default, the track is looped.
 @name Music
 @namespace
 */
-
 var Music;
 
 Music = (function() {
@@ -10045,7 +10234,6 @@ var __slice = Array.prototype.slice;
   };
 })(jQuery);
 ;
-
 /**
 A browser polyfill so you can consistently 
 call requestAnimationFrame. Using 
@@ -10057,7 +10245,6 @@ http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 @name requestAnimationFrame
 @namespace
 */
-
 window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
   return window.setTimeout(function() {
     return callback(+new Date());
