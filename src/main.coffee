@@ -10,13 +10,6 @@ player = engine.add
   y: 96
   color: "#F00"
 
-player.bind 'overlay', (canvas) ->
-  canvas.centerText
-    color: 'black'
-    y: 200
-    text: 'hello'
-
-
 engine.bind 'update', ->
   if justPressed.f
     engine.flash()
