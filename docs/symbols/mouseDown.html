@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="generator" content="JsDoc Toolkit" />
     
-    <title>JsDoc Reference - Flickerable</title>
+    <title>JsDoc Reference - mouseDown</title>
     <link href="/stylesheets/docs.css" type="text/css" rel="stylesheet" media="all" />
   </head>
 
@@ -196,7 +196,7 @@
       <div class="innerContent">
         <h1 class="classTitle">
           
-          <span>Flickerable</span>
+          <span>mouseDown</span>
         </h1>
 
         <p class="description summary">
@@ -209,15 +209,15 @@
 
         
           <div class="props">
-            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Flickerable.">
-              <caption>Module Summary</caption>
+            <table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class mouseDown.">
+              <caption>Class Summary</caption>
               <tbody>
                 <tr>
                   <td class="nameDescription" >
                     <div class="fixedFont">
-                      <b><a href="../symbols/Flickerable.html#constructor">Flickerable</a></b>(I, self)
+                      <b><a href="../symbols/mouseDown.html#constructor">mouseDown</a></b>()
                     </div>
-                    <div class="description">The <code>Flickerable</code> module provides a method to flicker a sprite between solid and 50% opacity.</div>
+                    <div class="description">The global mouseDown property lets your query the status of mouse buttons.</div>
                   </td>
                 </tr>
                 <tr>
@@ -234,29 +234,6 @@
   #### METHODS SUMMARY
   -->
         
-          
-          
-            <div class="props">
-              <table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Flickerable.">
-                <caption>Method Summary</caption>
-
-                <tbody>
-                  
-                    <tr>
-                      <td class="nameDescription">
-                        <div class="fixedFont"><b><a href="../symbols/Flickerable.html#flicker">flicker</a></b>(duration, frequency, alpha)
-                        </div>
-                        <div class="description">A convenient way to set the flicker instance variables on a sprite.</div>
-                      </td>
-                    </tr>
-                  
-                </tbody>
-              </table>
-            </div>
-          
-
-          
-        
 
   <!--
   #### EVENTS SUMMARY
@@ -272,33 +249,24 @@
               <a name="constructor"></a>
 
               <div class="fixedFont">
-                <b>Flickerable</b>(I, self)
+                <b>mouseDown</b>()
               </div>
 
               <div class="description">
-                The <code>Flickerable</code> module provides a method to flicker a sprite between solid and 50% opacity.
+                The global mouseDown property lets your query the status of mouse buttons.
+
+  <code><pre>
+  if mouseDown.left
+    moveLeft()
+
+  if mouseDown.right
+    attack()
+  </pre></code>
                 
               </div>
 
               
 
-              
-                <dl class="detailList params">
-                  <dt class="heading">Parameters:</dt>
-                  
-                    <dt>
-                      <b>I</b><span class='light fixedFont'> <a href="../symbols/Object.html">Object</a></span> 
-                      
-                    </dt>
-                    <dd>Instance variables</dd>
-                  
-                    <dt>
-                      <b>self</b><span class='light fixedFont'> <a href="../symbols/Core.html">Core</a></span> 
-                      
-                    </dt>
-                    <dd>Reference to including object</dd>
-                  
-                </dl>
               
 
               
@@ -314,71 +282,6 @@
   <!--
   #### METHOD DETAILS
   -->
-        
-          <div class="details props">
-            <div class="innerProps">
-              
-                <div class="fixedFont heading">
-                  <a name="flicker"></a>
-                  <span class='lighter'>
-                  
-                  </span>
-
-                  <b>flicker</b>(duration, frequency, alpha)
-                </div>
-
-                <div class="description">
-                  A convenient way to set the flicker instance variables on a sprite. You can modify the
-    instance variables by hand but the suggested way to do it is through this method.
-
-    <code><pre>
-    player = GameObject()
-
-    player.include(Flickerable)
-
-    player.flicker()
-    # => This causes the sprite to flicker between full opacity 
-    # => and 50% opacity every 3 frames for 30 frames
-
-    player.flicker(90, 5, 0.3)
-    # => This causes the sprite to flicker between full opacity
-    # => and 30% opacity every 5 frames for 90 frames
-    </pre></code>
-
-                  
-                </div>
-
-                
-
-                
-                  <dl class="detailList params">
-                    <dt class="heading">Parameters:</dt>
-                    
-                      <dt>
-                        <b>duration</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
-                        <i>Optional, Default: 30</i>
-                      </dt>
-                      <dd>How long the effect lasts</dd>
-                    
-                      <dt>
-                        <b>frequency</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
-                        <i>Optional, Default: 3</i>
-                      </dt>
-                      <dd>The number of frames in between opacity changes</dd>
-                    
-                      <dt>
-                        <b>alpha</b><span class='light fixedFont'> <a href="../symbols/Number.html">Number</a></span> 
-                        <i>Optional, Default: 0.5</i>
-                      </dt>
-                      <dd>The alpha value to flicker to</dd>
-                    
-                  </dl>
-                
-
-                
-              
-            </div>
-          </div>
         
 
   <!--

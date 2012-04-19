@@ -1049,8 +1049,14 @@ Core = function(I) {
     @methodOf Core#
     @param {Module} Module the module to include. A module is a constructor that takes two parameters, I and self, and returns an object containing the public methods to extend the including object with.
     */
-    include: function(Module) {
-      return self.extend(Module(I, self));
+    include: function() {
+      var Module, modules, _i, _len;
+      modules = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      for (_i = 0, _len = modules.length; _i < _len; _i++) {
+        Module = modules[_i];
+        self.extend(Module(I, self));
+      }
+      return self;
     }
   };
 };
@@ -1520,6 +1526,27 @@ Returns this number rounded to the nearest integer.
 
 Number.prototype.round = function() {
   return Math.round(this);
+};
+
+/**
+Get a bunch of points equally spaced around the unit circle.
+
+<code><pre>
+4.circularPoints (p) ->
+
+# p gets Point(1, 0), Point(0, 1), Point(-1, 0), Point(0, -1)
+</pre></code>
+
+@name circularPoint
+@methodOf Number#
+*/
+
+Number.prototype.circularPoints = function(block) {
+  var n;
+  n = this;
+  return n.times(function(i) {
+    return block(Point.fromAngle((i / n).turns), i);
+  });
 };
 
 /**
@@ -2194,6 +2221,24 @@ var __slice = Array.prototype.slice;
   };
   Point.prototype = {
     /**
+    Constrain the magnitude of a vector.
+    
+    @name clamp
+    @methodOf Point#
+    @param {Number} n Maximum value for magnitude.
+    @returns {Point} A new point whose magnitude has been clamped to the given value.
+    */
+    clamp: function(n) {
+      return this.copy().clamp$(n);
+    },
+    clamp$: function(n) {
+      if (this.magnitude() > n) {
+        return this.norm$(n);
+      } else {
+        return this;
+      }
+    },
+    /**
     Creates a copy of this point.
     
     @name copy
@@ -2761,6 +2806,14 @@ var __slice = Array.prototype.slice;
     }).scale(1 / points.length);
   };
   /**
+  Generate a random point on the unit circle.
+  
+  @returns {Point} A random point on the unit circle.
+  */
+  Point.random = function() {
+    return Point.fromAngle(Random.angle());
+  };
+  /**
   @name ZERO
   @fieldOf Point
   @returns {Point} The point (0, 0)
@@ -2815,6 +2868,16 @@ var __slice = Array.prototype.slice;
     */
     angle: function() {
       return rand() * Math.TAU;
+    },
+    /**
+    Returns a random angle between the given angles.
+    
+    @name angleBetween
+    @methodOf Random
+    @returns {Number} A random angle between the angles given.
+    */
+    angleBetween: function(min, max) {
+      return rand() * (max - min) + min;
     },
     /**
     Returns a random color.
@@ -4831,24 +4894,37 @@ Camera = function(I) {
     deadzone: Point(0, 0),
     zoom: 1,
     transform: Matrix(),
-    scroll: Point(0, 0)
+    x: App.width / 2,
+    y: App.height / 2,
+    velocity: Point.ZERO,
+    maxSpeed: 25,
+    t90: 2
   });
   currentType = "centered";
   currentObject = null;
   objectFilters = [];
   transformFilters = [];
   focusOn = function(object) {
-    var centerOffset, centerRect, deadzone, objectCenter;
-    objectCenter = object.center();
-    centerOffset = objectCenter.subtract(I.screen.width / 2, I.screen.height / 2);
-    deadzone = I.deadzone.scale(1 / (2 * I.zoom));
-    centerRect = Rectangle({
-      x: centerOffset.x - deadzone.x,
-      y: centerOffset.y - deadzone.y,
-      width: 2 * deadzone.x,
-      height: 2 * deadzone.y
-    });
-    return I.scroll = Point(I.scroll.x.clamp(centerRect.left, centerRect.right).clamp(I.cameraBounds.left, I.cameraBounds.right - I.screen.width), I.scroll.y.clamp(centerRect.top, centerRect.bottom).clamp(I.cameraBounds.top, I.cameraBounds.bottom - I.screen.height));
+    var c, dampingFactor, delta, dt, force, objectCenter, objectVelocity, target;
+    dt = 1 / 30;
+    dampingFactor = 2;
+    c = dt * 3.75 / I.t90;
+    if (c >= 1) {
+      self.position(target);
+      return I.velocity = Point.ZERO;
+    } else {
+      objectCenter = object.center();
+      objectVelocity = object.I.velocity;
+      if (objectVelocity) {
+        target = objectCenter.add(objectVelocity.scale(5));
+      } else {
+        target = objectCenter;
+      }
+      delta = target.subtract(self.position());
+      force = delta.subtract(I.velocity.scale(dampingFactor));
+      self.changePosition(I.velocity.scale(c).clamp(I.maxSpeed));
+      return I.velocity = I.velocity.add(force.scale(c));
+    }
   };
   followTypes = {
     centered: function(object) {
@@ -4873,8 +4949,7 @@ Camera = function(I) {
     follow: function(object, type) {
       if (type == null) type = "centered";
       currentObject = object;
-      currentType = type;
-      return I.scroll = object.center();
+      return currentType = type;
     },
     objectFilterChain: function(fn) {
       return objectFilters.push(fn);
@@ -4883,11 +4958,13 @@ Camera = function(I) {
       return transformFilters.push(fn);
     }
   });
-  self.attrAccessor("transform", "scroll");
   self.include(Bindable);
+  self.attrAccessor("transform");
   self.bind("afterUpdate", function() {
     if (currentObject) followTypes[currentType](currentObject);
-    return I.transform = Matrix.translate(-I.scroll.x, -I.scroll.y);
+    I.x = I.x.clamp(I.cameraBounds.left + I.screen.width / 2, I.cameraBounds.right - I.screen.width / 2);
+    I.y = I.y.clamp(I.cameraBounds.top + I.screen.height / 2, I.cameraBounds.bottom - I.screen.height / 2);
+    return I.transform = Matrix.translate(-I.x, -I.y);
   });
   self.bind("draw", function(canvas, objects) {
     return canvas.withTransform(Matrix.translate(I.screen.x, I.screen.y), function(canvas) {
@@ -4895,9 +4972,11 @@ Camera = function(I) {
       canvas.clip(0, 0, I.screen.width, I.screen.height);
       objects = objectFilters.pipeline(objects);
       transform = transformFilters.pipeline(self.transform().copy());
-      canvas.withTransform(transform, function(canvas) {
-        self.trigger("beforeDraw", canvas);
-        return objects.invoke("draw", canvas);
+      canvas.withTransform(Matrix.translation(I.screen.width / 2, I.screen.height / 2), function(canvas) {
+        return canvas.withTransform(transform, function(canvas) {
+          self.trigger("beforeDraw", canvas);
+          return objects.invoke("draw", canvas);
+        });
       });
       return self.trigger('flash', canvas);
     });
@@ -4909,6 +4988,7 @@ Camera = function(I) {
       return objects.invoke("trigger", "overlay", canvas);
     });
   });
+  self.include(Bounded);
   self.include(Camera.ZSort);
   self.include(Camera.Zoom);
   self.include(Camera.Rotate);
@@ -5077,7 +5157,7 @@ Camera.Rotate = function(I, self) {
     rotation: 0
   });
   self.transformFilterChain(function(transform) {
-    return transform.rotate(I.rotation);
+    return transform.rotate(I.rotation, self.position());
   });
   self.attrAccessor("rotation");
   return {
@@ -5129,7 +5209,7 @@ Camera.Zoom = function(I, self) {
     zoom: 1
   });
   self.transformFilterChain(function(transform) {
-    return transform.scale(I.zoom, I.zoom);
+    return transform.scale(I.zoom, I.zoom, self.position());
   });
   clampZoom = function(value) {
     return value.clamp(I.minZoom, I.maxZoom);
@@ -6871,13 +6951,17 @@ var Controllable;
 Controllable = function(I, self) {
   if (I == null) I = {};
   Object.reverseMerge(I, {
-    speed: 1
+    speed: 1,
+    velocity: Point(0, 0)
   });
   return self.bind("update", function() {
-    if (keydown.left) I.x -= I.speed;
-    if (keydown.right) I.x += I.speed;
-    if (keydown.up) I.y -= I.speed;
-    if (keydown.down) return I.y += I.speed;
+    I.velocity.x = 0;
+    I.velocity.y = 0;
+    if (keydown.left) I.velocity.x = -1;
+    if (keydown.right) I.velocity.x = 1;
+    if (keydown.up) I.velocity.y = -1;
+    if (keydown.down) I.velocity.y = 1;
+    return I.velocity = I.velocity.scale(I.speed);
   });
 };
 ;
@@ -7269,8 +7353,10 @@ var Emitter;
 
 Emitter = function(I) {
   var self;
+  if (I == null) I = {};
   self = GameObject(I);
-  return self.include(Emitterable);
+  self.include(Emitterable);
+  return self;
 };
 ;
 var Emitterable;
@@ -7601,7 +7687,7 @@ Emitterable = function(I, self) {
       draw: draw
     });
     self.include(Bindable);
-    defaultModules = ["Keyboard", "Mouse", "Clear", "Delay", "GameState", "Selector", "Collision"];
+    defaultModules = ["Keyboard", "Mouse", "Background", "Delay", "GameState", "Selector", "Collision"];
     modules = defaultModules.concat(I.includedModules);
     modules = modules.without([].concat(I.excludedModules));
     modules.each(function(moduleName) {
@@ -7625,15 +7711,24 @@ This module clears or fills the canvas before drawing the scene.
 @param {Object} I Instance variables
 @param {Object} self Reference to the engine
 */
-Engine.Clear = function(I, self) {
+Engine.Background = function(I, self) {
   Object.reverseMerge(I, {
+    background: null,
     backgroundColor: "#00010D",
     clear: false
   });
   self.attrAccessor("clear", "backgroundColor");
+  self.bind("init", function() {
+    var _ref;
+    if ((_ref = I.background) != null ? typeof _ref.isString === "function" ? _ref.isString() : void 0 : void 0) {
+      return I.background = Sprite.loadByName(I.background);
+    }
+  });
   self.bind("beforeDraw", function() {
     if (I.clear) {
       return I.canvas.clear();
+    } else if (I.background) {
+      return I.background.fill(I.canvas, 0, 0, App.width, App.height);
     } else if (I.backgroundColor) {
       return I.canvas.fill(I.backgroundColor);
     }
@@ -8008,6 +8103,56 @@ Engine.GameState = function(I, self) {
 };
 ;
 /**
+The <code>Joysticks</code> module gives the engine access to joysticks.
+
+<code><pre>
+# First you need to add the joysticks module to the engine
+window.engine = Engine
+  ...
+  includedModules: ["Joysticks"]
+# Then you need to get a controller reference
+# id = 0 for player 1, etc.
+controller = engine.controller(id)
+
+# Point indicating direction primary axis is held
+direction = controller.position()
+
+# Check if buttons are held
+controller.actionDown("A")
+controller.actionDown("B")
+controller.actionDown("X")
+controller.actionDown("Y")
+</pre></code>
+
+@name Joysticks
+@fieldOf Engine
+@module
+
+@param {Object} I Instance variables
+@param {Object} self Reference to the engine
+*/
+Engine.Joysticks = function(I, self) {
+  Joysticks.init();
+  self.bind("update", function() {
+    Joysticks.init();
+    return Joysticks.update();
+  });
+  return {
+    /**
+    Get a controller for a given joystick id.
+    
+    @name controller
+    @methodOf Engine.Joysticks#
+    
+    @param {Number} i The joystick id to get the controller of.
+    */
+    controller: function(i) {
+      return Joysticks.getController(i);
+    }
+  };
+};
+;
+/**
 This module sets up the keyboard inputs for each engine update.
 
 @name Keyboard
@@ -8028,7 +8173,8 @@ Engine.Levels = function(I, self) {
   var loadLevel;
   Object.reverseMerge(I, {
     levels: [],
-    currentLevel: -1
+    currentLevel: -1,
+    currentLevelName: null
   });
   I.transitioning = false;
   loadLevel = function(level) {
@@ -8038,6 +8184,7 @@ Engine.Levels = function(I, self) {
       levelState = LevelState({
         level: level
       });
+      I.currentLevelName = level;
       return engine.setState(levelState);
     }
   };
@@ -8055,6 +8202,9 @@ Engine.Levels = function(I, self) {
     },
     goToLevel: function(level) {
       return loadLevel(level);
+    },
+    reloadLevel: function() {
+      return loadLevel(I.currentLevelName);
     }
   };
 };
@@ -8661,7 +8811,7 @@ GameObject = function(I) {
       return I.active = false;
     }
   });
-  defaultModules = [Bindable, Bounded, Cooldown, Drawable, Durable];
+  defaultModules = [Bindable, Bounded, Cooldown, Drawable, Durable, Metered, TimedEvents];
   modules = defaultModules.concat(I.includedModules.invoke('constantize'));
   modules = modules.without(I.excludedModules.invoke('constantize'));
   modules.each(function(Module) {
@@ -8789,10 +8939,11 @@ GameState = function(I) {
 GameState.Cameras = function(I, self) {
   var cameras;
   cameras = [Camera()];
+  self.bind('update', function() {
+    return self.cameras().invoke('trigger', 'update');
+  });
   self.bind('afterUpdate', function() {
-    return self.cameras().each(function(camera) {
-      return camera.trigger('afterUpdate');
-    });
+    return self.cameras().invoke('trigger', 'afterUpdate');
   });
   self.bind('draw', function(canvas) {
     return self.cameras().invoke('trigger', 'draw', canvas, self.objects());
@@ -8962,6 +9113,225 @@ LevelState = function(I) {
 };
 ;
 /**
+The Metered module provides a simple drop-in
+meter ui to track arbitrary numeric attributes.
+
+<code><pre>
+player = GameObject
+  health: 100
+  maxHealth: 100
+
+player.include Metered
+
+enemy = GameObject
+  health: 500
+
+enemy.include Metered
+
+someOtherObject = GameObject
+
+someOtherObject.include Metered
+
+player.meter 'health'
+# => Sets up a health meter that will be drawn during the player overlay event
+
+enemy.meter 'health'
+# => Sets up a health meter that will be drawn during the enemy overlay event. 
+# Since maxHealth wasn't provided, it is set to the value of I.health (500)
+
+someOtherObject.meter 'turbo'
+# => Sets up a turbo meter that will be drawn during the someOtherObject overlay event. 
+# Since neither turbo maxTurbo were provided, they are both set to 100.
+
+</pre></code>
+
+Metered module
+@name Metered
+@module
+@constructor
+@param {Object} I Instance variables
+@param {GameObject} self Reference to including object
+*/
+var Metered;
+
+Metered = function(I, self) {
+  var setMeter;
+  if (I == null) I = {};
+  Object.reverseMerge(I, {
+    meters: {}
+  });
+  setMeter = function(name, value) {
+    var meterData, meterName, _ref, _results;
+    _ref = I.meters;
+    _results = [];
+    for (meterName in _ref) {
+      meterData = _ref[meterName];
+      if (meterName === name) {
+        _results.push(meterData.show = value);
+      } else {
+        _results.push(void 0);
+      }
+    }
+    return _results;
+  };
+  self.bind('overlay', function(canvas) {
+    var borderColor, borderWidth, color, font, height, meterData, name, nameColor, radius, ratio, show, showName, text, width, x, y, _ref, _ref2;
+    _ref = I.meters;
+    for (name in _ref) {
+      meterData = _ref[name];
+      borderColor = meterData.borderColor, borderWidth = meterData.borderWidth, color = meterData.color, font = meterData.font, height = meterData.height, nameColor = meterData.nameColor, (_ref2 = meterData.position, x = _ref2.x, y = _ref2.y), radius = meterData.radius, show = meterData.show, showName = meterData.showName, text = meterData.text, width = meterData.width;
+      if (!show) return;
+      ratio = I[name] / I["max" + (name.capitalize())];
+      if (showName || text) {
+        canvas.font(font);
+        canvas.drawText({
+          color: nameColor,
+          x: x,
+          y: y + 10,
+          text: text || name.capitalize()
+        });
+      }
+      canvas.drawRect({
+        color: color,
+        x: x,
+        y: y + 15,
+        width: width * ratio,
+        height: height
+      });
+      canvas.drawRoundRect({
+        x: x,
+        y: y + 15,
+        width: width,
+        height: height,
+        radius: radius,
+        stroke: {
+          color: borderColor,
+          width: borderWidth
+        }
+      });
+    }
+  });
+  return {
+    /**
+    Configures a meter to be drawn each overlay event.
+    
+    <code><pre>
+    player = GameObject
+    
+    player.include Metered      
+    
+    player.meter 'health',
+      borderColor: 'brown'
+      color: 'pink'
+      font: '30px Comic Sans'
+      height: 20
+      position: 
+        x: 5
+        y: 5
+      radius: 3
+      show: true
+      showName: true
+      text: 'Boss Health'
+      width: 150
+    
+    # => Sets up a health meter, using all the configuration options
+    </pre></code>
+    
+    @name meter
+    @methodOf Metered#
+    @param {String} name The name of the property to meter
+    @param {Object} options The meter configuration options
+    @param {String} borderColor Color of the meter's border
+    @param {Number} borderWidth Width of the meter's border
+    @param {String} color Color of the meter's inner rectangle
+    @param {String} nameColor Color of the property name displayed above the meter
+    @param {String} font Size and style of the meter's font
+    @param {Number} height Height of the meter
+    @param {Object} position An x, y object representing the position of the meter
+    @param {Number} radius Border radius of the meter
+    @param {Boolean} show Boolean to toggle whether of not to display the meter
+    @param {Boolean} showName Boolean to toggle whether or not to show the attribute associated with the meter
+    @param {String} text A String to display over the meter. Overrides default name attribute
+    @param {Number} width How wide the meter is
+    */
+    meter: function(name, options) {
+      if (options == null) options = {};
+      Object.reverseMerge(options, {
+        borderColor: 'white',
+        borderWidth: 1.5,
+        color: 'green',
+        nameColor: 'white',
+        font: '14px Helvetica',
+        height: 10,
+        position: {
+          x: 0,
+          y: 0
+        },
+        radius: 2,
+        show: true,
+        showName: false,
+        text: null,
+        width: 100
+      });
+      if (I[name] == null) I[name] = 100;
+      if (!I["max" + (name.capitalize())]) {
+        if (I[name]) {
+          I["max" + (name.capitalize())] = I[name];
+        } else {
+          I["max" + (name.capitalize())] = 100;
+        }
+      }
+      return I.meters[name] = options;
+    },
+    /**
+    Shows the named meter
+    
+    <code><pre>
+    player = GameObject
+    
+    player.include Metered      
+    
+    # creates a health meter but disables visibility
+    player.meter 'health'
+      show: false
+    
+    # enables visibility for the meter named 'health'
+    player.showMeter 'health'
+    </pre></code>
+    
+    @name meter
+    @methodOf Metered#
+    @param {String} name The name of the meter to toggle
+    */
+    showMeter: function(name) {
+      return setMeter(name, true);
+    },
+    /**
+    Hides the named meter
+    
+    <code><pre>
+    player = GameObject
+    
+    player.include Metered      
+    
+    # creates a health meter
+    player.meter 'health'
+    
+    # disables visibility for the meter named 'health'
+    player.hideMeter 'health'
+    </pre></code>
+    
+    @name meter
+    @methodOf Metered#
+    @param {String} name The name of the meter to toggle
+    */
+    hideMeter: function(name) {
+      return setMeter(name, false);
+    }
+  };
+};
+;
+/**
 The Movable module automatically updates the position and velocity of
 GameObjects based on the velocity and acceleration. It does not check
 collisions so is probably best suited to particle effect like things.
@@ -9115,6 +9485,29 @@ Rotatable = function(I, self) {
     return I.rotation += I.rotationalVelocity;
   });
   return {};
+};
+;
+var Score;
+
+Score = function(I, self) {
+  if (I == null) I = {};
+  Object.reverseMerge(I, {
+    score: 0,
+    scoreColor: 'black',
+    scorePosition: {
+      x: App.width - 100,
+      y: 20
+    }
+  });
+  return self.bind('overlay', function(canvas) {
+    canvas.font('14px Helvetica');
+    return canvas.drawText({
+      color: I.scoreColor,
+      x: I.scorePosition.x,
+      y: I.scorePosition.y,
+      text: "Score: " + I.score
+    });
+  });
 };
 ;
 /**
@@ -9400,6 +9793,17 @@ TextScreen = function(I) {
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Tilemap"] = Tilemap;
 })();
+;
+var TimedEvents;
+
+TimedEvents = function(I) {
+  if (I == null) I = {};
+  return {
+    every: function(n, fn) {
+      if (I.age.mod(n) === 0) return fn();
+    }
+  };
+};
 ;
 var TitleScreen;
 
@@ -10020,22 +10424,64 @@ default, the track is looped.
 var Music;
 
 Music = (function() {
-  var track;
+  var globalMusicVolume, track, trackVolume, updateTrackVolume;
+  globalMusicVolume = 1;
+  trackVolume = 1;
   track = $("<audio />", {
     loop: "loop"
   }).appendTo('body').get(0);
-  track.volume = 1;
+  updateTrackVolume = function() {
+    return track.volume = globalMusicVolume * trackVolume;
+  };
   return {
+    /**
+    Set the global volume modifier for all music.
+    
+    Any value set is clamped between 0 and 1. This is multiplied
+    into each individual track that plays.
+    
+    If no argument is given return the current global music volume.
+    
+    @name globalVolume
+    @methodOf Music
+    @param {Number} [newVolume] The volume to set
+    */
+    globalVolume: function(newVolume) {
+      if (newVolume != null) {
+        globalMusicVolume = newVolume.clamp(0, 1);
+        updateTrackVolume();
+      }
+      return globalMusicVolume;
+    },
+    /**
+    Plays a music track.
+    
+    @name play
+    @methodOf Music
+    @param {String} name The name of the track to play.
+    */
     play: function(name) {
+      updateTrackVolume();
       track.src = "" + BASE_URL + "/sounds/" + name + ".mp3";
       return track.play();
     },
+    /**
+    Get or set the current music volume. Any value passed is
+    clamped between 0 and 1. Use this to adjust the volume of
+    individual tracks or to increase or decrease volume during
+    gameplay.
+    
+    @name volume
+    @methodOf Music
+    @param {Number} [newVolume] The volume to set to.
+    */
     volume: function(newVolume) {
       if (newVolume != null) {
-        track.volume = newVolume;
+        trackVolume = newVolume.clamp(0, 1);
+        updateTrackVolume();
         return this;
       } else {
-        return track.volume;
+        return trackVolume;
       }
     }
   };
