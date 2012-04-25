@@ -4660,6 +4660,38 @@ Bounded = function(I, self) {
   });
   return {
     /**
+    Distance between two objects. Proxies to Point.distance.
+    In order for this to work, `otherObj` must have a 
+    position method.
+    
+    <code><pre>
+    player = GameObject
+      x: 50
+      y: 50
+      width: 10
+      height: 10
+    
+    player.include Bounded
+    
+    enemy = GameObject
+      x: 110
+      y: 120
+      width: 7
+      height: 20
+      
+    player.distance(enemy)
+    # => 92.19544457292888
+    </pre></code>
+    
+    @name distance
+    @methodOf Bounded#
+    @see Point.distance
+    @returns {Number} Distance between the two objects
+    */
+    distance: function(otherObj) {
+      return Point.distance(self.position(), otherObj.position());
+    },
+    /**
     The position of this game object. By default it is the top left point.
     Redefining the center method will change the relative position.
     
@@ -5298,6 +5330,30 @@ ClampBounds = function(I, self) {
     I.x = I.x.clamp(I.width / 2, App.width - I.width / 2);
     return I.y = I.y.clamp(I.height / 2, App.height - I.height / 2);
   });
+};
+;
+var Clampable;
+
+Clampable = function(I, self) {
+  if (I == null) I = {};
+  Object.reverseMerge(I, {
+    clampData: {}
+  });
+  self.bind("afterUpdate", function() {
+    var data, property, _ref, _results;
+    _ref = I.clampData;
+    _results = [];
+    for (property in _ref) {
+      data = _ref[property];
+      _results.push(I[property] = I[property].clamp(data.min, data.max));
+    }
+    return _results;
+  });
+  return {
+    clamp: function(data) {
+      return Object.extend(I.clampData, data);
+    }
+  };
 };
 ;
 
@@ -6924,12 +6980,13 @@ when up, down, left, or right are held.
 <code><pre>
   # create a player and include Controllable
   player = GameObject
-    includedModules: ["Controllable"]
     width: 5
     height: 17
     x: 15
     y: 30
     speed:  2
+
+  player.include Controllable
 
   # hold the left arrow key, then
   # update the player
@@ -6938,6 +6995,12 @@ when up, down, left, or right are held.
   # the player is moved left according to his speed
   player.I.x
   # => 13
+
+  # We keep track of the direction the object is
+  # facing in case you need that (eg. for attack direction)
+  player.I.facing
+  # => player.I.facing 
+  # => Point(-1, 0)
 </pre></code>
 
 @name Controllable
@@ -6951,18 +7014,26 @@ var Controllable;
 Controllable = function(I, self) {
   if (I == null) I = {};
   Object.reverseMerge(I, {
+    facing: Point(1, 0),
     speed: 1,
     velocity: Point(0, 0)
   });
-  return self.bind("update", function() {
-    I.velocity.x = 0;
-    I.velocity.y = 0;
-    if (keydown.left) I.velocity.x = -1;
-    if (keydown.right) I.velocity.x = 1;
-    if (keydown.up) I.velocity.y = -1;
-    if (keydown.down) I.velocity.y = 1;
-    return I.velocity = I.velocity.scale(I.speed);
+  self.bind("update", function() {
+    return self.movement();
   });
+  return {
+    movement: function() {
+      I.velocity.x = 0;
+      I.velocity.y = 0;
+      if (keydown.left) I.velocity.x = -1;
+      if (keydown.right) I.velocity.x = 1;
+      if (keydown.up) I.velocity.y = -1;
+      if (keydown.down) I.velocity.y = 1;
+      I.velocity = I.velocity.norm();
+      if (!I.velocity.equal(Point.ZERO)) I.facing = I.velocity;
+      return I.velocity = I.velocity.scale(I.speed);
+    }
+  };
 };
 ;
 /**
@@ -7551,10 +7622,10 @@ Emitterable = function(I, self) {
       }
       if (running) return window.requestAnimationFrame(animLoop);
     };
-    update = function() {
-      self.trigger("beforeUpdate");
-      self.trigger("update");
-      return self.trigger("afterUpdate");
+    update = function(elapsedTime) {
+      self.trigger("beforeUpdate", elapsedTime);
+      self.trigger("update", elapsedTime);
+      return self.trigger("afterUpdate", elapsedTime);
     };
     draw = function() {
       var canvas;
@@ -7564,8 +7635,10 @@ Emitterable = function(I, self) {
       return self.trigger("overlay", I.canvas);
     };
     step = function() {
+      var msPerFrame;
       if (!I.paused || frameAdvance) {
-        update();
+        msPerFrame = 1000 / I.FPS;
+        update(msPerFrame);
         I.age += 1;
       }
       return draw();
@@ -8387,8 +8460,10 @@ The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
 @param {Object} self Reference to the engine
 */
 Engine.Tilemap = function(I, self) {
-  var clearObjects, map, updating;
-  map = null;
+  var clearObjects, updating;
+  Object.extend(I, {
+    map: null
+  });
   updating = false;
   clearObjects = false;
   self.bind("update", function() {
@@ -8410,7 +8485,7 @@ Engine.Tilemap = function(I, self) {
     */
     loadMap: function(name, complete) {
       clearObjects = updating;
-      return map = Tilemap.load({
+      return I.map = Tilemap.load({
         name: name,
         complete: complete,
         entity: self.add
@@ -8498,16 +8573,23 @@ var Flickerable;
 
 Flickerable = function(I, self) {
   var originalAlpha;
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     flickerAlpha: 0.5,
-    flickerDuration: 0,
+    flickerDuration: 30,
     flickerFrequency: 3
   });
   originalAlpha = I.alpha;
   self.bind('update', function() {
     I.flickerDuration = I.flickerDuration.approach(0, 1);
-    if (I.flickerDuration > 0 && (I.age / I.flickerFrequency).floor() % 2) {
-      return I.alpha = I.flickerAlpha;
+    if (I.flickerDuration > 0) {
+      if (I.age.mod(I.flickerFrequency) === 0) {
+        if (I.alpha === I.flickerAlpha) {
+          return I.alpha = originalAlpha;
+        } else {
+          return I.alpha = I.flickerAlpha;
+        }
+      }
     } else {
       return I.alpha = originalAlpha;
     }
@@ -8537,13 +8619,12 @@ Flickerable = function(I, self) {
     @param {Number} [frequency=3] The number of frames in between opacity changes
     @param {Number} [alpha=0.5] The alpha value to flicker to
     */
-    flicker: function(duration, frequency, alpha) {
-      if (duration == null) duration = 30;
-      if (frequency == null) frequency = 3;
-      if (alpha == null) alpha = 0.5;
-      I.flickerDuration = duration;
-      I.flickerFrequency = frequency;
-      return I.flickerAlpha = alpha;
+    flicker: function(_arg) {
+      var alpha, duration, frequency, _ref;
+      _ref = _arg != null ? _arg : {}, duration = _ref.duration, frequency = _ref.frequency, alpha = _ref.alpha;
+      if (duration != null) I.flickerDuration = duration;
+      if (frequency != null) I.flickerFrequency = frequency;
+      if (alpha != null) return I.flickerAlpha = alpha;
     }
   };
 };
@@ -8781,10 +8862,10 @@ GameObject = function(I) {
     @name update
     @methodOf GameObject#
     */
-    update: function() {
+    update: function(elapsedTime) {
       if (I.active) {
-        self.trigger('step');
-        self.trigger('update');
+        self.trigger('step', elapsedTime);
+        self.trigger('update', elapsedTime);
         I.age += 1;
       }
       return I.active;
@@ -8811,7 +8892,7 @@ GameObject = function(I) {
       return I.active = false;
     }
   });
-  defaultModules = [Bindable, Bounded, Cooldown, Drawable, Durable, Metered, TimedEvents];
+  defaultModules = [Bindable, Bounded, Clampable, Cooldown, Drawable, Durable, Metered, TimedEvents, Tween];
   modules = defaultModules.concat(I.includedModules.invoke('constantize'));
   modules = modules.without(I.excludedModules.invoke('constantize'));
   modules.each(function(Module) {
@@ -8919,14 +9000,16 @@ GameState = function(I) {
     }
   });
   self.include(Bindable);
-  self.bind("update", function() {
-    var toRemove, _ref;
+  self.bind("update", function(elapsedTime) {
+    var toKeep, toRemove, _ref;
     I.updating = true;
+    I.objects.invoke("trigger", "beforeUpdate");
     _ref = I.objects.partition(function(object) {
-      return object.update();
-    }), I.objects = _ref[0], toRemove = _ref[1];
+      return object.update(elapsedTime);
+    }), toKeep = _ref[0], toRemove = _ref[1];
+    I.objects.invoke("trigger", "afterUpdate");
     toRemove.invoke("trigger", "remove");
-    I.objects = I.objects.concat(queuedObjects);
+    I.objects = toKeep.concat(queuedObjects);
     queuedObjects = [];
     return I.updating = false;
   });
@@ -9822,6 +9905,79 @@ TitleScreen = function(I) {
     });
   });
   return self;
+};
+;
+/**
+The <code>Tween</code> module provides a method to tween object properties. 
+
+@name Tween
+@module
+@constructor
+@param {Object} I Instance variables
+@param {Core} self Reference to including object
+*/
+var Tween;
+
+Tween = function(I, self) {
+  if (I == null) I = {};
+  Object.reverseMerge(I, {
+    activeTweens: {}
+  });
+  self.bind("update", function() {
+    var data, f, property, t, _ref, _results;
+    _ref = I.activeTweens;
+    _results = [];
+    for (property in _ref) {
+      data = _ref[property];
+      if (I.age >= data.endTime) {
+        I[property] = data.end;
+        _results.push(delete I.activeTweens[property]);
+      } else {
+        f = Easing[data.easing](data.start, data.end);
+        t = (I.age - data.startTime) / data.duration;
+        _results.push(I[property] = f(t));
+      }
+    }
+    return _results;
+  });
+  return {
+    /**
+    Modify the objects properties over time.
+    
+    <code><pre>
+    player = GameObject()
+    
+    player.tween 30,
+      x: 50
+      y: 50
+      easing: "quadratic"
+    </pre></code>
+    
+    @name tween
+    @methodOf Tween#
+    @param {Number} duration How long (in frames) until the object's properties reach their final values.
+    @param {Object} properties Which properties to tween. Set the `easing` property to specify the easing function.
+    */
+    tween: function(duration, properties) {
+      var easing, property, target, _results;
+      properties = Object.extend({}, properties);
+      easing = properties.easing || "linear";
+      delete properties.easing;
+      _results = [];
+      for (property in properties) {
+        target = properties[property];
+        _results.push(I.activeTweens[property] = {
+          end: target,
+          start: I[property],
+          easing: easing,
+          duration: duration,
+          startTime: I.age,
+          endTime: I.age + duration
+        });
+      }
+      return _results;
+    }
+  };
 };
 ;
 ;
