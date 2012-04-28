@@ -1566,7 +1566,15 @@ Returns a number whose value is limited to the given range.
 */
 
 Number.prototype.clamp = function(min, max) {
-  return Math.min(Math.max(this, min), max);
+  if ((min != null) && (max != null)) {
+    return Math.min(Math.max(this, min), max);
+  } else if (min != null) {
+    return Math.max(this, min);
+  } else if (max != null) {
+    return Math.min(this, max);
+  } else {
+    return this;
+  }
 };
 
 /**
@@ -3133,6 +3141,20 @@ String.prototype.parse = function() {
 };
 
 /**
+Returns true if this string starts with the given string.
+
+@name startsWith
+@methodOf String#
+@param {String} str The string to check.
+
+@returns {Boolean} True if this string starts with the given string, false otherwise.
+*/
+
+String.prototype.startsWith = function(str) {
+  return this.lastIndexOf(str, 0) === 0;
+};
+
+/**
 Returns a new string in Title Case.
 
 <code><pre>
@@ -3237,12 +3259,6 @@ String.prototype.parseHex = function() {
 };
 ;
 /**
-Non-standard
-
-@name toSource
-@methodOf Boolean#
-*/
-/**
 Returns a string representing the specified Boolean object.
 
 <code><em>bool</em>.toString()</code>
@@ -3291,12 +3307,6 @@ Returns a string representing the Number object to the specified precision.
 <code><em>number</em>.toPrecision( [ <em>precision</em> ] )</code>
 @param precision An integer specifying the number of significant digits.
 @name toPrecision
-@methodOf Number#
-*/
-/**
-Non-standard
-
-@name toSource
 @methodOf Number#
 */
 /**
@@ -3384,14 +3394,6 @@ expression.
 @param regexp A regular expression object. If a non-RegExp object obj is passed,
 it is implicitly converted to a RegExp by using new RegExp(obj).
 @name match
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name quote
 @methodOf String#
 */
 /**
@@ -3500,14 +3502,6 @@ Returns the calling string value converted to lowercase.
 @methodOf String#
 */
 /**
-Non-standard
-
-
-
-@name toSource
-@methodOf String#
-*/
-/**
 Returns a string representing the specified object.
 
 <code><em>string</em>.toString()</code>
@@ -3532,131 +3526,11 @@ Removes whitespace from both ends of the string.
 @methodOf String#
 */
 /**
-Non-standard
-
-
-
-@name trimLeft
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name trimRight
-@methodOf String#
-*/
-/**
 Returns the primitive value of a String object.
 
 <code><em>string</em>.valueOf()</code>
 
 @name valueOf
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name anchor
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name big
-@methodOf String#
-*/
-/**
-Non-standard
-
-<code>BLINK</code>
-
-@name blink
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name bold
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name fixed
-@methodOf String#
-*/
-/**
-Non-standard
-
-<code>&lt;FONT COLOR="<i>color</i>"&gt;</code>
-
-@name fontcolor
-@methodOf String#
-*/
-/**
-Non-standard
-
-<code>&lt;FONT SIZE="<i>size</i>"&gt;</code>
-
-@name fontsize
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name italics
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name link
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name small
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name strike
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name sub
-@methodOf String#
-*/
-/**
-Non-standard
-
-
-
-@name sup
 @methodOf String#
 */
 /**
@@ -3765,14 +3639,6 @@ offset from the end of the sequence. slice(2,-1) extracts the third element
 through the second-to-last element in the sequence.If end is omitted, slice
 extracts to the end of the sequence.
 @name slice
-@methodOf Array#
-*/
-/**
-Non-standard
-
-
-
-@name toSource
 @methodOf Array#
 */
 /**
@@ -3935,14 +3801,6 @@ executes.
 @methodOf Function#
 */
 /**
-Non-standard
-
-
-
-@name toSource
-@methodOf Function#
-*/
-/**
 Returns a string representing the source code of the function.
 
 <code><em>function</em>.toString(<em>indentation</em>)</code>
@@ -3972,14 +3830,6 @@ string. Returns true or false.
 a literal.
 @param str  The string against which to match the regular expression.
 @name test
-@methodOf RegExp#
-*/
-/**
-Non-standard
-
-
-
-@name toSource
 @methodOf RegExp#
 */
 /**
@@ -4179,14 +4029,6 @@ getUTCSeconds()
 @methodOf Date#
 */
 /**
-Deprecated
-
-
-
-@name getYear
-@methodOf Date#
-*/
-/**
 Sets the day of the month for a specified date according to local time.
 
 <code> setDate(<em>dayValue</em>) </code>
@@ -4379,14 +4221,6 @@ setUTCSeconds(<i>secondsValue</i>[, <em>msValue</em>])
 @methodOf Date#
 */
 /**
-Deprecated
-
-
-
-@name setYear
-@methodOf Date#
-*/
-/**
 Returns the date portion of a Date object in human readable form in American
 English.
 
@@ -4404,14 +4238,6 @@ Returns a JSON representation of the Date object.
 @methodOf Date#
 */
 /**
-Deprecated
-
-
-
-@name toGMTString
-@methodOf Date#
-*/
-/**
 Converts a date to a string, returning the "date" portion using the operating
 system's locale's conventions.
 
@@ -4420,14 +4246,6 @@ toLocaleDateString()
 </code>
 
 @name toLocaleDateString
-@methodOf Date#
-*/
-/**
-Non-standard
-
-
-
-@name toLocaleFormat
 @methodOf Date#
 */
 /**
@@ -4447,14 +4265,6 @@ locale's conventions.
 <code> toLocaleTimeString() </code>
 
 @name toLocaleTimeString
-@methodOf Date#
-*/
-/**
-Non-standard
-
-
-
-@name toSource
 @methodOf Date#
 */
 /**
@@ -4480,16 +4290,6 @@ Converts a date to a string, using the universal time convention.
 <code> toUTCString() </code>
 
 @name toUTCString
-@methodOf Date#
-*/
-/**
-Returns the primitive value of a Date object.
-
-<code>
-valueOf()
-</code>
-
-@name valueOf
 @methodOf Date#
 */
 
@@ -5281,57 +5081,14 @@ Camera.ZSort = function(I, self) {
 };
 ;
 /**
-The ClampBounds module adds a check to make sure
-that the including GameObject doesn't move outside
-the viewport.
+The <code>Clampable</code> module provides helper methods to clamp object properties. 
 
-<code><pre>
-  # create a player and include ClampBounds
-  player = GameObject
-    includedModules: ["ClampBounds"]
-    width: 5
-    height: 17
-
-  # put the player outside the viewport
-  player.I.x = -400
-  player.I.y = 1000
-
-  # update the player so ClampBounds can set 
-  # his position back inside the viewport.
-  player.update()
-
-  # x, y position is based on the center point so
-  # the position the player is set to is based on
-  # half their width and height
-  player.I.x
-  # => 2.5 # half the player's width
-
-  player.I.y
-  # => 311.5 # The default App.height (320) - half the player's height
-</pre></code>
-
-@name Cooldown
+@name Clampable
 @module
 @constructor
 @param {Object} I Instance variables
 @param {Core} self Reference to including object
 */
-var ClampBounds;
-
-ClampBounds = function(I, self) {
-  if (I == null) I = {};
-  Object.reverseMerge(I, {
-    x: 0,
-    y: 0,
-    width: 32,
-    height: 32
-  });
-  return self.bind("update", function() {
-    I.x = I.x.clamp(I.width / 2, App.width - I.width / 2);
-    return I.y = I.y.clamp(I.height / 2, App.height - I.height / 2);
-  });
-};
-;
 var Clampable;
 
 Clampable = function(I, self) {
@@ -5350,8 +5107,53 @@ Clampable = function(I, self) {
     return _results;
   });
   return {
+    /*
+      Keep an objects attributes within a given range.
+    
+      <code><pre>
+      # Player's health will be within [0, 100] at the end of every update
+      player.clamp
+        health:
+          min: 0
+          max: 100
+    
+      # Score can only be positive
+      player.clamp
+        score:
+          min: 0
+      </pre></code>
+    
+      @name clamp
+      @methodOf Clampable#
+      @param {Object} data
+    */
     clamp: function(data) {
       return Object.extend(I.clampData, data);
+    },
+    /**
+    Helper to clamp the `x` and `y` properties of the object to be within a given bounds.
+    
+    @name clampToBounds
+    @methodOf Clampable#
+    @param {Rectangle} [bounds] The bounds to clamp the object's position within. Defaults to the app size if none given.
+    */
+    clampToBounds: function(bounds) {
+      bounds || (bounds = Rectangle({
+        x: 0,
+        y: 0,
+        width: App.width,
+        height: App.height
+      }));
+      return self.clamp({
+        x: {
+          min: bounds.x + I.width / 2,
+          max: bounds.width - I.width / 2
+        },
+        y: {
+          min: bounds.y + I.height / 2,
+          max: bounds.height - I.height / 2
+        }
+      });
     }
   };
 };
@@ -7107,33 +6909,287 @@ Cooldown = function(I, self) {
   };
 };
 ;
-var DebugVelocity;
+/**
+The Debuggable Module provides a simple API to easily display
+an object's properties onscreen. This mixin comes with predefined
+attribute filters so that you can exclude irrelevant data.
 
-DebugVelocity = function(I, self) {
+<code><pre>
+player = GameObject
+  x: 40
+  y: 14
+  spriteName: null
+  numericErrorProperty: NaN
+
+player.include Debuggable
+
+# sets up debug output for all player's properties
+# at the starting position (0, 0)
+player.debug
+  filter: 'all'
+</pre></code>
+
+Debuggable module
+@name Debuggable
+@module
+@constructor
+@param {Object} I Instance variables
+@param {Core} self Reference to including object
+*/
+var Debuggable;
+
+Debuggable = function(I, self) {
+  var COL_HEIGHT, FONT_SIZE, ROW_HEIGHT, debugBounds, debugVelocity, debugX, debugY, drawDebugLine, filterProperties, getPropertyRow, initialI, nan, processValue, sortedKeys;
   if (I == null) I = {};
+  COL_HEIGHT = 175;
+  ROW_HEIGHT = 9;
+  FONT_SIZE = 9;
+  debugX = 0;
+  debugY = 0;
   Object.reverseMerge(I, {
-    velocity: Point(0, 0)
+    debug: {
+      enabled: false,
+      color: 'black',
+      filter: 'all',
+      bounds: true,
+      velocity: true,
+      position: {
+        x: 0,
+        y: 0
+      }
+    }
   });
-  return self.bind('afterTransform', function(canvas) {
-    if (engine.I.debugEnabled) {
+  initialI = Object.extend({}, I);
+  debugBounds = function(canvas) {
+    return canvas.drawRect({
+      color: 'rgba(255, 0, 255, 0.4)',
+      bounds: self.bounds()
+    });
+  };
+  debugVelocity = function(canvas) {
+    if (I.velocity != null) {
       return canvas.withTransform(Matrix.translation(I.x, I.y), function(canvas) {
+        var color, length, thickness;
+        thickness = 4;
+        length = 10;
+        color = 'rgba(255, 0, 0, 0.5)';
         canvas.drawRect({
           x: 0,
-          y: -2,
-          width: I.velocity.x * 10,
-          height: 4,
-          color: 'rgba(255, 255, 255, 0.75)'
+          y: -thickness / 2,
+          width: I.velocity.x * length,
+          height: thickness,
+          color: color
         });
         return canvas.drawRect({
-          x: -2,
+          x: -thickness / 2,
           y: 0,
-          width: 4,
-          height: I.velocity.y * 10,
-          color: 'rgba(255, 255, 255, 0.75)'
+          width: thickness,
+          height: I.velocity.y * length,
+          color: color
         });
       });
     }
+  };
+  filterProperties = function(properties) {
+    var key, results, value;
+    results = {};
+    switch (I.debug.filter) {
+      case 'all':
+        results = properties;
+        break;
+      case 'undefined':
+        for (key in properties) {
+          value = properties[key];
+          if (!(value != null) || nan(value)) results[key] = value;
+        }
+        break;
+      case 'changed':
+        for (key in properties) {
+          value = properties[key];
+          if (initialI[key] !== value) results[key] = value;
+        }
+    }
+    return results;
+  };
+  sortedKeys = function() {
+    var key, keys, value, _ref;
+    keys = [];
+    _ref = filterProperties(I);
+    for (key in _ref) {
+      value = _ref[key];
+      keys.push(key);
+    }
+    return keys.sort();
+  };
+  nan = function(value) {
+    return typeof value === 'number' && isNaN(value);
+  };
+  drawDebugLine = function(text, canvas, x, y) {
+    canvas.drawText({
+      color: I.debug.color,
+      x: x + I.debug.position.x,
+      y: y + I.debug.position.y,
+      text: text
+    });
+    return debugY += ROW_HEIGHT;
+  };
+  getPropertyRow = function(key, value, canvas) {
+    var k, toStringArray, v;
+    if (typeof value === 'function') {} else if (Object.isObject(value)) {
+      drawDebugLine(key, canvas, debugX, debugY);
+      debugX += 8;
+      for (k in value) {
+        v = value[k];
+        getPropertyRow(k, v, canvas);
+      }
+      return debugX -= 8;
+    } else if (Object.isArray(value)) {
+      toStringArray = (function() {
+        var _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = value.length; _i < _len; _i++) {
+          v = value[_i];
+          if (Object.isObject(v)) {
+            _results.push(v.I["class"] || v.toString());
+          } else {
+            _results.push(v);
+          }
+        }
+        return _results;
+      })();
+      return drawDebugLine("" + key + "(" + value.length + "): " + toStringArray, canvas, debugX, debugY);
+    } else {
+      value = processValue(value);
+      return drawDebugLine("" + key + ": " + value, canvas, debugX, debugY);
+    }
+  };
+  processValue = function(value) {
+    var output, parsedNumber;
+    output = value;
+    try {
+      parsedNumber = parseFloat(value);
+    } catch (_error) {}
+    if (parsedNumber) {
+      if (typeof value !== 'string' && parsedNumber !== parseInt(value)) {
+        output = value.toFixed(3);
+      }
+    }
+    return output;
+  };
+  self.bind("update", function() {
+    if (justPressed['0']) return self.toggleDebug();
   });
+  self.bind("overlay", function(canvas) {
+    var key, _i, _len, _ref;
+    if (I.debug.enabled) {
+      canvas.font("" + FONT_SIZE + "px Monaco");
+      debugX = 0;
+      debugY = ROW_HEIGHT;
+      _ref = sortedKeys();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        key = _ref[_i];
+        getPropertyRow(key, I[key], canvas);
+      }
+      debugX += COL_HEIGHT;
+      debugY = ROW_HEIGHT;
+      if (I.debug.bounds) debugBounds(canvas);
+      if (I.debug.velocity) return debugVelocity(canvas);
+    }
+  });
+  return {
+    /**
+    Enable debugging display for the calling GameObject.
+    
+    <code><pre>
+    player = GameObject
+      x: 40
+      y: 14
+      spriteName: null
+      numericErrorProperty: NaN
+    
+    player.include Debuggable
+    
+    # sets up debug output for all player's properties
+    # at the starting position (0, 0)
+    player.debug
+      filter: 'all'
+    
+    player.I.y = 45
+    
+    # sets up debug output for only properties that have
+    # changed since initialization. In this case only y
+    # would be displayed.
+    player.debug
+      filter: 'changed'
+    
+    # sets up debug output for properties that are <code>undefined</code>, 
+    # <code>null</code>, or <code>NaN</code>. In this case spriteName and
+    # numericErrorProperty would be displayed.
+    player.debug
+      filter: 'undefined'
+    
+    # sets up debug output using all possible configuration options
+    player.debug
+      bounds: true # set this to false to disable visual debugging of the object's bounding box
+      color: 'red' # color of debug text
+      filter: 'all'
+      x: 30 # x position to start printing debug information
+      y: 50 # y position to start printing debug information
+      velocity: true # set this to false to disable visual debugging of the object's velocity
+    </pre></code>
+    
+    @name debug
+    @methodOf Debuggable#
+    @param {Object} Options to configure debug output
+    @param {Boolean} bounds Whether or not to visually debug the object's bounds
+    @param {Color|String} color The color of the debug text
+    @param {String} filter Choices include 'all', 'changed', and 'undefined'
+    @param {Number} x The x position to start drawing the debug information
+    @param {Number} y The y position to start drawing the debug information
+    @param {Boolean} velocity Whether or not to visually debug the object's velocity
+    */
+    debug: function(options) {
+      var x, y;
+      if (options == null) options = {};
+      x = options.x, y = options.y;
+      if (x != null) I.debug.position.x = x;
+      if (y != null) I.debug.position.y = y;
+      Object.extend(I.debug, options);
+      return I.debug.enabled = true;
+    },
+    /**
+    Toggle display of debug information.
+    
+    <code><pre>
+    player = GameObject()
+    
+    player.include Debuggable
+    
+    # enables debug display
+    player.debug()
+    
+    # disables debug display
+    player.toggleDisable()
+    
+    # if false is passed to toggleDisplay, then debugging is disabled.  
+    player.toggleDisplay(false)
+    
+    # if true is passed to toggleDisplay, then debugging is enabled.
+    player.toggleDisplay(true)
+    </pre></code>
+    
+    @name toggleDebug
+    @methodOf Debuggable#
+    @param {Boolean} If true is passed then debugging is enabled, if false is passed then debugging is disabled, if nothing is passed, then debug state is toggled.
+    */
+    toggleDebug: function(newVal) {
+      if (newVal != null) {
+        return I.debug.enabled = newVal;
+      } else {
+        return I.debug.enabled = !I.debug.enabled;
+      }
+    }
+  };
 };
 ;
 /**
@@ -7882,127 +7938,6 @@ Engine.Collision = function(I, self) {
         }
       });
       return nearestHit;
-    }
-  };
-};
-;
-
-Engine.Debug = function(I, self) {
-  var COL_HEIGHT, FONT_SIZE, ROW_HEIGHT, debugX, debugY, drawDebugLine, getPropertyRow, processValue;
-  COL_HEIGHT = 175;
-  ROW_HEIGHT = 9;
-  FONT_SIZE = 9;
-  debugX = 0;
-  debugY = 0;
-  Object.reverseMerge(I, {
-    debuggedObjects: [],
-    debugEnabled: false,
-    debugColor: 'white'
-  });
-  drawDebugLine = function(text, canvas, x, y) {
-    canvas.drawText({
-      color: I.debugColor,
-      x: x,
-      y: y,
-      text: text
-    });
-    return debugY += ROW_HEIGHT;
-  };
-  getPropertyRow = function(key, value, canvas) {
-    var k, toStringArray, v;
-    if (typeof value === 'function') {} else if (Object.isObject(value)) {
-      drawDebugLine(key, canvas, debugX, debugY);
-      debugX += 8;
-      for (k in value) {
-        v = value[k];
-        getPropertyRow(k, v, canvas);
-      }
-      return debugX -= 8;
-    } else if (Object.isArray(value)) {
-      toStringArray = (function() {
-        var _i, _len, _results;
-        _results = [];
-        for (_i = 0, _len = value.length; _i < _len; _i++) {
-          v = value[_i];
-          if (Object.isObject(v)) {
-            _results.push(v.I["class"] || v.toString());
-          } else {
-            _results.push(v);
-          }
-        }
-        return _results;
-      })();
-      return drawDebugLine("" + key + "(" + value.length + "): " + toStringArray, canvas, debugX, debugY);
-    } else {
-      value = processValue(value);
-      return drawDebugLine("" + key + ": " + value, canvas, debugX, debugY);
-    }
-  };
-  processValue = function(value) {
-    var output, parsedNumber;
-    output = value;
-    try {
-      parsedNumber = parseFloat(value);
-    } catch (_error) {}
-    if (parsedNumber) {
-      if (typeof value !== 'string' && parsedNumber !== parseInt(value)) {
-        output = value.toFixed(3);
-      }
-    }
-    return output;
-  };
-  self.bind("update", function() {
-    if (justPressed['0']) return I.debugEnabled = !I.debugEnabled;
-  });
-  self.bind("draw", function(canvas) {
-    var obj, _i, _len, _ref, _results;
-    if (I.debugEnabled) {
-      _ref = I.debuggedObjects;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        obj = _ref[_i];
-        _results.push(canvas.drawRect({
-          color: 'rgba(255, 0, 255, 0.4)',
-          x: obj.I.x - obj.I.width / 2,
-          y: obj.I.y - obj.I.height / 2,
-          width: obj.I.width,
-          height: obj.I.height
-        }));
-      }
-      return _results;
-    }
-  });
-  self.bind("overlay", function(canvas) {
-    var key, obj, value, _i, _len, _ref, _ref2, _results;
-    if (I.debugEnabled) {
-      canvas.font("" + FONT_SIZE + "px Monaco");
-      debugX = 0;
-      debugY = ROW_HEIGHT;
-      _ref = I.debuggedObjects;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        obj = _ref[_i];
-        _ref2 = obj.I;
-        for (key in _ref2) {
-          value = _ref2[key];
-          getPropertyRow(key, value, canvas);
-        }
-        debugX += COL_HEIGHT;
-        _results.push(debugY = ROW_HEIGHT);
-      }
-      return _results;
-    }
-  });
-  return {
-    addDebug: function(obj) {
-      return I.debuggedObjects.push(obj);
-    },
-    debugBySelector: function(selector) {
-      I.debuggedObjects.clear();
-      return I.debuggedObjects = engine.find(selector);
-    },
-    removeDebug: function(obj) {
-      return I.debuggedObjects.remove(obj);
     }
   };
 };
@@ -9258,11 +9193,11 @@ Metered = function(I, self) {
     return _results;
   };
   self.bind('overlay', function(canvas) {
-    var borderColor, borderWidth, color, font, height, meterData, name, nameColor, radius, ratio, show, showName, text, width, x, y, _ref, _ref2;
+    var backgroundColor, borderColor, borderWidth, color, font, height, meterData, name, nameColor, radius, ratio, show, showName, text, width, x, y, _ref, _ref2;
     _ref = I.meters;
     for (name in _ref) {
       meterData = _ref[name];
-      borderColor = meterData.borderColor, borderWidth = meterData.borderWidth, color = meterData.color, font = meterData.font, height = meterData.height, nameColor = meterData.nameColor, (_ref2 = meterData.position, x = _ref2.x, y = _ref2.y), radius = meterData.radius, show = meterData.show, showName = meterData.showName, text = meterData.text, width = meterData.width;
+      backgroundColor = meterData.backgroundColor, borderColor = meterData.borderColor, borderWidth = meterData.borderWidth, color = meterData.color, font = meterData.font, height = meterData.height, nameColor = meterData.nameColor, (_ref2 = meterData.position, x = _ref2.x, y = _ref2.y), radius = meterData.radius, show = meterData.show, showName = meterData.showName, text = meterData.text, width = meterData.width;
       if (!show) return;
       ratio = I[name] / I["max" + (name.capitalize())];
       if (showName || text) {
@@ -9274,6 +9209,13 @@ Metered = function(I, self) {
           text: text || name.capitalize()
         });
       }
+      canvas.drawRect({
+        color: backgroundColor,
+        x: x,
+        y: y + 15,
+        width: width,
+        height: height
+      });
       canvas.drawRect({
         color: color,
         x: x,
@@ -9340,6 +9282,7 @@ Metered = function(I, self) {
     meter: function(name, options) {
       if (options == null) options = {};
       Object.reverseMerge(options, {
+        backgroundColor: 'black',
         borderColor: 'white',
         borderWidth: 1.5,
         color: 'green',
@@ -9633,6 +9576,19 @@ draw anything to the screen until the image has been loaded.
       draw: function(canvas, x, y) {
         return canvas.drawImage(image, sourceX, sourceY, width, height, x, y, width, height);
       },
+      /**
+      Draw this sprite on the given canvas tiled to the x, y, 
+      width, and height dimensions specified.
+      
+      @name fill
+      @methodOf Sprite#
+      @param {PowerCanvas} canvas Reference to the canvas to draw the sprite on
+      @param {Number} x Position on the x axis to draw the sprite
+      @param {Number} y Position on the y axis to draw the sprite
+      @param {Number} width How far to tile the sprite on the x-axis
+      @param {Number} height How far to tile the sprite on the y-axis
+      @param {String} repeat Repeat options. Can be `repeat-x`, `repeat-y`, `no-repeat`, or `repeat`. Defaults to `repeat`
+      */
       fill: function(canvas, x, y, width, height, repeat) {
         var pattern;
         if (repeat == null) repeat = "repeat";
