@@ -5107,25 +5107,25 @@ Clampable = function(I, self) {
     return _results;
   });
   return {
-    /*
-      Keep an objects attributes within a given range.
+    /**
+    Keep an objects attributes within a given range.
     
-      <code><pre>
-      # Player's health will be within [0, 100] at the end of every update
-      player.clamp
-        health:
-          min: 0
-          max: 100
+    <code><pre>
+    # Player's health will be within [0, 100] at the end of every update
+    player.clamp
+      health:
+        min: 0
+        max: 100
     
-      # Score can only be positive
-      player.clamp
-        score:
-          min: 0
-      </pre></code>
+    # Score can only be positive
+    player.clamp
+      score:
+        min: 0
+    </pre></code>
     
-      @name clamp
-      @methodOf Clampable#
-      @param {Object} data
+    @name clamp
+    @methodOf Clampable#
+    @param {Object} data
     */
     clamp: function(data) {
       return Object.extend(I.clampData, data);
@@ -8588,6 +8588,7 @@ enemy = GameObject
   width: 10
   height: 10
   velocity: Point(0, 0)
+  speed: 2
 
 enemy.include Follow
 
@@ -8614,23 +8615,19 @@ var Follow;
 Follow = function(I, self) {
   if (I == null) I = {};
   Object.reverseMerge(I, {
-    direction: Point(0, 0)
+    velocity: Point(0, 0),
+    speed: 1
   });
   return {
     /**
-    Set your direction to face another object.
+    Set your velocity to follow another object.
     
     <code><pre>
     enemy.follow(player)
     
-    # => The enemy now has it's direction attribute set to face
-    # the player object. From here you can use the direction and
-    # calculate a velocity.
-    
-    enemy.I.velocity = enemy.I.direction.scale(4)
-    # now the enemy has a velocity, pointing toward player, 
-    # with 4 times the magnitude of its direction
-    
+    # => The enemy now has it's velocity attribute set in
+    # the direction of the player, with magnitude equal to
+    # the enemy's speed
     </pre></code>
     
     @name follow
@@ -8638,7 +8635,9 @@ Follow = function(I, self) {
     @param {GameObject} obj The object you want to follow
     */
     follow: function(obj) {
-      return I.direction = obj.position().subtract(self.position()).norm();
+      if (obj) {
+        return I.velocity = obj.position().subtract(self.position()).norm(I.speed);
+      }
     }
   };
 };
