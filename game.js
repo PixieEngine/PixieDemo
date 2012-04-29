@@ -770,7 +770,7 @@ Bindable = function() {
   eventCallbacks = {};
   return {
     /**
-    The bind method adds a function as an event listener.
+    Adds a function as an event listener.
     
     <code><pre>
     # this will call coolEventHandler after
@@ -793,7 +793,7 @@ Bindable = function() {
       return eventCallbacks[event].push(callback);
     },
     /**
-    The unbind method removes a specific event listener, or all event listeners if
+    Removes a specific event listener, or all event listeners if
     no specific listener is given.
     
     <code><pre>
@@ -819,7 +819,7 @@ Bindable = function() {
       }
     },
     /**
-    The trigger method calls all listeners attached to the specified event.
+    Calls all listeners attached to the specified event.
     
     <code><pre>
     # calls each event handler bound to "someCustomEvent"
@@ -1000,8 +1000,7 @@ Core = function(I) {
       });
     },
     /**
-    Extends this object with methods from the passed in object. A shortcut for
-    <code>Object.extend(self, methods)</code>
+    Extends this object with methods from the passed in object. A shortcut for Object.extend(self, methods)
     
     <code><pre>
     I =
@@ -4587,8 +4586,7 @@ Bounded = function(I, self) {
       return bounds;
     },
     /**
-    The bounds method returns infomation about the location 
-    of the object and its dimensions with optional offsets.
+    Returns infomation about the location of the object and its dimensions with optional offsets.
     
     <code><pre>
     player = Core
@@ -9918,7 +9916,7 @@ Tween = function(I, self) {
   });
   return {
     /**
-    Modify the objects properties over time.
+    Modify the object's properties over time.
     
     <code><pre>
     player = GameObject()
