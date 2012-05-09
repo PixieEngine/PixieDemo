@@ -5,7 +5,7 @@ Player = (I={}) ->
   Object.reverseMerge I,
     width: 16
     height: 16
-    speed: 17
+    speed: 90
 
   # The player is a GameObject
   self = GameObject(I)
