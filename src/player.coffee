@@ -32,4 +32,3 @@ Player = (I={}) ->
 
   # We must return a reference to self from the constructor
   return self
-
