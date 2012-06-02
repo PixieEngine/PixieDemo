@@ -4,7 +4,7 @@ window.engine = Engine
   canvas: $("canvas").pixieCanvas()
 
 # Add the player object to the engine
-player = engine.add "Player",
+engine.add "Player",
   x: 160
   y: 96
   color: "#F00"
