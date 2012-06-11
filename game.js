@@ -1,5 +1,5 @@
 App = {"directories":{"animations":"animations","data":"data","entities":"entities","images":"images","lib":"lib","sounds":"sounds","source":"src","test":"test","test_lib":"test_lib","tilemaps":"tilemaps"},"width":480,"height":320,"library":false,"main":"main.coffee","wrapMain":true,"hotSwap":true,"name":"PixieDemo","author":"STRd6","libs":{"00_gamelib.js":"https://raw.github.com/PixieEngine/PixieDust/pixie/game.js","browserlib.js":"https://github.com/STRd6/browserlib/raw/pixie/game.js"}};
-;
+
 ;
 ;
 /**
@@ -967,6 +967,8 @@ CommandStack = function() {
     }
   };
 };
+
+(typeof exports !== "undefined" && exports !== null ? exports : this)["CommandStack"] = CommandStack;
 ;
 /**
 The Core class is used to add extended functionality to objects without
@@ -2970,6 +2972,26 @@ String.prototype.constantize = function() {
 };
 
 /**
+Get the file extension of a string.
+
+    "README.md".extension() # => "md"
+    "README".extension() # => ""
+
+@name extension
+@methodOf String#
+@returns {String} File extension
+*/
+
+String.prototype.extension = function() {
+  var extension, _ref;
+  if (extension = (_ref = this.match(/\.([^\.]*)$/, '')) != null ? _ref.last() : void 0) {
+    return extension;
+  } else {
+    return '';
+  }
+};
+
+/**
 Returns a new string that is a more human readable version.
 
     "player_id".humanize()
@@ -4270,7 +4292,7 @@ Generate a random uuid.
   };
 })();;
 ;
-;
+
 /**
 The ActiveBounds module automatically destroys objects that
 are outside of the specified bounds. The default bounds are
@@ -4330,7 +4352,7 @@ ActiveBounds = function(I, self) {
     }
   });
 };
-;
+
 /**
 The Ageable module handles keeping track of an object's age.
 
@@ -4358,7 +4380,7 @@ Ageable = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The Bounded module is used to provide basic data about the
 location and dimensions of the including object. This module is included
@@ -4649,7 +4671,7 @@ Bounded = function(I, self) {
     }
   };
 };
-;
+
 var Camera, oldCamera;
 
 oldCamera = Camera;
@@ -4772,7 +4794,7 @@ Camera = function(I) {
 Camera.defaultModules = ["ZSort", "Zoom", "Rotate", "Shake", "Flash", "Fade"];
 
 Object.extend(Camera, oldCamera);
-;
+
 /**
 The <code>Fade</code> module provides convenience methods for accessing common Engine.Flash presets.
 
@@ -4846,7 +4868,7 @@ Camera.Fade = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>Flash</code> module allows you to flash a color onscreen and then fade to transparent over a time period. 
 This is nice for lightning type effects or to accentuate major game events.
@@ -4919,7 +4941,7 @@ Camera.Flash = function(I, self) {
     }
   };
 };
-;
+
 
 Camera.Rotate = function(I, self) {
   Object.reverseMerge(I, {
@@ -4935,7 +4957,7 @@ Camera.Rotate = function(I, self) {
     }
   };
 };
-;
+
 
 Camera.Shake = function(I, self) {
   var defaultParams;
@@ -4968,7 +4990,7 @@ Camera.Shake = function(I, self) {
     }
   };
 };
-;
+
 
 Camera.Zoom = function(I, self) {
   var clampZoom;
@@ -5000,7 +5022,7 @@ Camera.Zoom = function(I, self) {
     }
   };
 };
-;
+
 
 Camera.ZSort = function(I, self) {
   Object.reverseMerge(I, {
@@ -5016,7 +5038,7 @@ Camera.ZSort = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The `Clampable` module provides helper methods to clamp object properties. This module is included by default in `GameObject`
 
@@ -5098,7 +5120,7 @@ Clampable = function(I, self) {
     }
   };
 };
-;
+
 
 (function() {
   var ANY, CEILING, Collidable, DOWN, FLOOR, LEFT, NONE, RIGHT, UP, WALL, _ref, _ref2;
@@ -5214,7 +5236,7 @@ Clampable = function(I, self) {
     }
   });
 })();
-;
+
 
 (function() {
   var Collision, collides;
@@ -5472,7 +5494,7 @@ Clampable = function(I, self) {
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Collision"] = Collision;
 })();
-;
+
 var CollisionResponse;
 
 CollisionResponse = function(I, self) {
@@ -5507,7 +5529,7 @@ CollisionResponse = function(I, self) {
     }
   });
 };
-;
+
 var __slice = Array.prototype.slice;
 
 (function() {
@@ -6651,7 +6673,7 @@ var __slice = Array.prototype.slice;
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Color"] = Color;
 })();
-;
+
 
 (function() {
   var lookup, names, normalizeKey;
@@ -6667,7 +6689,7 @@ var __slice = Array.prototype.slice;
     return lookup[normalizeKey(color)];
   };
 })();
-;
+
 /**
 The Controllable module adds simple movement
 when up, down, left, or right are held.
@@ -6728,7 +6750,7 @@ Controllable = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Cooldown module provides a declarative way to manage cooldowns on
 GameObject's properties.
@@ -6795,7 +6817,7 @@ Cooldown = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Debuggable Module provides a simple API to easily display
 an object's properties onscreen. This mixin comes with predefined
@@ -7070,7 +7092,7 @@ Debuggable = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Drawable module is used to provide a simple draw method to the including
 object.
@@ -7151,13 +7173,13 @@ var Drawable;
 
 Drawable = function(I, self) {
   var setSizeCallback, _ref;
-  I || (I = {});
+  if (I == null) I = {};
   Object.reverseMerge(I, {
     alpha: 1,
     color: "#196",
-    hflip: false,
-    vflip: false,
     scale: 1,
+    scaleX: 1,
+    scaleY: 1,
     zIndex: 0
   });
   setSizeCallback = function(sprite) {
@@ -7171,7 +7193,7 @@ Drawable = function(I, self) {
       I.sprite = Sprite.loadByName(I.sprite, setSizeCallback);
     }
   }
-  self.bind('draw', function(canvas) {
+  self.bind('draw.Drawable', function(canvas) {
     var previousAlpha, sprite;
     if ((I.alpha != null) && I.alpha !== 1) {
       previousAlpha = canvas.context().globalAlpha;
@@ -7235,12 +7257,8 @@ Drawable = function(I, self) {
       var center, transform;
       center = self.center();
       transform = Matrix.translation(center.x.floor(), center.y.floor());
-      if ((I.scale != null) && I.scale !== 1) {
-        transform = transform.concat(Matrix.scale(I.scale));
-      }
+      transform = transform.concat(Matrix.scale(I.scale * I.scaleX, I.scale * I.scaleY));
       if (I.rotation) transform = transform.concat(Matrix.rotation(I.rotation));
-      if (I.hflip) transform = transform.concat(Matrix.HORIZONTAL_FLIP);
-      if (I.vflip) transform = transform.concat(Matrix.VERTICAL_FLIP);
       if (I.spriteOffset) {
         transform = transform.concat(Matrix.translation(I.spriteOffset.x, I.spriteOffset.y));
       }
@@ -7250,7 +7268,7 @@ Drawable = function(I, self) {
 };
 
 Drawable.setSizeCallback = function(sprite) {};
-;
+
 var DustEmitter, DustParticle;
 
 DustParticle = function(I, self) {
@@ -7286,7 +7304,7 @@ DustEmitter = function(I) {
   self = Emitter(I);
   return self;
 };
-;
+
 
 (function() {
   var Easing, polynomialEasings;
@@ -7343,7 +7361,7 @@ DustEmitter = function(I) {
   });
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Easing"] = Easing;
 })();
-;
+
 var Emitter;
 
 Emitter = function(I) {
@@ -7353,7 +7371,7 @@ Emitter = function(I) {
   self.include("Emitterable");
   return self;
 };
-;
+
 var Emitterable;
 
 Emitterable = function(I, self) {
@@ -7426,7 +7444,7 @@ Emitterable = function(I, self) {
   });
   return {};
 };
-;
+
 
 (function() {
   var Engine, defaults;
@@ -7688,7 +7706,7 @@ Emitterable = function(I, self) {
   Engine.defaultModules = ["Data", "Keyboard", "Mouse", "Background", "Delay", "GameState", "Selector", "Collision", "Tilemap", "Levels"];
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Engine"] = Engine;
 })();
-;
+
 /**
 This module clears or fills the canvas before drawing the scene.
 
@@ -7722,7 +7740,7 @@ Engine.Background = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The <code>Collision</code> module provides some simple collision detection methods to engine.
 
@@ -7799,7 +7817,7 @@ Engine.Collision = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>Data</code> module provides methods to store global and persistent data in the engine.
 
@@ -7826,7 +7844,7 @@ Engine.Data = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The <code>Delay</code> module provides methods to trigger events after a number of steps have passed.
 
@@ -7872,7 +7890,7 @@ Engine.Delay = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>FPSCounter</code> module tracks and displays the framerate.
 
@@ -7907,7 +7925,7 @@ Engine.FPSCounter = function(I, self) {
     return framerate.rendered();
   });
 };
-;
+
 
 Engine.GameState = function(I, self) {
   var requestedState;
@@ -7996,7 +8014,7 @@ Engine.GameState = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>Joysticks</code> module gives the engine access to joysticks.
 
@@ -8044,7 +8062,7 @@ Engine.Joysticks = function(I, self) {
     }
   };
 };
-;
+
 /**
 This module sets up the keyboard inputs for each engine update.
 
@@ -8060,7 +8078,7 @@ Engine.Keyboard = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 This module provides methods for transitioning between levels.
 
@@ -8136,7 +8154,7 @@ Engine.Levels = function(I, self) {
     }
   };
 };
-;
+
 /**
 This module sets up the mouse inputs for each engine update.
 
@@ -8152,7 +8170,7 @@ Engine.Mouse = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The <code>Selector</code> module provides methods to query the engine to find game objects.
 
@@ -8331,7 +8349,7 @@ Object.extend(Engine.Selector, {
     };
   }
 });
-;
+
 /**
 The <code>Stats</code> module provides methods to query the engine to find game objects.
 
@@ -8351,7 +8369,7 @@ Engine.Stats = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>Tilemap</code> module provides a way to load tilemaps in the engine.
 
@@ -8396,7 +8414,7 @@ Engine.Tilemap = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Expirable module deactivates a <code>GameObject</code> after a specified duration.
 If a duration is specified the object will update that many times. If -1 is
@@ -8444,7 +8462,7 @@ Expirable = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The `Flickerable` module provides a method to flicker a sprite between its current opacity (alpha) and a given opacity. 
 
@@ -8530,7 +8548,7 @@ Flickerable = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Follow module provides a simple method to set an object's
 direction so that it is pointed at another object.
@@ -8604,7 +8622,7 @@ Follow = function(I, self) {
     }
   };
 };
-;
+
 /**
 This object keeps track of framerate and displays it by creating and appending an
 html element to the DOM.
@@ -8651,7 +8669,7 @@ Framerate = function(options) {
     }
   };
 };
-;
+
 /**
 The default base class for all objects you can add to the engine.
 
@@ -8814,7 +8832,7 @@ GameObject.construct = function(entityData) {
     return GameObject(entityData);
   }
 };
-;
+
 /**
 A collection of effects to make your game juicy.
 
@@ -8854,7 +8872,7 @@ GameObject.Effect = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Metered module provides a simple drop-in
 meter ui to track arbitrary numeric attributes.
@@ -9048,7 +9066,7 @@ GameObject.Meter = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Game Over class sets up a simple game state with restart instructions.
 
@@ -9093,7 +9111,7 @@ GameOver = function(I) {
   });
   return self;
 };
-;
+
 var GameState;
 
 GameState = function(I) {
@@ -9157,7 +9175,7 @@ GameState = function(I) {
   self.include("GameState.SaveState");
   return self;
 };
-;
+
 
 GameState.Cameras = function(I, self) {
   var cameras;
@@ -9195,7 +9213,7 @@ GameState.Cameras = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>SaveState</code> module provides methods to save and restore the current game state.
 
@@ -9277,7 +9295,7 @@ GameState.SaveState = function(I, self) {
     }
   };
 };
-;
+
 /**
 The <code>SingleCamera</code> module provides provides a single camera view of the game.
 Its transform can be adjusted to view different areas and provide various camera effects.
@@ -9308,7 +9326,7 @@ GameState.SingleCamera = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 A Game State that loads the map for a given level and transitions into the level.
 
@@ -9345,7 +9363,7 @@ LevelState = function(I) {
   });
   return self;
 };
-;
+
 /**
 The Movable module automatically updates the position and velocity of
 GameObjects based on the velocity and acceleration. It does not check
@@ -9402,7 +9420,7 @@ Movable = function(I, self) {
     return I.y += I.velocity.y * dt;
   });
 };
-;
+
 /**
 Creates an oscillator function with the given parameters.
 
@@ -9425,7 +9443,7 @@ Oscillator = function(options) {
     return amplitude * Math.cos(Math.TAU * t / period + offset);
   };
 };
-;
+
 /**
 @name ResourceLoader
 @namespace
@@ -9461,7 +9479,7 @@ Helps access the assets in your game.
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["ResourceLoader"] = ResourceLoader;
 })();
-;
+
 /**
 The Rotatable module rotates the object
 based on its rotational velocity.
@@ -9503,7 +9521,7 @@ Rotatable = function(I, self) {
   });
   return {};
 };
-;
+
 /**
 The Sprite class provides a way to load images for use in games.
 
@@ -9515,7 +9533,7 @@ draw anything to the screen until the image has been loaded.
 @constructor
 */
 (function() {
-  var LoaderProxy, Sprite;
+  var LoaderProxy, Sprite, spriteCache;
   LoaderProxy = function() {
     return {
       draw: function() {},
@@ -9526,6 +9544,7 @@ draw anything to the screen until the image has been loaded.
       height: null
     };
   };
+  spriteCache = {};
   Sprite = function(image, sourceX, sourceY, width, height) {
     sourceX || (sourceX = 0);
     sourceY || (sourceY = 0);
@@ -9611,14 +9630,16 @@ draw anything to the screen until the image has been loaded.
   @returns {Sprite} A sprite object
   */
   Sprite.load = function(url, loadedCallback) {
-    var img, proxy;
+    var img, proxy, sprite;
+    if (sprite = spriteCache[url]) {
+      if (loadedCallback != null) loadedCallback.defer(sprite);
+      return sprite;
+    }
     img = new Image();
     proxy = LoaderProxy();
     img.onload = function() {
-      var tile;
-      tile = Sprite(this);
-      Object.extend(proxy, tile);
-      if (loadedCallback) return loadedCallback(proxy);
+      spriteCache[url] = Object.extend(proxy, Sprite(this));
+      return typeof loadedCallback === "function" ? loadedCallback(proxy) : void 0;
     };
     img.src = url;
     return proxy;
@@ -9676,7 +9697,7 @@ draw anything to the screen until the image has been loaded.
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Sprite"] = Sprite;
 })();
-;
+
 /**
 The Text Effect class provides a method to display moving text onscreen, fading out the text over the effect duration.
 
@@ -9747,7 +9768,7 @@ TextEffect = function(I) {
   });
   return self;
 };
-;
+
 /**
 `TextEffect.Floating` is a simple subclass of `TextEffect`. It provides some defaults
 to move the text upward and fade it out over 0.5 seconds.
@@ -9772,7 +9793,7 @@ TextEffect.Floating = function(I) {
   });
   return TextEffect(I);
 };
-;
+
 /**
 The Text Screen class is a GameState that provides convenience methods for drawing text to screen. 
 
@@ -9819,7 +9840,7 @@ TextScreen = function(I) {
     }
   });
 };
-;
+
 
 (function() {
   var Map, Tilemap, loadByName;
@@ -9879,7 +9900,7 @@ TextScreen = function(I) {
   };
   return (typeof exports !== "undefined" && exports !== null ? exports : this)["Tilemap"] = Tilemap;
 })();
-;
+
 /**
 The TimedEvents module allows arbitrary code to be executed at set intervals. <code>GameObject</code> includes this module by default
 
@@ -9973,7 +9994,7 @@ TimedEvents = function(I, self) {
     }
   };
 };
-;
+
 /**
 The Title Screen class sets up a simple game title screen using <code>App.name</code>
 
@@ -10014,7 +10035,7 @@ TitleScreen = function(I) {
   });
   return self;
 };
-;
+
 /**
 The <code>Tween</code> module provides a method to tween object properties. 
 
@@ -10032,7 +10053,7 @@ Tween = function(I, self) {
     activeTweens: {}
   });
   self.bind("update", function(elapsedTime) {
-    var data, f, property, t, _base, _ref, _results;
+    var data, easingFunction, property, t, _base, _base2, _ref, _results;
     t = I.age + elapsedTime;
     _ref = I.activeTweens;
     _results = [];
@@ -10045,8 +10066,12 @@ Tween = function(I, self) {
         }
         _results.push(delete I.activeTweens[property]);
       } else {
-        f = Easing[data.easing](data.start, data.end);
-        _results.push(I[property] = f((t - data.startTime) / data.duration));
+        if (typeof (_base2 = data.easing).isString === "function" ? _base2.isString() : void 0) {
+          easingFunction = Easing[data.easing](data.start, data.end);
+        } else {
+          easingFunction = data.easing;
+        }
+        _results.push(I[property] = easingFunction((t - data.startTime) / data.duration));
       }
     }
     return _results;
@@ -10099,10 +10124,10 @@ Tween = function(I, self) {
     }
   };
 };
-;
-;
 
-;
+
+
+
 /*!
  * xStats.js v1.0.0-pre
  * Copyright 2011-2012 John-David Dalton <http://allyoucanleet.com/>
@@ -10870,7 +10895,7 @@ Tween = function(I, self) {
     '.xstats{cursor:pointer;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;user-select:none}');
 
 }(this, this.document));
-;
+
 
 document.oncontextmenu = function() {
   return false;
@@ -10879,7 +10904,7 @@ document.oncontextmenu = function() {
 $(document).bind("keydown", function(event) {
   if (!$(event.target).is("input")) return event.preventDefault();
 });
-;
+
 
 Engine.Stats = function(I, self) {
   var stats;
@@ -10892,7 +10917,7 @@ Engine.Stats = function(I, self) {
   }).appendTo("body");
   return {};
 };
-;
+
 /**
 This error handler captures any runtime errors and reports them to the IDE
 if present.
@@ -10903,7 +10928,7 @@ window.onerror = function(message, url, lineNumber) {
   errorContext[4] = "<b style='font-weight: bold; text-decoration: underline;'>" + errorContext[4] + "</b>";
   return typeof displayRuntimeError === "function" ? displayRuntimeError("<code>" + message + "</code> <br /><br />(Sometimes this context may be wrong.)<br /><code><pre>" + (errorContext.join('\n')) + "</pre></code>") : void 0;
 };
-;
+
 var root;
 
 (function() {}, root = typeof exports !== "undefined" && exports !== null ? exports : this, root.gameKeys = function(keyMap) {
@@ -10912,7 +10937,7 @@ var root;
     data: keyMap
   }, 'http://pixieengine.com');
 })();
-;
+
 var Joysticks,
   __slice = Array.prototype.slice;
 
@@ -11144,7 +11169,7 @@ Joysticks = (function() {
     }
   };
 })();
-;
+
 /**
 jQuery Hotkeys Plugin
 Copyright 2010, John Resig
@@ -11293,7 +11318,7 @@ Binny V A, http://www.openjs.com/scripts/events/keyboard_shortcuts/
     };
   });
 })(jQuery);
-;
+
 /**
 Merges properties from objects into target without overiding.
 First come, first served.
@@ -11321,7 +11346,7 @@ jQuery.extend({
     return target;
   }
 });
-;
+
 
 $(function() {
   /**
@@ -11403,7 +11428,7 @@ $(function() {
     return _results;
   };
 });
-;
+
 
 $(function() {
   /**
@@ -11475,7 +11500,7 @@ $(function() {
     return _results;
   };
 });
-;
+
 /**
 The Music object provides an easy API to play
 songs from your sounds project directory. By
@@ -11553,7 +11578,7 @@ Music = (function() {
     }
   };
 })();
-;
+
 var __slice = Array.prototype.slice;
 
 (function($) {
@@ -12075,14 +12100,16 @@ var __slice = Array.prototype.slice;
       @param {String} text text to print
       @param {Point} [position] position to start printing. Overrides x and y if passed
       @param {String|Color} [color] color of text to start printing
+      @param {String} [font] font of text to print
       
       @returns {PixieCanvas} this
       */
       drawText: function(_arg) {
-        var color, position, text, x, y;
-        x = _arg.x, y = _arg.y, text = _arg.text, position = _arg.position, color = _arg.color;
+        var color, font, position, text, x, y;
+        x = _arg.x, y = _arg.y, text = _arg.text, position = _arg.position, color = _arg.color, font = _arg.font;
         if (position) x = position.x, y = position.y;
         this.fillColor(color);
+        if (font) this.font(font);
         context.fillText(text, x, y);
         return this;
       },
@@ -12125,18 +12152,20 @@ var __slice = Array.prototype.slice;
       @param {Number} [x] location on the x axis to start printing. Overrides the default centering behavior if passed
       @param {Point} [position] position to start printing. Overrides x and y if passed
       @param {String|Color} [color] color of text to print
+      @param {String} [font] font of text to print
       
       @returns {PixieCanvas} this
       */
       centerText: function(_arg) {
-        var color, position, text, textWidth, x, y;
-        text = _arg.text, x = _arg.x, y = _arg.y, position = _arg.position, color = _arg.color;
+        var color, font, position, text, textWidth, x, y;
+        text = _arg.text, x = _arg.x, y = _arg.y, position = _arg.position, color = _arg.color, font = _arg.font;
         if (position) x = position.x, y = position.y;
         if (x == null) x = canvas.width / 2;
         textWidth = this.measureText(text);
         return this.drawText({
           text: text,
           color: color,
+          font: font,
           x: x - textWidth / 2,
           y: y
         });
@@ -12284,7 +12313,7 @@ var __slice = Array.prototype.slice;
     }
   };
 })(jQuery);
-;
+
 /**
 A browser polyfill so you can consistently 
 call requestAnimationFrame. Using 
@@ -12301,7 +12330,7 @@ window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitReq
     return callback(+new Date());
   }, 1000 / 60);
 });
-;
+
 
 (function($) {
   /**
@@ -12433,7 +12462,7 @@ window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitReq
     }
   }, (typeof exports !== "undefined" && exports !== null ? exports : this)["Sound"] = Sound);
 })(jQuery);
-;
+
 
 (function() {
   /**
@@ -12524,8 +12553,8 @@ window.requestAnimationFrame || (window.requestAnimationFrame = window.webkitReq
     }
   };
 })();
-;
-;
+
+
 
 
 var Player;
@@ -12539,11 +12568,8 @@ Player = function(I) {
     speed: 90
   });
   self = GameObject(I);
+  self.include("Controllable");
   self.bind("update", function(elapsedTime) {
-    if (keydown.left) I.x -= I.speed * elapsedTime;
-    if (keydown.right) I.x += I.speed * elapsedTime;
-    if (keydown.up) I.y -= I.speed * elapsedTime;
-    if (keydown.down) I.y += I.speed * elapsedTime;
     I.x = I.x.clamp(I.width / 2, App.width - I.width / 2);
     return I.y = I.y.clamp(I.height / 2, App.height - I.height / 2);
   });
@@ -12551,15 +12577,13 @@ Player = function(I) {
 };
 
 App.entities = {};
-;$(function(){ var player;
-
+;$(function(){ 
 window.engine = Engine({
   backgroundColor: Color("light yellow"),
   canvas: $("canvas").pixieCanvas()
 });
 
-player = engine.add({
-  "class": "Player",
+engine.add("Player", {
   x: 160,
   y: 96,
   color: "#F00"
