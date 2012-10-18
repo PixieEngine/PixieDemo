@@ -2,7 +2,7 @@
 Player = (I={}) ->
 
   # Default values that can be overriden when creating a new player.
-  Object.reverseMerge I,
+  Object.defaults I,
     width: 16
     height: 16
     speed: 90
