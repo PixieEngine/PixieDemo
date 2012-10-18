@@ -9,7 +9,7 @@ engine.add "Player",
   y: 96
   color: "#F00"
 
-engine.bind 'update', ->
+engine.on 'update', ->
   if justPressed.f
     engine.flash()
 
