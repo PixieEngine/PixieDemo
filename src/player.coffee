@@ -15,7 +15,7 @@ Player = (I={}) ->
 
   # Bind an update event
   # This will run each game step
-  self.bind "update", (elapsedTime) ->
+  self.on "update", (elapsedTime) ->
     # Clamp the player's position to be within the screen
     I.x = I.x.clamp(I.width/2, App.width - I.width/2)
     I.y = I.y.clamp(I.height/2, App.height - I.height/2)
